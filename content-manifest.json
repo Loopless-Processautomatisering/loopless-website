@@ -1,0 +1,330 @@
+{
+  "_scope": "DEKKING: dit manifest beschrijft alleen de twee pagina's die hun tekst uit het portaal lezen (/ en /over; getBlocksByPage komt alleen voor in src/app/(site)/page.tsx en over/page.tsx). De pagina's cases, diensten, contact, faq, kennisbank, projecten, privacy en configurator staan volledig in code en zijn hier BEWUST afwezig - hun afwezigheid is geen omissie. Gegenereerd uit de live database (35-02), niet uit de code-fallbacks.",
+  "tenant": {
+    "name": "Loopless",
+    "slug": "loopless",
+    "origin": "https://loopless.nl",
+    "siteType": "nextjs",
+    "napSource": "code"
+  },
+  "sections": [
+    {
+      "key": "home/bovenaan",
+      "label": "Bovenaan de pagina en de problemen",
+      "pagePath": "/",
+      "pageLabel": "Homepagina",
+      "sortOrder": 1
+    },
+    {
+      "key": "home/vervangt",
+      "label": "Vervangt dit mijn mensen?",
+      "pagePath": "/",
+      "pageLabel": "Homepagina",
+      "sortOrder": 2
+    },
+    {
+      "key": "home/case",
+      "label": "Case",
+      "pagePath": "/",
+      "pageLabel": "Homepagina",
+      "sortOrder": 3
+    },
+    {
+      "key": "home/belofte",
+      "label": "Belofte-strook",
+      "pagePath": "/",
+      "pageLabel": "Homepagina",
+      "sortOrder": 4
+    },
+    {
+      "key": "home/afsluiter",
+      "label": "Afsluiter",
+      "pagePath": "/",
+      "pageLabel": "Homepagina",
+      "sortOrder": 5
+    },
+    {
+      "key": "over/intro",
+      "label": "Intro",
+      "pagePath": "/over",
+      "pageLabel": "Over",
+      "sortOrder": 1
+    },
+    {
+      "key": "over/waarom",
+      "label": "Waarom dat werkt",
+      "pagePath": "/over",
+      "pageLabel": "Over",
+      "sortOrder": 2
+    },
+    {
+      "key": "over/praktijk",
+      "label": "In de praktijk",
+      "pagePath": "/over",
+      "pageLabel": "Over",
+      "sortOrder": 3
+    },
+    {
+      "key": "over/resultaat",
+      "label": "Bewezen resultaat",
+      "pagePath": "/over",
+      "pageLabel": "Over",
+      "sortOrder": 4
+    },
+    {
+      "key": "over/afsluiter",
+      "label": "Afsluiter",
+      "pagePath": "/over",
+      "pageLabel": "Over",
+      "sortOrder": 5
+    }
+  ],
+  "blocks": [
+    {
+      "key": "home/home_hero_title",
+      "label": "Bovenaan de pagina — titel",
+      "value": "Laat je mensen doen\nwaarvoor je ze\nhebt aangenomen.",
+      "sortOrder": 1,
+      "section": "home/bovenaan"
+    },
+    {
+      "key": "home/home_hero_subtitle",
+      "label": "Bovenaan de pagina — subtitel",
+      "value": "Toch gaat de dag op aan uitzoeken, overtypen en mail doorspitten.",
+      "sortOrder": 2,
+      "section": "home/bovenaan"
+    },
+    {
+      "key": "home/home_problems_heading",
+      "label": "Problemen — kop",
+      "value": "Herken je dit?",
+      "sortOrder": 3,
+      "section": "home/bovenaan"
+    },
+    {
+      "key": "home/home_problem_1_title",
+      "label": "Probleem 1 — titel",
+      "value": "Je beste mensen zijn uren kwijt aan uitzoeken",
+      "sortOrder": 4,
+      "section": "home/bovenaan"
+    },
+    {
+      "key": "home/home_problem_1_desc",
+      "label": "Probleem 1 — tekst",
+      "value": "Mail doorspitten, Excel bijwerken, leveranciersdocs doorzoeken. Uren per week die niet naar hun vak gaan.",
+      "sortOrder": 5,
+      "section": "home/bovenaan"
+    },
+    {
+      "key": "home/home_problem_2_title",
+      "label": "Probleem 2 — titel",
+      "value": "De kennis zit in het hoofd van één iemand",
+      "sortOrder": 6,
+      "section": "home/bovenaan"
+    },
+    {
+      "key": "home/home_problem_2_desc",
+      "label": "Probleem 2 — tekst",
+      "value": "Is die collega er niet, dan staat het stil. Vragen blijven liggen tot diegene terug is.",
+      "sortOrder": 7,
+      "section": "home/bovenaan"
+    },
+    {
+      "key": "home/home_problem_3_title",
+      "label": "Probleem 3 — titel",
+      "value": "Jij beantwoordt zelf nog elke lastige vraag",
+      "sortOrder": 8,
+      "section": "home/bovenaan"
+    },
+    {
+      "key": "home/home_problem_3_desc",
+      "label": "Probleem 3 — tekst",
+      "value": "Terwijl je bedrijf jouw aandacht ergens anders nodig heeft. Ondernemen komt er niet meer van.",
+      "sortOrder": 9,
+      "section": "home/bovenaan"
+    },
+    {
+      "key": "home/home_case_intro",
+      "label": "Case — intro",
+      "value": "Niet alleen mooie woorden: dit is wat we al hebben opgeleverd.",
+      "sortOrder": 10,
+      "section": "home/case"
+    },
+    {
+      "key": "home/home_case_title",
+      "label": "Case — titel",
+      "value": "Van zoekwerk naar een lijst die 's ochtends klaarstaat",
+      "sortOrder": 11,
+      "section": "home/case"
+    },
+    {
+      "key": "home/home_case_desc",
+      "label": "Case — tekst",
+      "value": "Elke ochtend staat de lijst klaar met wie de moeite waard is. Het team begint de dag met bellen in plaats van met zoeken, en bepaalt zelf wie er benaderd wordt.",
+      "sortOrder": 12,
+      "section": "home/case"
+    },
+    {
+      "key": "home/home_cta_heading",
+      "label": "Afsluiter — kop",
+      "value": "Benieuwd welk werk bij jou eraf kan?",
+      "sortOrder": 13,
+      "section": "home/afsluiter"
+    },
+    {
+      "key": "home/home_cta_text",
+      "label": "Afsluiter — tekst",
+      "value": "Weet je waar het blijft hangen, plan dan een gesprek. Weet je het nog niet precies, kijk dan eerst wat er bij jou kan.",
+      "sortOrder": 14,
+      "section": "home/afsluiter"
+    },
+    {
+      "key": "home/home_replace_heading",
+      "label": "Vervangt-blok — kop",
+      "value": "Vervangt dit mijn mensen? Nee. Bewust niet.",
+      "sortOrder": 15,
+      "section": "home/vervangt"
+    },
+    {
+      "key": "home/home_replace_intro",
+      "label": "Vervangt-blok — intro",
+      "value": "Wij automatiseren het uitzoeken, niet het beslissen. Daar zijn drie redenen voor:",
+      "sortOrder": 16,
+      "section": "home/vervangt"
+    },
+    {
+      "key": "home/home_replace_1_title",
+      "label": "Vervangt-blok — reden 1 titel",
+      "value": "Je mensen zíjn je bedrijf",
+      "sortOrder": 17,
+      "section": "home/vervangt"
+    },
+    {
+      "key": "home/home_replace_1_desc",
+      "label": "Vervangt-blok — reden 1 tekst",
+      "value": "Hun kennis van klanten, leveranciers en uitzonderingen kan geen systeem vervangen. Die kennis wordt juist meer waard als het werk eromheen verdwijnt.",
+      "sortOrder": 18,
+      "section": "home/vervangt"
+    },
+    {
+      "key": "home/home_replace_2_title",
+      "label": "Vervangt-blok — reden 2 titel",
+      "value": "Ook een slim systeem maakt fouten",
+      "sortOrder": 19,
+      "section": "home/vervangt"
+    },
+    {
+      "key": "home/home_replace_2_desc",
+      "label": "Vervangt-blok — reden 2 tekst",
+      "value": "Daarom gaat er bij ons niets ongecontroleerd de deur uit. Jouw mensen controleren, het systeem bereidt voor.",
+      "sortOrder": 20,
+      "section": "home/vervangt"
+    },
+    {
+      "key": "home/home_replace_3_title",
+      "label": "Vervangt-blok — reden 3 titel",
+      "value": "Het werkt beter",
+      "sortOrder": 21,
+      "section": "home/vervangt"
+    },
+    {
+      "key": "home/home_replace_3_desc",
+      "label": "Vervangt-blok — reden 3 tekst",
+      "value": "Een team dat sneller wordt, werkt mee. Bij onze klanten beslist de inkoper nog steeds zelf. Ze doen alleen het werk eromheen niet meer.",
+      "sortOrder": 22,
+      "section": "home/vervangt"
+    },
+    {
+      "key": "home/home_promise_heading",
+      "label": "Belofte-strook — kop",
+      "value": "Binnen 4 tot 6 weken draait er één proces dat je nu handmatig doet.",
+      "sortOrder": 23,
+      "section": "home/belofte"
+    },
+    {
+      "key": "home/home_promise_text",
+      "label": "Belofte-strook — tekst",
+      "value": "Vaste prijs, duidelijke acceptatiecriteria vooraf. Werkt het niet zoals afgesproken, dan betaal je de laatste termijn niet.",
+      "sortOrder": 24,
+      "section": "home/belofte"
+    },
+    {
+      "key": "over/over_intro_kicker",
+      "label": "Intro — bovenkopje",
+      "value": "Oprichter Loopless",
+      "sortOrder": 1,
+      "section": "over/intro"
+    },
+    {
+      "key": "over/over_intro_p1",
+      "label": "Intro — alinea 1",
+      "value": "Je bent geen bedrijf begonnen om de hele dag uit te zoeken en mail door te spitten. En je hebt je mensen niet aangenomen om dat voor je te doen.",
+      "sortOrder": 2,
+      "section": "over/intro"
+    },
+    {
+      "key": "over/over_intro_p2",
+      "label": "Intro — alinea 2",
+      "value": "Toch gaat het zo bij veel bedrijven. De inkoper is de halve week databeheerder, de binnendienst verzuipt in mail en Excel. Ik bouw de systemen die dat werk overnemen.",
+      "sortOrder": 3,
+      "section": "over/intro"
+    },
+    {
+      "key": "over/over_photo",
+      "label": "Intro — foto",
+      "type": "image",
+      "sortOrder": 4,
+      "section": "over/intro"
+    },
+    {
+      "key": "over/over_waarom_p1",
+      "label": "Waarom dat werkt — alinea 1",
+      "value": "Tijdens mijn studie Bedrijfskunde aan Avans Breda leerde ik een bedrijf uit elkaar halen: waar loopt het vast, welke stap kost tijd en levert niets op. Daarnaast leerde ik bouwen. Niet als hobby, maar om die stappen er ook echt uit te kunnen halen.",
+      "sortOrder": 5,
+      "section": "over/waarom"
+    },
+    {
+      "key": "over/over_waarom_p2",
+      "label": "Waarom dat werkt — alinea 2",
+      "value": "Daardoor begint het bij mij nooit bij een tool. Het begint bij de vraag welk werk jouw mensen doen waarvoor ze niet zijn aangenomen. Wat daaruit komt, bouw ik zelf.",
+      "sortOrder": 6,
+      "section": "over/waarom"
+    },
+    {
+      "key": "over/over_praktijk_p1",
+      "label": "In de praktijk — alinea 1",
+      "value": "Sommige bedrijven komen met een concreet idee: dit stuk werk moet eraf. Anderen weten alleen dat er tijd verdwijnt, maar niet precies waar. Beide zijn een goed startpunt, want je mensen weten het meestal wel.",
+      "sortOrder": 7,
+      "section": "over/praktijk"
+    },
+    {
+      "key": "over/over_praktijk_p2",
+      "label": "In de praktijk — alinea 2",
+      "value": "We kijken samen waar het uitzoekwerk zit en ik bouw daar een systeem omheen. Het systeem zet klaar, jouw mensen controleren en beslissen. Niemand wordt vervangen: dat is geen geruststelling achteraf, zo bouw ik het.",
+      "sortOrder": 8,
+      "section": "over/praktijk"
+    },
+    {
+      "key": "over/over_resultaat_text",
+      "label": "Bewezen resultaat — tekst",
+      "value": "Bij vuljevacature.nl deed het team het voorwerk zelf: leads zoeken, screenen, gegevens overtypen. Nu staat die lijst er 's ochtends al. Ze beginnen de dag met bellen in plaats van met zoeken, en bepalen zelf wie ze benaderen.",
+      "sortOrder": 9,
+      "section": "over/resultaat"
+    },
+    {
+      "key": "over/over_cta_heading",
+      "label": "Afsluiter — kop",
+      "value": "Benieuwd welk werk bij jou eraf kan?",
+      "sortOrder": 10,
+      "section": "over/afsluiter"
+    },
+    {
+      "key": "over/over_cta_text",
+      "label": "Afsluiter — tekst",
+      "value": "Weet je waar het blijft hangen, plan dan een gesprek. Weet je het nog niet, kijk dan eerst wat er bij jou kan.",
+      "sortOrder": 11,
+      "section": "over/afsluiter"
+    }
+  ],
+  "collections": []
+}

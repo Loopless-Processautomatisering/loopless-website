@@ -1,0 +1,29 @@
+name: Manifest-check
+
+# Draait op elke push en PR. Klopt content-manifest.json structureel niet --
+# dubbele sectie-key, twee namen voor een pagina, een blok dat naar een
+# niet-bestaande sectie wijst -- dan is de check rood en mag er niet gemerged
+# worden. Geldt voor iedereen die aan deze site werkt, ook zonder Claude Code.
+#
+# Bewust GEEN database en GEEN geheim: dit is pure structuurvalidatie. Het
+# verschil "manifest gewijzigd, seeder nooit gedraaid" is een DB-verschil en
+# glipt hier dus doorheen -- dat is ISS-047, niet een gat in deze workflow.
+#
+# Geen `npm ci`: check-manifest.mjs leest alleen node-builtins en scripts/manifest.ts.
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  manifest:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: Manifest-check (structuur + secties)
+        run: npm run check:manifest
