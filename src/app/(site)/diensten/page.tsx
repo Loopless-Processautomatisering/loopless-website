@@ -224,6 +224,16 @@ export default function DienstenPage() {
             >
               Vertel over je proces
             </Link>
+            <p className="mt-8 text-sm text-[#8585A3]">
+              Weet je nog niet waar je moet beginnen?{" "}
+              <Link
+                href="/kennisbank/automatisering-mkb"
+                className="font-semibold text-[#4F8EF7] transition-colors hover:text-[#7EAEFA]"
+              >
+                Lees eerst hoe je dat bepaalt
+              </Link>
+              .
+            </p>
           </AnimateIn>
         </div>
       </section>

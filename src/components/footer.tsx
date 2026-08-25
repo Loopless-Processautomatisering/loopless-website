@@ -29,6 +29,7 @@ export function Footer() {
                   { href: "/diensten", label: "Diensten" },
                   { href: "/configurator", label: "Doe de zelfscan" },
                   { href: "/cases", label: "Cases" },
+                  { href: "/kennisbank", label: "Kennisbank" },
                   { href: "/over", label: "Over mij" },
                   { href: "/faq", label: "FAQ" },
                   { href: "/contact", label: "Contact" },
