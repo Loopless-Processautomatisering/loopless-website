@@ -1,0 +1,88 @@
+- generic [active] [ref=e1]:
+  - banner [ref=e2]:
+    - generic [ref=e3]:
+      - link "LoopLess LoopLess" [ref=e4] [cursor=pointer]:
+        - /url: /
+        - generic [ref=e5]:
+          - img "LoopLess" [ref=e6]
+          - generic [ref=e7]: LoopLess
+      - button "Menu" [ref=e8]:
+        - img [ref=e9]
+  - navigation:
+    - link "Home":
+      - /url: /
+    - link "Diensten":
+      - /url: /diensten
+    - link "Wat kan het overnemen?":
+      - /url: /configurator
+    - link "Over mij":
+      - /url: /over
+    - link "FAQ":
+      - /url: /faq
+    - link "Contact":
+      - /url: /contact
+    - link "Plan een gesprek":
+      - /url: /contact
+  - main [ref=e10]:
+    - generic [ref=e12]:
+      - generic [ref=e13]:
+        - heading "Welk werk zou een systeem bij jou kunnen overnemen?" [level=1] [ref=e14]
+        - paragraph [ref=e15]: "Drie vragen, ongeveer 2 minuten. Je krijgt een concreet overzicht, geen verkooppraatje. Niemand wordt vervangen: jouw mensen controleren en beslissen."
+      - generic [ref=e16]:
+        - generic [ref=e18]: Vraag 1 van 3
+        - heading "Hoeveel mensen werken er bij jullie?" [level=2] [ref=e21]
+        - generic [ref=e22]:
+          - button "Minder dan 10" [ref=e23]
+          - button "10 tot 50" [ref=e24]
+          - button "50 tot 100" [ref=e25]
+          - button "Meer dan 100" [ref=e26]
+        - button "Verder" [disabled] [ref=e28]
+  - contentinfo [ref=e29]:
+    - generic [ref=e30]:
+      - generic [ref=e31]:
+        - generic [ref=e32]:
+          - link "LoopLess LoopLess" [ref=e33] [cursor=pointer]:
+            - /url: /
+            - generic [ref=e34]:
+              - img "LoopLess" [ref=e35]
+              - generic [ref=e36]: LoopLess
+          - paragraph [ref=e37]: Geen overbodige stappen. Alleen processen die werken.
+        - generic [ref=e38]:
+          - generic [ref=e39]:
+            - heading "Pagina's" [level=4] [ref=e40]
+            - list [ref=e41]:
+              - listitem [ref=e42]:
+                - link "Home" [ref=e43] [cursor=pointer]:
+                  - /url: /
+              - listitem [ref=e44]:
+                - link "Diensten" [ref=e45] [cursor=pointer]:
+                  - /url: /diensten
+              - listitem [ref=e46]:
+                - link "Wat kan het overnemen?" [ref=e47] [cursor=pointer]:
+                  - /url: /configurator
+              - listitem [ref=e48]:
+                - link "Cases" [ref=e49] [cursor=pointer]:
+                  - /url: /cases
+              - listitem [ref=e50]:
+                - link "Over mij" [ref=e51] [cursor=pointer]:
+                  - /url: /over
+              - listitem [ref=e52]:
+                - link "FAQ" [ref=e53] [cursor=pointer]:
+                  - /url: /faq
+              - listitem [ref=e54]:
+                - link "Contact" [ref=e55] [cursor=pointer]:
+                  - /url: /contact
+          - generic [ref=e56]:
+            - heading "Contact" [level=4] [ref=e57]
+            - list [ref=e58]:
+              - listitem [ref=e59]:
+                - link "wessel@loopless.nl" [ref=e60] [cursor=pointer]:
+                  - /url: mailto:wessel@loopless.nl
+              - listitem [ref=e61]:
+                - link "LinkedIn" [ref=e62] [cursor=pointer]:
+                  - /url: https://www.linkedin.com/in/wessel-broeders-250767221/
+      - paragraph [ref=e64]:
+        - text: "© 2026 Loopless — Broeders Digital | KVK: 42004729 |"
+        - link "Privacy" [ref=e65] [cursor=pointer]:
+          - /url: /privacy
+  - alert [ref=e66]

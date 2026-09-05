@@ -1,0 +1,217 @@
+- generic [active] [ref=e1]:
+  - banner [ref=e2]:
+    - generic [ref=e3]:
+      - link "LoopLess LoopLess" [ref=e4] [cursor=pointer]:
+        - /url: /
+        - generic [ref=e5]:
+          - img "LoopLess" [ref=e6]
+          - generic [ref=e7]: LoopLess
+      - navigation [ref=e8]:
+        - link "Home" [ref=e9] [cursor=pointer]:
+          - /url: /
+        - link "Diensten" [ref=e10] [cursor=pointer]:
+          - /url: /diensten
+        - link "Over mij" [ref=e11] [cursor=pointer]:
+          - /url: /over
+        - link "FAQ" [ref=e12] [cursor=pointer]:
+          - /url: /faq
+        - link "Contact" [ref=e13] [cursor=pointer]:
+          - /url: /contact
+        - link "Plan een gesprek" [ref=e14] [cursor=pointer]:
+          - /url: /contact
+  - main [ref=e15]:
+    - generic [ref=e16]:
+      - generic [ref=e23]:
+        - generic [ref=e24]: Doorbreek de loop van handmatig werk.
+        - heading "Laat je mensen doen waarvoor je ze hebt aangenomen." [level=1] [ref=e25]:
+          - generic [ref=e26]: Laat je mensen doen
+          - generic [ref=e27]: waarvoor je ze
+          - text: hebt aangenomen.
+        - paragraph [ref=e28]: "Je inkoper wil inkopen. Je binnendienst wil klanten helpen. Toch gaat hun dag op aan uitzoeken, overtypen en mail. Loopless bouwt systemen die dat werk op de achtergrond doen. Het resultaat: het werk komt af zonder extra mensen aan te nemen, en iedereen heeft weer tijd voor het werk dat er echt toe doet."
+        - generic [ref=e29]:
+          - link "Bekijk onze diensten" [ref=e30] [cursor=pointer]:
+            - /url: /diensten
+          - link "Plan een gesprek" [ref=e31] [cursor=pointer]:
+            - /url: /contact
+      - generic [ref=e33]:
+        - heading "Herken je dit?" [level=2] [ref=e35]
+        - generic [ref=e36]:
+          - generic [ref=e38]:
+            - generic [ref=e39]: "01"
+            - heading "Je beste mensen zijn uren kwijt aan uitzoeken" [level=3] [ref=e40]
+            - paragraph [ref=e41]: Mail doorspitten, Excel bijwerken, leveranciersdocs doorzoeken. Uren per week die niet naar hun vak gaan.
+          - generic [ref=e43]:
+            - generic [ref=e44]: "02"
+            - heading "De kennis zit in het hoofd van één iemand" [level=3] [ref=e45]
+            - paragraph [ref=e46]: Is die collega er niet, dan staat het stil. Vragen blijven liggen tot diegene terug is.
+          - generic [ref=e48]:
+            - generic [ref=e49]: "03"
+            - heading "Jij beantwoordt zelf nog elke lastige vraag" [level=3] [ref=e50]
+            - paragraph [ref=e51]: Terwijl je bedrijf jouw aandacht ergens anders nodig heeft. Ondernemen komt er niet meer van.
+    - generic [ref=e53]:
+      - heading "Wat is AI-automatisering voor het MKB?" [level=2] [ref=e55]
+      - generic [ref=e57]:
+        - paragraph [ref=e58]: Automatisering betekent bij ons niet dat een systeem je mensen vervangt. Het betekent dat het werk waarvoor je niemand hebt aangenomen alvast gedaan is. Een lead die gescreend klaarstaat. Een besteladvies met één knop. Een antwoord dat alleen nog gecontroleerd hoeft te worden.
+        - paragraph [ref=e59]: "Jouw mensen doen wat een systeem niet kan: beslissen, uitzonderingen zien, de klant kennen. En het bedrijf merkt het: er wordt meer werk verzet met hetzelfde team, omdat iedereen weer zijn vak doet."
+        - paragraph [ref=e60]: Wat we bouwen hangt af van waar bij jou tijd verloren gaat. Geen one-size-fits-all-tool, wel een systeem dat past op jouw schaal en jouw manier van werken.
+      - link "Bekijk wat we automatiseren" [ref=e62] [cursor=pointer]:
+        - /url: /diensten
+        - text: Bekijk wat we automatiseren
+        - img [ref=e63]
+    - generic [ref=e66]:
+      - generic [ref=e67]:
+        - heading "Onze aanpak" [level=2] [ref=e68]
+        - paragraph [ref=e69]: We beginnen bij jouw probleem, niet bij de technologie.
+      - generic [ref=e70]:
+        - generic [ref=e76]:
+          - generic [ref=e77]: "01"
+          - heading "Analyseren" [level=3] [ref=e78]
+          - paragraph [ref=e79]: We analyseren waar jouw team vastloopt
+        - generic [ref=e84]:
+          - generic [ref=e85]: "02"
+          - heading "Bouwen" [level=3] [ref=e86]
+          - paragraph [ref=e87]: We bouwen een oplossing op maat
+        - generic [ref=e92]:
+          - generic [ref=e93]: "03"
+          - heading "Draaien" [level=3] [ref=e94]
+          - paragraph [ref=e95]: Jouw processen lopen automatisch, zonder dat iemand er iets voor hoeft te doen.
+    - generic [ref=e99]:
+      - generic [ref=e100]:
+        - generic [ref=e101]:
+          - heading "Onze diensten" [level=2] [ref=e102]
+          - paragraph [ref=e103]: Elk proces dat handmatig draait, kan slimmer.
+        - link "Alle diensten bekijken" [ref=e104] [cursor=pointer]:
+          - /url: /diensten
+          - text: Alle diensten bekijken
+          - img [ref=e105]
+      - generic [ref=e107]:
+        - link "Lead Qualification Je team begint de ochtend met een gescreende leadlijst. De machine heeft gezocht, jouw mensen bellen. Meer info" [ref=e109] [cursor=pointer]:
+          - /url: /diensten
+          - generic [ref=e110]:
+            - img [ref=e112]
+            - heading "Lead Qualification" [level=3] [ref=e116]
+            - paragraph [ref=e117]: Je team begint de ochtend met een gescreende leadlijst. De machine heeft gezocht, jouw mensen bellen.
+            - generic [ref=e118]:
+              - text: Meer info
+              - img [ref=e119]
+        - link "Offerte-automatisering Het concept staat klaar, jij zet de kennis en de prijs erin. Uren opzoekwerk, minuten controle. Meer info" [ref=e122] [cursor=pointer]:
+          - /url: /diensten
+          - generic [ref=e123]:
+            - img [ref=e125]
+            - heading "Offerte-automatisering" [level=3] [ref=e128]
+            - paragraph [ref=e129]: Het concept staat klaar, jij zet de kennis en de prijs erin. Uren opzoekwerk, minuten controle.
+            - generic [ref=e130]:
+              - text: Meer info
+              - img [ref=e131]
+        - link "Interne kennisbank Alle kennis uit hoofden en documenten, opvraagbaar voor iedereen. Nieuwe mensen zijn sneller ingewerkt, de expert wordt niet meer voor alles gestoord. Meer info" [ref=e134] [cursor=pointer]:
+          - /url: /diensten
+          - generic [ref=e135]:
+            - img [ref=e137]
+            - heading "Interne kennisbank" [level=3] [ref=e139]
+            - paragraph [ref=e140]: Alle kennis uit hoofden en documenten, opvraagbaar voor iedereen. Nieuwe mensen zijn sneller ingewerkt, de expert wordt niet meer voor alles gestoord.
+            - generic [ref=e141]:
+              - text: Meer info
+              - img [ref=e142]
+        - link "Procesautomatisering Maatwerk voor het uitzoekwerk dat jouw team het meeste tijd kost. We beginnen bij de persoon die verzuipt, niet bij de tool. Meer info" [ref=e145] [cursor=pointer]:
+          - /url: /diensten
+          - generic [ref=e146]:
+            - img [ref=e148]
+            - heading "Procesautomatisering" [level=3] [ref=e159]
+            - paragraph [ref=e160]: Maatwerk voor het uitzoekwerk dat jouw team het meeste tijd kost. We beginnen bij de persoon die verzuipt, niet bij de tool.
+            - generic [ref=e161]:
+              - text: Meer info
+              - img [ref=e162]
+    - generic [ref=e165]:
+      - generic [ref=e166]:
+        - heading "Vervangt dit mijn mensen? Nee. Bewust niet." [level=2] [ref=e167]
+        - paragraph [ref=e168]: "Wij automatiseren het uitzoeken, niet het beslissen. Daar zijn drie redenen voor:"
+      - generic [ref=e169]:
+        - generic [ref=e171]:
+          - generic [ref=e172]: "01"
+          - generic [ref=e173]:
+            - heading "Je mensen zíjn je bedrijf" [level=3] [ref=e174]
+            - paragraph [ref=e175]: Hun kennis van klanten, leveranciers en uitzonderingen kan geen systeem vervangen. Die kennis wordt juist meer waard als het werk eromheen verdwijnt.
+        - generic [ref=e177]:
+          - generic [ref=e178]: "02"
+          - generic [ref=e179]:
+            - heading "Ook een slim systeem maakt fouten" [level=3] [ref=e180]
+            - paragraph [ref=e181]: Daarom gaat er bij ons niets ongecontroleerd de deur uit. Jouw mensen controleren, het systeem bereidt voor.
+        - generic [ref=e183]:
+          - generic [ref=e184]: "03"
+          - generic [ref=e185]:
+            - heading "Het werkt beter" [level=3] [ref=e186]
+            - paragraph [ref=e187]: Een team dat sneller wordt, werkt mee. Bij onze klanten beslist de inkoper nog steeds zelf. Ze doen alleen het werk eromheen niet meer.
+    - generic [ref=e192]:
+      - generic [ref=e193]:
+        - generic [ref=e194]: Case study
+        - heading "Bewezen resultaat" [level=2] [ref=e195]
+        - paragraph [ref=e196]: "Niet alleen mooie woorden: dit is wat we al hebben opgeleverd."
+      - generic [ref=e198]:
+        - generic [ref=e199]:
+          - link "vuljevacature.nl" [ref=e200] [cursor=pointer]:
+            - /url: https://vuljevacature.nl
+            - img "vuljevacature.nl" [ref=e201]
+          - generic [ref=e202]: Recruitment
+        - heading "Van uren zoekwerk naar gekwalificeerde leads elke ochtend" [level=3] [ref=e203]
+        - paragraph [ref=e204]: "Elke ochtend een lijst met relevante kandidaten klaar, zonder dat het team er iets voor hoeft te doen. De vrijgekomen tijd gaat naar waar het om draait: leads benaderen en vacatures vullen."
+        - generic [ref=e205]:
+          - generic [ref=e206]:
+            - generic [ref=e207]: ✓
+            - text: Uren per week bespaard
+          - generic [ref=e208]:
+            - generic [ref=e209]: ✓
+            - text: 24/7 automatisch actief
+          - generic [ref=e210]:
+            - generic [ref=e211]: ✓
+            - text: Team focust op klantcontact
+        - link "Ook tijd besparen?" [ref=e212] [cursor=pointer]:
+          - /url: /contact
+          - text: Ook tijd besparen?
+          - img [ref=e213]
+    - generic [ref=e218]:
+      - heading "Binnen 4 tot 6 weken draait er één proces dat je nu handmatig doet." [level=2] [ref=e219]
+      - paragraph [ref=e220]: Vaste prijs, duidelijke acceptatiecriteria vooraf. Werkt het niet zoals afgesproken, dan betaal je de laatste termijn niet.
+    - generic [ref=e227]:
+      - heading "Benieuwd waar de meeste winst zit in jouw processen?" [level=2] [ref=e228]
+      - paragraph [ref=e229]: Ontdek waar jouw team de meeste tijd terugwint. Plan een gratis gesprek, geheel vrijblijvend.
+      - link "Plan een gratis gesprek" [ref=e230] [cursor=pointer]:
+        - /url: /contact
+  - contentinfo [ref=e231]:
+    - generic [ref=e232]:
+      - generic [ref=e233]:
+        - generic [ref=e234]:
+          - link "LoopLess LoopLess" [ref=e235] [cursor=pointer]:
+            - /url: /
+            - generic [ref=e236]:
+              - img "LoopLess" [ref=e237]
+              - generic [ref=e238]: LoopLess
+          - paragraph [ref=e239]: Geen overbodige stappen. Alleen processen die werken.
+        - generic [ref=e240]:
+          - generic [ref=e241]:
+            - heading "Pagina's" [level=4] [ref=e242]
+            - list [ref=e243]:
+              - listitem [ref=e244]:
+                - link "Home" [ref=e245] [cursor=pointer]:
+                  - /url: /
+              - listitem [ref=e246]:
+                - link "Diensten" [ref=e247] [cursor=pointer]:
+                  - /url: /diensten
+              - listitem [ref=e248]:
+                - link "Over mij" [ref=e249] [cursor=pointer]:
+                  - /url: /over
+              - listitem [ref=e250]:
+                - link "Contact" [ref=e251] [cursor=pointer]:
+                  - /url: /contact
+          - generic [ref=e252]:
+            - heading "Contact" [level=4] [ref=e253]
+            - list [ref=e254]:
+              - listitem [ref=e255]:
+                - link "wessel@loopless.nl" [ref=e256] [cursor=pointer]:
+                  - /url: mailto:wessel@loopless.nl
+              - listitem [ref=e257]:
+                - link "LinkedIn" [ref=e258] [cursor=pointer]:
+                  - /url: https://www.linkedin.com/in/wessel-broeders-250767221/
+      - paragraph [ref=e260]: "© Loopless — Broeders Digital | KVK: 42004729"
+  - button "Open Next.js Dev Tools" [ref=e266] [cursor=pointer]:
+    - img [ref=e267]
+  - alert [ref=e270]

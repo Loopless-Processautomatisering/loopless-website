@@ -1,0 +1,5 @@
+Total messages: 3 (Errors: 3, Warnings: 0)
+
+[ERROR] The Content Security Policy directive 'upgrade-insecure-requests' is ignored when delivered in a report-only policy. @ http://localhost:3311/kennisbank/automatisering-mkb:0
+[ERROR] Failed to load resource: the server responded with a status of 404 (Not Found) @ http://localhost:3311/_vercel/insights/script.js:0
+[ERROR] Refused to execute script from 'http://localhost:3311/_vercel/insights/script.js' because its MIME type ('text/html') is not executable, and strict MIME type checking is enabled. @ http://localhost:3311/_next/static/chunks/744355e03808d4c7.js:0

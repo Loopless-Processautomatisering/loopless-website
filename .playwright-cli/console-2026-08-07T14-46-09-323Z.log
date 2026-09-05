@@ -1,0 +1,3 @@
+[     658ms] [ERROR] The Content Security Policy directive 'upgrade-insecure-requests' is ignored when delivered in a report-only policy. @ http://localhost:3111/:0
+[    1159ms] [ERROR] Failed to load resource: the server responded with a status of 500 (Internal Server Error) @ http://localhost:3111/_next/static/chunks/b7ba08ea243c38df.js:0
+[    1159ms] [ERROR] Refused to execute script from 'http://localhost:3111/_next/static/chunks/b7ba08ea243c38df.js' because its MIME type ('text/plain') is not executable, and strict MIME type checking is enabled. @ http://localhost:3111/:0

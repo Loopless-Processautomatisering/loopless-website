@@ -1,0 +1,261 @@
+- generic [active] [ref=e1]:
+  - banner [ref=e2]:
+    - generic [ref=e3]:
+      - link "LoopLess LoopLess" [ref=e4] [cursor=pointer]:
+        - /url: /
+        - generic [ref=e5]:
+          - img "LoopLess" [ref=e6]
+          - generic [ref=e7]: LoopLess
+      - navigation [ref=e8]:
+        - link "Home" [ref=e9] [cursor=pointer]:
+          - /url: /
+        - link "Diensten" [ref=e10] [cursor=pointer]:
+          - /url: /diensten
+        - link "Doe de zelfscan" [ref=e11] [cursor=pointer]:
+          - /url: /configurator
+        - link "Over mij" [ref=e12] [cursor=pointer]:
+          - /url: /over
+        - link "FAQ" [ref=e13] [cursor=pointer]:
+          - /url: /faq
+        - link "Contact" [ref=e14] [cursor=pointer]:
+          - /url: /contact
+        - link "Plan een gesprek" [ref=e15] [cursor=pointer]:
+          - /url: /contact
+  - main [ref=e16]:
+    - generic [ref=e18]:
+      - navigation "Kruimelpad" [ref=e20]:
+        - link "Kennisbank" [ref=e21] [cursor=pointer]:
+          - /url: /kennisbank
+      - 'heading "Automatisering in het MKB: waar je begint en wat het oplevert" [level=1] [ref=e23]'
+      - paragraph [ref=e25]: In elk bedrijf zit werk waar eigenlijk niemand voor is aangenomen. Opzoeken, overtypen, mail doorspitten, gegevens bij elkaar rapen. De vraag is niet of je dat kunt automatiseren, want dat kan tegenwoordig bijna altijd. De vraag is welk stuk je als eerste aanpakt, en waaraan je merkt of het de moeite waard was. Daar gaat dit stuk over.
+      - generic [ref=e27]:
+        - generic [ref=e28]: Kennisbank
+        - generic [ref=e29]: Leestijd ongeveer 9 minuten
+      - navigation "In dit artikel" [ref=e31]:
+        - heading "In dit artikel" [level=2] [ref=e32]
+        - list [ref=e33]:
+          - listitem [ref=e34]:
+            - link "01 Wat automatisering in het MKB wel en niet is" [ref=e35] [cursor=pointer]:
+              - /url: "#wat"
+              - generic [ref=e36]: "01"
+              - text: Wat automatisering in het MKB wel en niet is
+          - listitem [ref=e37]:
+            - link "02 Welk proces kies je als eerste" [ref=e38] [cursor=pointer]:
+              - /url: "#welk-proces"
+              - generic [ref=e39]: "02"
+              - text: Welk proces kies je als eerste
+          - listitem [ref=e40]:
+            - link "03 Hoe het er in de praktijk uitziet" [ref=e41] [cursor=pointer]:
+              - /url: "#praktijk"
+              - generic [ref=e42]: "03"
+              - text: Hoe het er in de praktijk uitziet
+          - listitem [ref=e43]:
+            - link "04 Van idee naar werkend, stap voor stap" [ref=e44] [cursor=pointer]:
+              - /url: "#stappen"
+              - generic [ref=e45]: "04"
+              - text: Van idee naar werkend, stap voor stap
+          - listitem [ref=e46]:
+            - link "05 Wat het kost en wat het oplevert" [ref=e47] [cursor=pointer]:
+              - /url: "#kosten"
+              - generic [ref=e48]: "05"
+              - text: Wat het kost en wat het oplevert
+          - listitem [ref=e49]:
+            - link "06 Waarom het misgaat" [ref=e50] [cursor=pointer]:
+              - /url: "#misgaat"
+              - generic [ref=e51]: "06"
+              - text: Waarom het misgaat
+          - listitem [ref=e52]:
+            - link "07 Zelf doen of uitbesteden" [ref=e53] [cursor=pointer]:
+              - /url: "#zelf-of-uitbesteden"
+              - generic [ref=e54]: "07"
+              - text: Zelf doen of uitbesteden
+          - listitem [ref=e55]:
+            - link "08 Veelgestelde vragen" [ref=e56] [cursor=pointer]:
+              - /url: "#vragen"
+              - generic [ref=e57]: "08"
+              - text: Veelgestelde vragen
+    - article [ref=e60]:
+      - generic [ref=e61]:
+        - heading "Wat automatisering in het MKB wel en niet is" [level=2] [ref=e62]
+        - paragraph [ref=e63]: Automatiseren betekent niet dat er een systeem komt dat jouw werk overneemt. Het betekent dat het uitzoekwerk eraf gaat en dat de beslissing bij jou blijft.
+        - paragraph [ref=e64]: "Dat onderscheid klinkt als een detail, maar het bepaalt of iets werkt. Neem een inkoper die elke week zijn artikellijst naloopt: voorraad checken, verbruik van eerdere periodes erbij pakken, inschatten wat er besteld moet worden. Het uitzoeken kost uren, de beslissing kost minuten. Als je die uren weghaalt en de minuten laat staan, is er niets veranderd aan wie er verantwoordelijk is. Er is alleen tijd overgebleven."
+        - paragraph [ref=e65]: "Waar het misgaat is bij bedrijven die het omgekeerde proberen: de beslissing wegautomatiseren. Dan krijg je een systeem dat bestellingen plaatst die niemand heeft nagekeken, of dat klanten mailt met een toon die niemand heeft gelezen. Dat werkt een paar weken en dan gaat het één keer goed mis, en daarna zet iedereen het uit."
+        - paragraph [ref=e66]:
+          - strong [ref=e67]: "De vuistregel die wij aanhouden: het systeem doet het zoekwerk, de mens doet de keuze."
+          - text: Niet omdat techniek de keuze niet aankan, maar omdat een keuze die niemand meer nakijkt, ook niemand meer kan bijsturen. En bijsturen is precies wat je in een MKB-bedrijf de hele dag doet.
+        - paragraph [ref=e68]: "Wat er dus niet in dit verhaal thuishoort: mensen vervangen. Wat er wel in thuishoort: mensen weer laten doen waarvoor je ze hebt aangenomen."
+      - generic [ref=e69]:
+        - heading "Welk proces kies je als eerste" [level=2] [ref=e70]
+        - paragraph [ref=e71]: Dit is de vraag waar de meeste bedrijven op vastlopen, en meestal niet omdat er te weinig kandidaten zijn maar omdat er te veel zijn.
+        - paragraph [ref=e72]: Er zijn drie kenmerken die samen een goed eerste proces aanwijzen.
+        - paragraph [ref=e73]:
+          - strong [ref=e74]: Het komt terug.
+          - text: Iets dat één keer per jaar gebeurt, is het niet waard om in te richten, hoe vervelend het ook is. Iets dat elke dag of elke week gebeurt wel, ook als het per keer maar een half uur kost. Reken het eens uit over een jaar; dat getal verrast bijna iedereen.
+        - paragraph [ref=e75]:
+          - strong [ref=e76]: Er zitten vaste regels in.
+          - text: Als je aan de persoon die het doet kunt vragen “hoe bepaal je dat?” en er komt een antwoord dat je kunt opschrijven, dan is het geschikt. Komt er “dat voel je gewoon na twintig jaar”, dan is het dat niet, of in elk geval nog niet.
+        - paragraph [ref=e77]:
+          - strong [ref=e78]: Het uitzoeken kost meer tijd dan het beslissen.
+          - text: Dit is het belangrijkste van de drie en het wordt het vaakst overgeslagen. Als iemand tien minuten zoekt en vervolgens twee minuten nadenkt, valt er veel te winnen. Als hij één minuut zoekt en daarna een halfuur zit te wikken, dan zit het probleem ergens anders en gaat automatiseren het niet oplossen.
+        - paragraph [ref=e79]: "Een praktische manier om dit boven tafel te krijgen: vraag je mensen niet wat er geautomatiseerd zou moeten worden. Die vraag levert wensen op. Vraag ze waar hun dag aan opgaat, en vooral welk deel van hun werk ze zouden overslaan als ze mochten. Daar zit het antwoord meestal binnen tien minuten."
+        - paragraph [ref=e80]: "Wat je aan het begin niet moet doen: het grootste of het meest zichtbare proces kiezen. Het eerste project is er om te leren of het bij jou werkt en of je mensen het vertrouwen. Kies iets dat groot genoeg is om verschil te maken en klein genoeg om binnen enkele weken te draaien."
+      - generic [ref=e81]:
+        - heading "Hoe het er in de praktijk uitziet" [level=2] [ref=e82]
+        - paragraph [ref=e83]: Twee voorbeelden uit ons eigen werk, allebei bij een bedrijf dat er niet naar op zoek was maar er wel elke dag last van had.
+        - generic [ref=e84]:
+          - generic [ref=e85]:
+            - heading "Een recruitmentbedrijf" [level=3] [ref=e86]
+            - paragraph [ref=e87]:
+              - generic [ref=e88]: Ervoor
+              - text: "Het team deed het voorwerk zelf: bedrijven opzoeken, beoordelen of er iets te halen viel, gegevens overtypen. Werk dat af moest zijn voordat er überhaupt iemand gebeld kon worden. Het gevolg was dat de ochtend opging aan voorbereiding en het bellen, waar ze goed in zijn, pas daarna begon."
+            - paragraph [ref=e89]:
+              - generic [ref=e90]: Erna
+              - text: Nu staat de lijst elke ochtend klaar met wie de moeite waard is. Het team begint de dag met bellen in plaats van met zoeken. Wie er benaderd wordt bepalen ze nog steeds zelf, en het systeem draait door ook als er niemand naar kijkt.
+          - generic [ref=e91]:
+            - heading "Een groothandel" [level=3] [ref=e92]
+            - paragraph [ref=e93]:
+              - generic [ref=e94]: Ervoor
+              - text: "De inkopers liepen hun lijst artikel voor artikel na: voorraad checken, verbruik van eerdere periodes erbij pakken, inschatten wat er besteld moest worden. Uitzoekwerk dat elke keer terugkwam en dat elke keer hetzelfde was."
+            - paragraph [ref=e95]:
+              - generic [ref=e96]: Erna
+              - text: "Nu staat het besteladvies met één knop klaar: wat urgent is, wat er in voorraad ligt, wat eruit gaat. De inkopers kijken het na, passen aan waar ze het beter weten, en bestellen. De cijfers komen uit hun eigen systeem en niet uit een schatting."
+        - paragraph [ref=e97]: "Wat deze twee gemeen hebben is niet de techniek, want die is totaal verschillend. Wat ze gemeen hebben is de vorm: het zoekwerk is eraf gegaan, de beslissing is gebleven waar hij was, en de mensen die het werk doen zijn er beter van geworden in plaats van overbodig."
+        - paragraph [ref=e98]: Bij elk bedrijf zit dat werk ergens anders. Maar het is er, en je mensen weten precies waar.
+        - link "Bekijk beide cases uitgebreider" [ref=e99] [cursor=pointer]:
+          - /url: /cases
+          - text: Bekijk beide cases uitgebreider
+          - img [ref=e100]
+      - generic [ref=e102]:
+        - heading "Van idee naar werkend, stap voor stap" [level=2] [ref=e103]
+        - paragraph [ref=e104]:
+          - strong [ref=e105]: Begin met meten wat het nu kost.
+          - text: "Niet op gevoel maar met een getal: hoeveel keer per week gebeurt het, hoe lang duurt het, hoeveel mensen zijn ermee bezig. Dit kost een middag en het is de stap die het vaakst wordt overgeslagen. Zonder dit getal kun je achteraf nooit hard maken of het iets heeft opgeleverd, en dan blijft het een gevoel."
+        - paragraph [ref=e106]:
+          - strong [ref=e107]: Bouw de kleinste versie die echt werkt.
+          - text: "Niet een demo en niet een proefopstelling, maar iets dat één stuk van het echte werk doet met echte gegevens. Liever één proces dat af is dan vijf die half staan. De reden is niet zuinigheid: een half werkend systeem kost meer vertrouwen dan het oplevert, want je mensen moeten het nakijken én zelf nog doen."
+        - paragraph [ref=e108]:
+          - strong [ref=e109]: Laat het meelopen naast de oude manier.
+          - text: Twee tot vier weken, met de mensen die het werk normaal doen. Zij zien binnen een week wat er niet klopt en dat is precies wat je wilt weten. In deze fase hoort het systeem fouten te maken; als het er geen maakt, kijkt er waarschijnlijk niemand goed genoeg.
+        - paragraph [ref=e110]:
+          - strong [ref=e111]: Beslis daarna pas.
+          - text: Werkt het, dan zet je de oude manier uit. Werkt het niet, dan stop je ermee, en dat is een geldige uitkomst. Een pilot die eerlijk op nee eindigt heeft je meer opgeleverd dan een pilot die uit beleefdheid doorgaat.
+        - paragraph [ref=e112]:
+          - strong [ref=e113]: Pas dan het volgende proces.
+          - text: Niet eerder, hoe verleidelijk het ook is. Het tweede proces gaat sneller dan het eerste omdat de koppelingen er al liggen en omdat je mensen inmiddels weten wat ze kunnen verwachten.
+        - paragraph [ref=e114]: "Wat in elke stap meegaat: wie er verantwoordelijk blijft, en wat er gebeurt als het systeem eruit ligt. Dat laatste klinkt somber maar het is de vraag die het verschil maakt tussen iets waar een bedrijf op durft te leunen en iets dat na de eerste storing wordt uitgezet."
+      - generic [ref=e115]:
+        - heading "Wat het kost en wat het oplevert" [level=2] [ref=e116]
+        - paragraph [ref=e117]: "Eerlijk antwoord: dat hangt af van hoe je gegevens erbij liggen, en veel minder van hoe ingewikkeld het proces zelf is."
+        - paragraph [ref=e118]: Een proces met vaste regels waarvan de gegevens netjes in één systeem staan, is in enkele weken te bouwen. Hetzelfde proces waarbij de informatie over vier plekken verspreid staat, waarvan er één een gedeelde map met spreadsheets is, kost een veelvoud. Niet vanwege de automatisering maar vanwege het opruimen dat eraan voorafgaat. Dat opruimen had trouwens sowieso moeten gebeuren.
+        - paragraph [ref=e119]: Aan de opbrengstkant is de rekensom simpeler dan bedrijven denken, mits je die nulmeting hebt gedaan. Uren maal weken maal uurloon, en dan de vraag wat die uren nu doen. Dat laatste bepaalt of het echt oplevert. Tijd die vrijkomt en in ander uitzoekwerk verdwijnt, levert niets op. Tijd die naar klanten gaat of naar werk waar je mensen voor zijn aangenomen, wel.
+        - paragraph [ref=e120]: "Waar wij zelf op sturen: het moet binnen een jaar terugverdiend zijn. Lukt dat niet op papier vooraf, dan is het het verkeerde eerste proces en zoeken we een ander."
+        - paragraph [ref=e121]: "Wat er niet in de rekensom hoort, hoe vaak het ook zo verkocht wordt: besparing op mensen. Als dat je doel is, is dit het verkeerde verhaal en waarschijnlijk ook de verkeerde partij."
+      - generic [ref=e122]:
+        - heading "Waarom het misgaat" [level=2] [ref=e123]
+        - paragraph [ref=e124]:
+          - strong [ref=e125]: Er is begonnen bij de techniek.
+          - text: Iemand ziet iets werken bij een ander bedrijf en wil dat ook. Dan is het gereedschap gekozen voordat het probleem is opgeschreven, en gaat de rest van het project over de vraag welk probleem er bij het gereedschap past. Begin bij het probleem, kies daarna pas waarmee.
+        - paragraph [ref=e126]:
+          - strong [ref=e127]: Het is te groot begonnen.
+          - text: Het proces dat de meeste tijd kost is bijna nooit het proces waarmee je moet beginnen, want dat is meestal ook het proces met de meeste uitzonderingen.
+        - paragraph [ref=e128]:
+          - strong [ref=e129]: De mensen die het werk doen zijn er niet bij betrokken.
+          - text: Zij weten waar de uitzonderingen zitten. Worden ze pas bij de oplevering gevraagd, dan komen die uitzonderingen alsnog, alleen dan als reden om het niet te gebruiken.
+        - paragraph [ref=e130]:
+          - strong [ref=e131]: Niemand heeft de nulmeting gedaan.
+          - text: Achteraf is de vraag “heeft het geholpen” dan niet te beantwoorden, en wat je niet kunt aantonen ga je ook niet uitbreiden.
+        - paragraph [ref=e132]:
+          - strong [ref=e133]: Er is niet nagedacht over wat er misgaat.
+          - text: Elk systeem ligt er een keer uit. Als niemand weet wat er dan gebeurt, wordt de eerste storing het einde.
+      - generic [ref=e134]:
+        - heading "Zelf doen of uitbesteden" [level=2] [ref=e135]
+        - paragraph [ref=e136]: Zelf doen kan prima, en vaker dan partijen zoals wij toegeven. Zit er iemand in je bedrijf die handig is met systemen, heeft die er tijd voor, en is het proces overzichtelijk? Begin dan zelf. Je leert er meer van dan van welke uitleg ook, en je weet daarna veel beter wat je aan een ander zou moeten vragen.
+        - paragraph [ref=e137]: Waar het zelf doen meestal spaak loopt is niet bij het bouwen maar bij het onderhouden. Het is gebouwd door één iemand, in zijn eigen tijd, zonder dat iemand anders weet hoe het in elkaar zit. Als die persoon vertrekt of het te druk krijgt, blijft er iets achter waar niemand aankomt.
+        - paragraph [ref=e138]: "De vragen die de keuze bepalen: is het straks nog te veranderen door iemand anders dan de bouwer, staat er beschreven wat het doet, en wie kijkt ernaar als het misgaat. Kun je die drie beantwoorden, dan is zelf doen een goede keuze. Kun je dat niet, dan koop je met uitbesteden vooral dat."
+      - heading "Veelgestelde vragen" [level=2] [ref=e139]
+      - generic [ref=e140]:
+        - generic [ref=e141]:
+          - heading "Hoe lang duurt zo'n eerste project?" [level=3] [ref=e142]
+          - paragraph [ref=e143]: "Voor een afgebakend proces waarvan de gegevens beschikbaar zijn: enkele weken tot ongeveer anderhalve maand, inclusief de periode dat het meeloopt naast de oude manier. Duurt het veel langer, dan is het waarschijnlijk te groot ingestoken."
+        - generic [ref=e144]:
+          - heading "Moeten wij eerst nieuwe software aanschaffen?" [level=3] [ref=e145]
+          - paragraph [ref=e146]: Meestal niet. In de meeste gevallen werkt het met de systemen die er al staan. Het aanschaffen van iets nieuws is een aparte beslissing en die zou niet uit een automatiseringsproject moeten voortkomen.
+        - generic [ref=e147]:
+          - heading "Wat als onze gegevens een rommeltje zijn?" [level=3] [ref=e148]
+          - paragraph [ref=e149]: Dan begin je daar, en dat is geen verloren tijd. Ordelijke gegevens zijn de voorwaarde voor bijna alles wat daarna komt, ook voor dingen die niets met automatiseren te maken hebben.
+        - generic [ref=e150]:
+          - heading "Verliezen wij de controle?" [level=3] [ref=e151]
+          - paragraph [ref=e152]: Nee, en dat is geen geruststelling maar een ontwerpkeuze. Het systeem doet het zoekwerk en legt het resultaat voor. Wie beslist, blijft beslissen.
+        - generic [ref=e153]:
+          - heading "Wij zijn maar met acht man. Is dit iets voor ons?" [level=3] [ref=e154]
+          - paragraph [ref=e155]: Juist wel. In een klein bedrijf komt het uitzoekwerk terecht bij de mensen die het minst gemist kunnen worden, vaak de eigenaar zelf. Het verschil is daar per persoon groter, niet kleiner.
+        - generic [ref=e156]:
+          - heading "Kunnen we ergens beginnen zonder meteen een traject in te gaan?" [level=3] [ref=e157]
+          - paragraph [ref=e158]: Ja. Neem één proces, meet een week lang hoeveel tijd het kost, en schrijf op hoe de beslissing wordt genomen. Met die twee dingen kun je zelf al beoordelen of het de moeite waard is, ongeacht met wie je verder gaat.
+    - generic [ref=e162]:
+      - generic [ref=e164]:
+        - heading "Welk uitzoekwerk zit er bij jou?" [level=2] [ref=e165]
+        - paragraph [ref=e166]: Weet je al waar het bij jou blijft hangen, plan dan een gesprek. Weet je het nog niet precies, doe dan eerst de zelfscan. Die loopt langs de plekken waar dit werk zich meestal ophoopt en geeft aan waar bij jou de meeste tijd in gaat zitten.
+        - generic [ref=e167]:
+          - link "Plan een gesprek" [ref=e168] [cursor=pointer]:
+            - /url: /contact
+            - text: Plan een gesprek
+            - img [ref=e169]
+          - link "Doe de zelfscan" [ref=e171] [cursor=pointer]:
+            - /url: /configurator
+      - link "Terug naar de kennisbank" [ref=e172] [cursor=pointer]:
+        - /url: /kennisbank
+        - img [ref=e173]
+        - text: Terug naar de kennisbank
+  - contentinfo [ref=e175]:
+    - generic [ref=e176]:
+      - generic [ref=e177]:
+        - generic [ref=e178]:
+          - link "LoopLess LoopLess" [ref=e179] [cursor=pointer]:
+            - /url: /
+            - generic [ref=e180]:
+              - img "LoopLess" [ref=e181]
+              - generic [ref=e182]: LoopLess
+          - paragraph [ref=e183]: Geen overbodige stappen. Alleen processen die werken.
+        - generic [ref=e184]:
+          - generic [ref=e185]:
+            - heading "Pagina's" [level=4] [ref=e186]
+            - list [ref=e187]:
+              - listitem [ref=e188]:
+                - link "Home" [ref=e189] [cursor=pointer]:
+                  - /url: /
+              - listitem [ref=e190]:
+                - link "Diensten" [ref=e191] [cursor=pointer]:
+                  - /url: /diensten
+              - listitem [ref=e192]:
+                - link "Doe de zelfscan" [ref=e193] [cursor=pointer]:
+                  - /url: /configurator
+              - listitem [ref=e194]:
+                - link "Cases" [ref=e195] [cursor=pointer]:
+                  - /url: /cases
+              - listitem [ref=e196]:
+                - link "Kennisbank" [ref=e197] [cursor=pointer]:
+                  - /url: /kennisbank
+              - listitem [ref=e198]:
+                - link "Over mij" [ref=e199] [cursor=pointer]:
+                  - /url: /over
+              - listitem [ref=e200]:
+                - link "FAQ" [ref=e201] [cursor=pointer]:
+                  - /url: /faq
+              - listitem [ref=e202]:
+                - link "Contact" [ref=e203] [cursor=pointer]:
+                  - /url: /contact
+          - generic [ref=e204]:
+            - heading "Contact" [level=4] [ref=e205]
+            - list [ref=e206]:
+              - listitem [ref=e207]:
+                - link "wessel@loopless.nl" [ref=e208] [cursor=pointer]:
+                  - /url: mailto:wessel@loopless.nl
+              - listitem [ref=e209]:
+                - link "LinkedIn" [ref=e210] [cursor=pointer]:
+                  - /url: https://www.linkedin.com/in/wessel-broeders-250767221/
+      - paragraph [ref=e212]:
+        - text: "© 2026 Loopless — Broeders Digital | KVK: 42004729 |"
+        - link "Privacy" [ref=e213] [cursor=pointer]:
+          - /url: /privacy
+  - alert [ref=e214]
