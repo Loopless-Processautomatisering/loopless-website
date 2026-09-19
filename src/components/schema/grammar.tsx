@@ -22,6 +22,7 @@ export function Node({
   label,
   accent = false,
   muted = false,
+  rx = 14,
 }: {
   x: number;
   y: number;
@@ -30,6 +31,8 @@ export function Node({
   label: string[];
   accent?: boolean;
   muted?: boolean;
+  /** Ronding. 14 = zacht (standaard), 2 = strak technisch. */
+  rx?: number;
 }) {
   const stroke = accent ? "var(--color-accent)" : muted ? "var(--color-rule-strong)" : "var(--color-ink)";
   const fill = accent ? "var(--color-accent-wash)" : "transparent";
@@ -44,7 +47,7 @@ export function Node({
         y={y}
         width={w}
         height={h}
-        rx={2}
+        rx={rx}
         fill={fill}
         stroke={stroke}
         strokeWidth={accent ? 1.5 : 1}
@@ -71,26 +74,53 @@ export function Arrow({
   from,
   to,
   accent = false,
+  bocht = 0,
 }: {
   from: [number, number];
   to: [number, number];
   accent?: boolean;
+  /** Zijwaartse doorbuiging in px. 0 = kaarsrecht, 6-14 = los. */
+  bocht?: number;
 }) {
   const stroke = accent ? "var(--color-accent)" : "var(--color-rule-strong)";
   const [x1, y1] = from;
   const [x2, y2] = to;
   const horizontal = Math.abs(x2 - x1) > Math.abs(y2 - y1);
   const dir = horizontal ? Math.sign(x2 - x1) : Math.sign(y2 - y1);
-  const head = 4.5;
+  const head = 5;
 
   const headPath = horizontal
     ? `M ${x2 - dir * head} ${y2 - head} L ${x2} ${y2} L ${x2 - dir * head} ${y2 + head}`
     : `M ${x2 - head} ${y2 - dir * head} L ${x2} ${y2} L ${x2 + head} ${y2 - dir * head}`;
 
+  // Controlepunt haaks op de looprichting: dat geeft een vloeiende boog in
+  // plaats van een rechte lijn, zonder dat de richting onduidelijk wordt.
+  const mx = (x1 + x2) / 2;
+  const my = (y1 + y2) / 2;
+  const cx = horizontal ? mx : mx + bocht;
+  const cy = horizontal ? my - bocht : my;
+
+  const lijn = bocht
+    ? `M ${x1} ${y1} Q ${cx} ${cy} ${x2} ${y2}`
+    : `M ${x1} ${y1} L ${x2} ${y2}`;
+
   return (
     <g>
-      <line x1={x1} y1={y1} x2={x2} y2={y2} stroke={stroke} strokeWidth={1} />
-      <path d={headPath} fill="none" stroke={stroke} strokeWidth={1} strokeLinecap="round" />
+      <path
+        d={lijn}
+        fill="none"
+        stroke={stroke}
+        strokeWidth={1.25}
+        strokeLinecap="round"
+      />
+      <path
+        d={headPath}
+        fill="none"
+        stroke={stroke}
+        strokeWidth={1.25}
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
     </g>
   );
 }

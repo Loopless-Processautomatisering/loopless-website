@@ -38,11 +38,11 @@ function KetenBreed({ k, extra }: { k: Keten; extra?: boolean }) {
         </Item>
       ))}
 
-      <Arrow from={[130, midY]} to={[172, midY]} />
+      <Arrow from={[130, midY]} to={[172, midY]} bocht={7} />
       <Node x={182} y={midY - 28} w={160} h={56} label={k.midden} />
-      <Arrow from={[342, midY]} to={[384, midY]} accent />
+      <Arrow from={[342, midY]} to={[384, midY]} accent bocht={7} />
       <Node x={394} y={midY - 36} w={166} h={72} accent label={k.beslissing} />
-      <Arrow from={[560, midY]} to={[602, midY]} />
+      <Arrow from={[560, midY]} to={[602, midY]} bocht={7} />
 
       <Item x={612} y={midY - 40}>{k.uitkomstLabel ?? "resultaat"}</Item>
       {k.uitkomsten.map((u, i) => (
@@ -54,18 +54,20 @@ function KetenBreed({ k, extra }: { k: Keten; extra?: boolean }) {
       {extra && (
         <>
           <path
-            d={`M 477 ${midY + 36} L 477 ${midY + 92} L 262 ${midY + 92} L 262 ${midY + 28}`}
+            d={`M 477 ${midY + 36} C 477 ${midY + 104}, 262 ${midY + 104}, 262 ${midY + 30}`}
             fill="none"
             stroke="var(--color-rule-strong)"
-            strokeWidth={1}
-            strokeDasharray="3 3"
+            strokeWidth={1.25}
+            strokeDasharray="4 4"
+            strokeLinecap="round"
           />
           <path
-            d={`M 257.5 ${midY + 32.5} L 262 ${midY + 28} L 266.5 ${midY + 32.5}`}
+            d={`M 257.5 ${midY + 35} L 262 ${midY + 29} L 266.5 ${midY + 35}`}
             fill="none"
             stroke="var(--color-rule-strong)"
-            strokeWidth={1}
+            strokeWidth={1.25}
             strokeLinecap="round"
+            strokeLinejoin="round"
           />
           <text
             x={369}
@@ -125,11 +127,11 @@ function KetenSmal({ k }: { k: Keten }) {
         </text>
       ))}
 
-      <Arrow from={[W / 2, yBronnen + bronnenH + 4]} to={[W / 2, yMidden - 8]} />
+      <Arrow from={[W / 2, yBronnen + bronnenH + 4]} to={[W / 2, yMidden - 8]} bocht={8} />
       <Node x={x} y={yMidden} w={nodeW} h={56} label={k.midden} />
-      <Arrow from={[W / 2, yMidden + 60]} to={[W / 2, yBeslissing - 8]} accent />
+      <Arrow from={[W / 2, yMidden + 60]} to={[W / 2, yBeslissing - 8]} accent bocht={8} />
       <Node x={x} y={yBeslissing} w={nodeW} h={76} accent label={k.beslissing} />
-      <Arrow from={[W / 2, yBeslissing + 80]} to={[W / 2, yUitkomst - 8]} />
+      <Arrow from={[W / 2, yBeslissing + 80]} to={[W / 2, yUitkomst - 8]} bocht={8} />
 
       <text
         x={W / 2}
@@ -314,7 +316,7 @@ export function SchemaVoorNa({
                   y={rowY[rij]}
                   width={w}
                   height={46}
-                  rx={2}
+                  rx={10}
                   fill={isBeslissing ? "var(--color-accent-wash)" : "transparent"}
                   stroke={
                     isBeslissing
@@ -393,7 +395,7 @@ export function SchemaVoorNa({
               y={y}
               width={kolW}
               height={34}
-              rx={2}
+              rx={10}
               fill="transparent"
               stroke="var(--color-ink)"
               strokeWidth={1}
@@ -413,7 +415,7 @@ export function SchemaVoorNa({
               y={y}
               width={kolW}
               height={34}
-              rx={2}
+              rx={10}
               fill={isBeslissing ? "var(--color-accent-wash)" : "transparent"}
               stroke={
                 isBeslissing
@@ -500,11 +502,11 @@ export function SchemaLoopHero({ className }: { className?: string }) {
         het uitzoekwerk
       </text>
 
-      <Arrow from={[W / 2, 30]} to={[W / 2, 58]} />
+      <Arrow from={[W / 2, 30]} to={[W / 2, 58]} bocht={9} />
 
       <Node x={x} y={70} w={nodeW} h={58} label={["systeem zoekt uit", "en zet klaar"]} />
 
-      <Arrow from={[W / 2, 132]} to={[W / 2, 160]} accent />
+      <Arrow from={[W / 2, 132]} to={[W / 2, 160]} accent bocht={9} />
 
       <Node
         x={x}
@@ -515,7 +517,7 @@ export function SchemaLoopHero({ className }: { className?: string }) {
         label={["jouw mensen", "controleren en beslissen"]}
       />
 
-      <Arrow from={[W / 2, 254]} to={[W / 2, 282]} />
+      <Arrow from={[W / 2, 254]} to={[W / 2, 282]} bocht={9} />
 
       <text
         x={W / 2}
@@ -530,18 +532,20 @@ export function SchemaLoopHero({ className }: { className?: string }) {
 
       {/* De terugkoppeling: de loop uit de merknaam. */}
       <path
-        d={`M ${x + nodeW + 14} 211 L ${x + nodeW + 34} 211 L ${x + nodeW + 34} 99 L ${x + nodeW + 14} 99`}
+        d={`M ${x + nodeW + 10} 211 C ${x + nodeW + 68} 211, ${x + nodeW + 68} 99, ${x + nodeW + 12} 99`}
         fill="none"
         stroke="var(--color-rule-strong)"
-        strokeWidth={1}
-        strokeDasharray="3 3"
+        strokeWidth={1.25}
+        strokeDasharray="4 4"
+        strokeLinecap="round"
       />
       <path
-        d={`M ${x + nodeW + 18.5} 94.5 L ${x + nodeW + 14} 99 L ${x + nodeW + 18.5} 103.5`}
+        d={`M ${x + nodeW + 17} 94 L ${x + nodeW + 11} 99 L ${x + nodeW + 17} 104`}
         fill="none"
         stroke="var(--color-rule-strong)"
-        strokeWidth={1}
+        strokeWidth={1.25}
         strokeLinecap="round"
+        strokeLinejoin="round"
       />
       <text
         x={W / 2}

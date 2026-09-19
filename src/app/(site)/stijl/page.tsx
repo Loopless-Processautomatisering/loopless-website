@@ -11,6 +11,7 @@ import {
   TextLink,
 } from "@/components/ds";
 import { Figure } from "@/components/schema/grammar";
+import { LoopCirkel, LoopBalk, LoopLijst } from "@/components/schema/loop";
 import {
   SchemaLoop,
   SchemaLoopHero,
@@ -48,7 +49,7 @@ function HeroProef({ variant }: { variant: "a" | "b" }) {
           ? "Newsreader + IBM Plex Sans"
           : "Schibsted Grotesk"}
       </p>
-      <div className="grid gap-10 md:grid-cols-[1fr_1fr] md:items-center">
+      <div className="grid gap-10 md:grid-cols-[minmax(0,1fr)_minmax(0,1.15fr)] md:items-center">
         <div>
           <Eyebrow>Doorbreek de loop van handmatig werk</Eyebrow>
           <h1 className="text-display font-medium leading-[1.04] tracking-tight">
@@ -66,7 +67,10 @@ function HeroProef({ variant }: { variant: "a" | "b" }) {
             <TextLink href="/configurator">Kijk wat er bij jou kan</TextLink>
           </div>
         </div>
-        <SchemaLoopHero className="mx-auto max-w-[24rem]" />
+        <div>
+          <LoopCirkel actief="probleem" className="hidden md:block" />
+          <LoopLijst actief="probleem" className="md:hidden" />
+        </div>
       </div>
     </div>
   );
@@ -121,7 +125,37 @@ export default function StijlPage() {
       </div>
 
       {/* ------------------------------------------------------------------ */}
-      <Kop>3 — Schema&apos;s: het beeldmerk</Kop>
+      <Kop>3 — De site als loop</Kop>
+      <p className="mb-8 max-w-prose text-ink-2">
+        Het idee: de site is niet een stapel pagina&apos;s maar één kringloop, en elke pagina
+        is er een stap in. Je ziet altijd waar je bent en wat ervoor en erna komt. Hieronder
+        drie manieren om dat te tonen — ze sluiten elkaar niet uit.
+      </p>
+
+      <div className="grid gap-12 md:grid-cols-2 md:items-center">
+        <Figure caption="In de hero: de loop als cirkel, met de huidige stap gemarkeerd. Hier staat 'Diensten' aan.">
+          <LoopCirkel actief="probleem" />
+        </Figure>
+        <Figure caption="Op een dienstpagina: dezelfde cirkel, andere stap actief. Het beeld verandert niet, je positie erin wel.">
+          <LoopCirkel actief="beslissen" />
+        </Figure>
+      </div>
+
+      <div className="mt-12 border-y border-rule py-6">
+        <p className="mb-4 font-mono text-label text-ink-3">
+          Als balk — past onder de masthead of onderaan elke pagina
+        </p>
+        <LoopBalk actief="uitzoeken" />
+      </div>
+
+      <p className="mt-6 max-w-prose text-meta text-ink-3">
+        Waar dit op let: de gewone navigatie moet blijven werken. De loop komt erbij als
+        oriëntatie, niet in plaats van een menu — anders moet een bezoeker een metafoor
+        snappen voordat hij bij je contactpagina komt.
+      </p>
+
+      {/* ------------------------------------------------------------------ */}
+      <Kop>4 — Schema&apos;s: het beeldmerk</Kop>
       <p className="mb-8 max-w-prose text-ink-2">
         Geen stockbeeld en geen icoontjesgrid. Zes tekeningen in één taal, die allemaal
         hetzelfde zeggen: het systeem zoekt uit, jouw mensen beslissen. In de hero staat
@@ -155,7 +189,7 @@ export default function StijlPage() {
       </div>
 
       {/* ------------------------------------------------------------------ */}
-      <Kop>4 — Tekstprimitieven</Kop>
+      <Kop>5 — Tekstprimitieven</Kop>
       <div className="grid gap-12 md:grid-cols-2">
         <div>
           <p className="mb-4 font-mono text-label text-ink-3">NumberedList (vervangt de kaarten)</p>
@@ -208,7 +242,7 @@ export default function StijlPage() {
       </div>
 
       {/* ------------------------------------------------------------------ */}
-      <Kop>5 — Interactie</Kop>
+      <Kop>6 — Interactie</Kop>
       <p className="mb-6 max-w-prose text-ink-2">
         De hele interactietaal van de site: kleur verandert, niets beweegt. Geen hover-lift,
         geen schaduw, geen glow.
