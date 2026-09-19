@@ -1,0 +1,35 @@
+name: Build-check
+
+# Toegevoegd bij het herontwerp (2026-09-19). Vóór die datum draaide er alleen een
+# manifest-structuurcheck: geen install, geen lint, geen tsc, geen build. Een kapotte
+# wijziging kon dus groen door CI, en `npm run lint` faalde op dat moment al met drie
+# errors zonder dat iemand het zag.
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - run: npm ci
+
+      - name: Types
+        run: npx tsc --noEmit
+
+      - name: Lint
+        run: npm run lint
+
+      - name: Geen losse kleuren buiten het design system
+        run: npm run check:kleuren
+
+      - name: Build
+        run: npm run build

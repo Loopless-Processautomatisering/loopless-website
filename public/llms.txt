@@ -1,25 +1,44 @@
 # Loopless: AI-automatisering voor het MKB
 
-> Loopless (Broeders Digital) bouwt op maat AI-automatisering voor Nederlandse MKB-bedrijven.
-> Gespecialiseerd in lead qualification, offerte-automatisering en interne kennisbanken (RAG).
+> Loopless (Broeders Digital) bouwt op maat automatisering voor Nederlandse MKB-bedrijven.
+> Het uitgangspunt: automatiseer het uitzoekwerk, niet het beslissen. Mensen houden de beslissing,
+> het systeem bereidt voor.
 > Eigenaar: Wessel Broeders. Gevestigd in Tiel, actief vanuit Tiel en Breda.
 
 ## Diensten
 - [Diensten overzicht](https://loopless.nl/diensten)
+- Besteladvies en inkoop-uitzoekwerk — voor groothandels en technische handel waar inkopers dagelijks prijzen, voorraad en levertijden bij elkaar zoeken
+- Leads uitzoeken — voor recruitmentbureaus en salesteams
+- Offertes klaarzetten — voor bedrijven die projectoffertes opstellen met vaste tarieven
+- Vragen beantwoorden uit eigen documentatie — voor bedrijven met veel interne handleidingen en procedures
+- Maatwerk — als het proces nergens onder valt
+
+## Cases
 - [Bewezen cases](https://loopless.nl/cases)
+
+Drabor (groothandel): de inkopers liepen hun voorraadlijst artikel voor artikel na. Nu vragen ze
+met één knop het inkooprapport op: wat urgent is, wat er ligt, wat eruit gaat. Ze kijken het na,
+passen aan waar ze het beter weten, en bestellen. Het systeem stelt voor, de inkopers beslissen.
+
+vuljevacature.nl (recruitment): het uitzoeken van leads gaat automatisch. Elke ochtend staat de
+lijst klaar met wie de moeite waard is. Het team begint de dag met bellen in plaats van met
+zoeken, en bepaalt zelf wie er benaderd wordt.
 
 ## Over
 - [Over Wessel](https://loopless.nl/over)
 - [FAQ](https://loopless.nl/faq)
 - [Contact](https://loopless.nl/contact)
-
-## Kerncase
-vuljevacature.nl: lead qualification volledig geautomatiseerd. Het team logt 's ochtends in en heeft direct een lijst met gekwalificeerde leads klaarstaan. Uren per week bespaard, structureel.
+- [Kennisbank](https://loopless.nl/kennisbank)
 
 ## Aanpak
-1. Analyseren: probleem eerst, technologie tweede
-2. Bouwen: binnen 2 weken werkende oplossing
-3. Draaien: 2 weken testfase, daarna live op klant-eigen infrastructuur
+1. Analyseren: we kijken waar het team vastloopt. Probleem eerst, techniek tweede.
+2. Bouwen: binnen 4 tot 6 weken draait er één proces dat nu handmatig gaat. Vaste prijs,
+   acceptatiecriteria vooraf afgesproken.
+3. Draaien: live op infrastructuur van de klant zelf.
+
+## Wat Loopless niet doet
+Mensen vervangen. Het systeem doet het uitzoekwerk en zet klaar; medewerkers controleren en
+beslissen. Er gaat niets ongecontroleerd de deur uit.
 
 ## Contact
 - E-mail: wessel@loopless.nl

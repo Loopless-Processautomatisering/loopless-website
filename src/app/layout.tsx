@@ -1,18 +1,39 @@
 import type { Metadata } from "next";
-import { Space_Grotesk, DM_Sans } from "next/font/google";
+import { Newsreader, IBM_Plex_Sans, IBM_Plex_Mono, Schibsted_Grotesk } from "next/font/google";
 import Script from "next/script";
 import "./globals.css";
 
-const spaceGrotesk = Space_Grotesk({
+// Twee typografie-varianten staan naast elkaar tot de keuze op /stijl is gemaakt
+// (besluit 5, HERONTWERP-PLAN.md). Variant A is de standaard; /stijl zet
+// data-type="b" op een fragment om B te tonen. Zodra de keuze valt gaat de
+// verliezer eruit, inclusief zijn font-import.
+//
+// Variant A — redactioneel: serif-koppen met krantenherkomst + nuchtere sans.
+const newsreader = Newsreader({
   subsets: ["latin"],
-  weight: ["400", "500", "600", "700"],
-  variable: "--font-heading",
+  weight: ["400", "500", "600"],
+  style: ["normal", "italic"],
+  variable: "--font-serif",
 });
 
-const dmSans = DM_Sans({
+const plexSans = IBM_Plex_Sans({
+  subsets: ["latin"],
+  weight: ["400", "500", "600"],
+  variable: "--font-sans-ui",
+});
+
+// Alleen voor schema-labels en meta-cijfers. Zelfde familie als de body, dus één stem.
+const plexMono = IBM_Plex_Mono({
+  subsets: ["latin"],
+  weight: ["400"],
+  variable: "--font-mono-ui",
+});
+
+// Variant B — één familie, koppen via gewicht en maat. Ontworpen voor krantenzetsel.
+const schibsted = Schibsted_Grotesk({
   subsets: ["latin"],
   weight: ["400", "500", "700"],
-  variable: "--font-body",
+  variable: "--font-grotesk",
 });
 
 export const metadata: Metadata = {
@@ -23,8 +44,6 @@ export const metadata: Metadata = {
   },
   description:
     "Loopless bouwt AI-systemen die het uitzoekwerk doen voor het MKB: leads uitzoeken, offertes klaarzetten, vragen beantwoorden uit eigen documentatie. Actief vanuit Tiel en Breda.",
-  keywords:
-    "AI automatisering, MKB automatisering, procesautomatisering, lead qualification, offerte automatisering, kennisbank AI, Loopless, Tiel, Breda, Nederland",
   authors: [{ name: "Wessel Broeders" }],
   alternates: {
     canonical: "/",
@@ -105,7 +124,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="nl">
-      <body className={`${spaceGrotesk.variable} ${dmSans.variable} font-sans antialiased`}>
+      <body className={`${newsreader.variable} ${plexSans.variable} ${plexMono.variable} ${schibsted.variable} antialiased`}>
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(organizationJsonLd) }}

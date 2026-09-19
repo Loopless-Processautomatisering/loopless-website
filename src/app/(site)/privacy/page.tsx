@@ -4,7 +4,7 @@ import { PageGlow } from "@/components/page-glow";
 // Privacyverklaring — toegevoegd 2026-07-24 (review-ronde configurator).
 // Claims hier zijn geverifieerd tegen de werkelijke stack: contactformulier
 // via Formspree, configurator via eigen server (n8n, EU) naar Google
-// Workspace, hosting Vercel, geen tracking-cookies of analytics.
+// Workspace, hosting Vercel, geen tracking-cookies; wel cookieloze Vercel Web Analytics.
 
 export const metadata: Metadata = {
   title: "Privacyverklaring",
@@ -75,8 +75,10 @@ export default function PrivacyPage() {
 
           <H2>Cookies</H2>
           <P>
-            Loopless.nl gebruikt geen tracking-cookies en geen analytics. Er kan alleen een
-            functionele cookie worden gezet die nodig is om de site te laten werken.
+            Loopless.nl gebruikt geen tracking-cookies. Er kan alleen een functionele cookie
+            worden gezet die nodig is om de site te laten werken. Voor bezoekersstatistieken
+            draait Vercel Web Analytics: dat meet paginaweergaven zonder cookies, zonder
+            profielen en zonder gegevens die naar jou herleidbaar zijn.
           </P>
 
           <H2>Gegevens van opdrachtgevers</H2>
