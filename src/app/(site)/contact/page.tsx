@@ -6,13 +6,11 @@ import { Mail, Linkedin, Clock, ShieldCheck, Send } from "lucide-react";
 import { AnimateIn } from "@/components/ui/animate-in";
 import { PageGlow } from "@/components/page-glow";
 
-const FORMSPREE_ACTION = "https://formspree.io/f/xbdeeolq";
-
 const contactFields = [
-  { entry: "naam", label: "Naam", type: "text", placeholder: "Jouw naam" },
-  { entry: "bedrijf", label: "Bedrijfsnaam", type: "text", placeholder: "Jouw bedrijf" },
-  { entry: "email", label: "E-mailadres", type: "email", placeholder: "naam@bedrijf.nl" },
-  { entry: "telefoon", label: "Telefoonnummer", type: "tel", placeholder: "+31 6 12345678" },
+  { entry: "naam", label: "Naam", type: "text", placeholder: "Jouw naam", required: true },
+  { entry: "bedrijf", label: "Bedrijfsnaam", type: "text", placeholder: "Jouw bedrijf", required: false },
+  { entry: "email", label: "E-mailadres", type: "email", placeholder: "naam@bedrijf.nl", required: true },
+  { entry: "telefoon", label: "Telefoonnummer", type: "tel", placeholder: "+31 6 12345678", required: false },
 ];
 
 // Afgeslankt 2026-07-25: de zes intakevragen zijn vervangen door één
@@ -34,13 +32,15 @@ export default function ContactPage() {
     setSubmitting(true);
     setError(false);
 
-    const formData = new FormData(e.currentTarget);
+    // Eigen route (2026-09-25): Resend primair, Formspree als server-side fallback.
+    // Alleen een 2xx betekent dat de lead echt verstuurd is.
+    const data = Object.fromEntries(new FormData(e.currentTarget));
 
     try {
-      const res = await fetch(FORMSPREE_ACTION, {
+      const res = await fetch("/api/contact", {
         method: "POST",
-        body: formData,
-        headers: { Accept: "application/json" },
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(data),
       });
 
       if (res.ok) {
@@ -149,10 +149,14 @@ export default function ContactPage() {
               </div>
             ) : (
               <form onSubmit={handleSubmit}>
+                {/* Honeypot: onzichtbaar voor mensen, bots vullen het in. */}
                 <input
-                  type="hidden"
-                  name="_subject"
-                  value="Nieuwe intake via loopless.nl"
+                  type="text"
+                  name="_hp"
+                  tabIndex={-1}
+                  autoComplete="off"
+                  aria-hidden="true"
+                  className="absolute -left-[9999px] h-px w-px opacity-0"
                 />
                 {/* Contact details section */}
                 <div className="mb-8">
@@ -163,14 +167,16 @@ export default function ContactPage() {
                     Zodat ik je kan bereiken na het invullen.
                   </p>
                   <div className="grid gap-4 sm:grid-cols-2">
-                    {contactFields.map(({ entry, label, type, placeholder }) => (
+                    {contactFields.map(({ entry, label, type, placeholder, required }) => (
                       <div key={entry}>
                         <label className="mb-1.5 block text-sm font-medium text-[#EDEDF4]">
                           {label}
+                          {required && <span className="text-[#4F8EF7]"> *</span>}
                         </label>
                         <input
                           type={type}
                           name={entry}
+                          required={required}
                           placeholder={placeholder}
                           className="w-full rounded-lg border border-[#2E2E4A] bg-[#1E1E30] px-4 py-3 text-[#EDEDF4] placeholder-[#8585A3] transition-colors focus:border-[#4F8EF7] focus:outline-none focus:ring-2 focus:ring-[#4F8EF740]"
                         />

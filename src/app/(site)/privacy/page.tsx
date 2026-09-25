@@ -3,7 +3,7 @@ import { PageGlow } from "@/components/page-glow";
 
 // Privacyverklaring — toegevoegd 2026-07-24 (review-ronde configurator).
 // Claims hier zijn geverifieerd tegen de werkelijke stack: contactformulier
-// via Formspree, configurator via eigen server (n8n, EU) naar Google
+// via /api/contact (Resend, fallback Formspree), configurator via eigen server (n8n, EU) naar Google
 // Workspace, hosting Vercel, geen tracking-cookies of analytics.
 
 export const metadata: Metadata = {
@@ -61,7 +61,9 @@ export default function PrivacyPage() {
           <P>
             Inzendingen via de configurator lopen via onze eigen automatiseringsserver in een
             EU-datacenter en worden bewaard in Google Workspace (mail en een spreadsheet). Het
-            contactformulier wordt verwerkt door Formspree. De website wordt gehost bij Vercel.
+            contactformulier wordt als e-mail bezorgd via Resend, met Formspree als reserveroute
+            als die bezorging mislukt; de mail zelf staat in Google Workspace. De website wordt
+            gehost bij Vercel.
             Voor zover deze partijen gegevens buiten de EU verwerken, gebeurt dat onder de
             waarborgen die de AVG daarvoor kent, zoals het EU-VS Data Privacy Framework of
             standaardcontractbepalingen.
