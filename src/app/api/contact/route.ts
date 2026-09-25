@@ -140,6 +140,31 @@ export async function GET(request: Request) {
   return Response.json({ resend: resendKlaar }, { status: resendKlaar ? 200 : 503 });
 }
 
+// Pushmelding naar Wessels telefoon (besluit 2026-09-25, na een intake die twee weken
+// ongelezen in de inbox stond). Aanvulling op de mail, geen vervanging: faalt de push,
+// dan blijft de uitkomst voor de bezoeker gelijk. Bewust alleen naam + bedrijf — het
+// ntfy-topic draait op een publieke server, dus geen e-mail, telefoon of bericht erin.
+async function pushMelding(l: Lead, mailGelukt: boolean): Promise<void> {
+  const url = process.env.NTFY_TOPIC_URL;
+  if (!url) return;
+  try {
+    const res = await fetch(url, {
+      method: "POST",
+      headers: {
+        Title: mailGelukt ? "Nieuwe intake via loopless.nl" : "Intake NIET gemaild - check Vercel-logs",
+        Priority: mailGelukt ? "high" : "urgent",
+        Tags: "incoming_envelope",
+        Click: "https://mail.google.com/mail/u/?authuser=wessel@loopless.nl#label/Lead",
+      },
+      body: `${l.naam}${l.bedrijf ? ` (${l.bedrijf})` : ""}${mailGelukt ? " — staat in je mail." : " — mail faalde, bezoeker zag de foutmelding."}`,
+      signal: AbortSignal.timeout(4_000),
+    });
+    if (!res.ok) console.error("[contact] ntfy antwoordde", res.status);
+  } catch (e) {
+    console.error("[contact] ntfy onbereikbaar:", e);
+  }
+}
+
 export async function POST(request: Request) {
   const ruw = await request.text();
   if (ruw.length > MAX_BODY) {
@@ -178,8 +203,9 @@ export async function POST(request: Request) {
     return Response.json({ ok: false }, { status: 400 });
   }
 
-  if (await viaResend(lead)) return Response.json({ ok: true });
-  if (await viaFormspree(lead)) return Response.json({ ok: true });
+  const gemaild = (await viaResend(lead)) || (await viaFormspree(lead));
+  await pushMelding(lead, gemaild);
+  if (gemaild) return Response.json({ ok: true });
 
   console.error("[contact] beide mailpaden faalden — bezoeker krijgt de mailto-foutmelding");
   return Response.json({ ok: false }, { status: 502 });
