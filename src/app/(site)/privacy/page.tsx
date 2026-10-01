@@ -34,7 +34,7 @@ export default function PrivacyPage() {
           <h1 className="mb-4 font-[family-name:var(--font-heading)] text-4xl font-bold text-white md:text-5xl">
             Privacyverklaring
           </h1>
-          <p className="mb-2 text-sm text-[#8585A3]">Laatst bijgewerkt: 8 augustus 2026</p>
+          <p className="mb-2 text-sm text-[#8585A3]">Laatst bijgewerkt: 1 oktober 2026</p>
           <P>
             Loopless is een handelsnaam van Broeders Digital (eenmanszaak, KVK 42004729). Deze
             pagina legt uit welke gegevens we verwerken als je iets achterlaat op loopless.nl, en
@@ -96,6 +96,30 @@ export default function PrivacyPage() {
             Draait een systeem op de accounts van de opdrachtgever, dan zijn die diensten
             subverwerkers van de opdrachtgever zelf, die de instellingen dus ook zelf kan inzien en
             wijzigen.
+          </P>
+
+          <H2>Als wij jou benaderen</H2>
+          <P>
+            Loopless benadert soms zelf bedrijven per e-mail. Daarvoor verwerken we zakelijke
+            contactgegevens: de bedrijfsnaam, de website, het algemene e-mailadres dat het bedrijf
+            zelf op de eigen website heeft gepubliceerd, en waar bekend de naam en functie van een
+            contactpersoon uit openbare bedrijfsinformatie. Het e-mailadres halen we alleen van de
+            eigen website van het bedrijf; we leggen vast op welke pagina het stond.
+          </P>
+          <P>
+            We gebruiken deze gegevens om één bedrijf gericht een aanbod te doen dat bij dat
+            bedrijf past. De grondslag is ons gerechtvaardigd belang bij het vinden van
+            opdrachtgevers. De gegevens staan in een database in de EU en worden niet verkocht of
+            gedeeld.
+          </P>
+          <P>
+            Wil je geen mail meer ontvangen, antwoord dan met &quot;stop&quot; of mail naar{" "}
+            <a href="mailto:wessel@loopless.nl" className="text-[#4F8EF7] hover:underline">
+              wessel@loopless.nl
+            </a>
+            . We benaderen je dan niet opnieuw en bewaren alleen je e-mailadres, zodat we dat ook
+            kunnen waarmaken. Zonder reactie verwijderen we je gegevens uiterlijk twaalf maanden na
+            het laatste contact.
           </P>
 
           <H2>Je rechten</H2>
