@@ -16,7 +16,7 @@ export default async function Image() {
           flexDirection: "column",
           alignItems: "center",
           justifyContent: "center",
-          backgroundColor: "#13131F",
+          backgroundColor: "#FFFFFF",
           position: "relative",
         }}
       >
@@ -67,7 +67,7 @@ export default async function Image() {
         <div
           style={{
             fontSize: "28px",
-            color: "#8585A3",
+            color: "#5F6B85",
             textAlign: "center",
             maxWidth: "700px",
             lineHeight: 1.4,
@@ -94,9 +94,9 @@ export default async function Image() {
                 style={{
                   padding: "8px 20px",
                   borderRadius: "999px",
-                  border: "1px solid #2E2E4A",
-                  backgroundColor: "#1E1E30",
-                  color: "#EDEDF4",
+                  border: "1px solid #DCE6F5",
+                  backgroundColor: "#F3F7FD",
+                  color: "#2B3446",
                   fontSize: "16px",
                   display: "flex",
                 }}

@@ -40,10 +40,16 @@ async function getPublishedBlocks(tenantId: string): Promise<RawBlock[]> {
   cacheLife("max");
   cacheTag(`tenant:${tenantId}:content`);
 
-  const supabase = createClient(
-    process.env.NEXT_PUBLIC_SUPABASE_URL!,
-    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
-  );
+  // Zonder Supabase-gegevens (bv. een verse checkout zonder .env.local) niet crashen maar
+  // de standaardteksten uit de code tonen.
+  const url = process.env.NEXT_PUBLIC_SUPABASE_URL;
+  const key = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
+  if (!url || !key) {
+    console.warn("[content] geen Supabase-gegevens in .env.local: standaardteksten uit de code");
+    return [];
+  }
+
+  const supabase = createClient(url, key);
   const { data, error } = await supabase
     .from("content_blocks")
     .select("key, type, text_value, image_url")

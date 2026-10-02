@@ -9,6 +9,9 @@ interface NeuralBackgroundProps {
   trailOpacity?: number;
   particleCount?: number;
   speed?: number;
+  // RGB-triplet van de uitdoofkleur van de sporen; moet gelijk zijn aan de achtergrond
+  // (donker: "0, 0, 0", licht: "255, 255, 255"), anders slaat de canvas dicht naar zwart.
+  trailColor?: string;
 }
 
 export default function NeuralBackground({
@@ -17,6 +20,7 @@ export default function NeuralBackground({
   trailOpacity = 0.15,
   particleCount = 600,
   speed = 1,
+  trailColor = "0, 0, 0",
 }: NeuralBackgroundProps) {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const containerRef = useRef<HTMLDivElement>(null);
@@ -118,7 +122,7 @@ export default function NeuralBackground({
     };
 
     const animate = () => {
-      ctx.fillStyle = `rgba(0, 0, 0, ${trailOpacity})`;
+      ctx.fillStyle = `rgba(${trailColor}, ${trailOpacity})`;
       ctx.fillRect(0, 0, width, height);
 
       particles.forEach((p) => {
@@ -159,13 +163,13 @@ export default function NeuralBackground({
       container.removeEventListener("mouseleave", handleMouseLeave);
       cancelAnimationFrame(animationFrameId);
     };
-  }, [color, trailOpacity, particleCount, speed]);
+  }, [color, trailOpacity, particleCount, speed, trailColor]);
 
   return (
     <div
       ref={containerRef}
       className={cn(
-        "relative h-full w-full overflow-hidden bg-black",
+        "relative h-full w-full overflow-hidden",
         className
       )}
     >

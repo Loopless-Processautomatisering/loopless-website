@@ -65,12 +65,12 @@ export default function CasesPage() {
       <section className="relative pb-12 pt-40">
         <div className="mx-auto max-w-[1000px] px-6">
           <AnimateIn>
-            <h1 className="mb-4 font-[family-name:var(--font-heading)] text-4xl font-bold text-white md:text-5xl">
+            <h1 className="mb-4 font-[family-name:var(--font-heading)] text-4xl font-bold text-[#10182B] md:text-5xl">
               Het uitzoekwerk ging eraf. Dit bleef over.
             </h1>
           </AnimateIn>
           <AnimateIn delay={0.1}>
-            <p className="max-w-[560px] text-lg text-[#8585A3]">
+            <p className="max-w-[560px] text-lg text-[#5F6B85]">
               Twee bedrijven, twee soorten uitzoekwerk. In beide gevallen
               beslist er nog steeds een mens.
             </p>
@@ -99,7 +99,7 @@ export default function CasesPage() {
                     <Image src={c.logo} alt={c.naam} width={120} height={30} className={c.lichtVlak ? "h-6 w-auto" : "h-7 w-auto"} />
                   </a>
                 ) : (
-                  <strong className="text-2xl text-white font-[family-name:var(--font-heading)]">
+                  <strong className="text-2xl text-[#10182B] font-[family-name:var(--font-heading)]">
                     {c.naam}
                   </strong>
                 )}
@@ -112,16 +112,16 @@ export default function CasesPage() {
             {/* Voor / Na grid */}
             <StaggerContainer className="grid gap-6 md:grid-cols-2" staggerDelay={0.15}>
               <StaggerItem>
-                <div className="h-full rounded-xl border border-[#2E2E4A] bg-[#1E1E30] p-8 transition-all duration-300 hover:border-[#3E3E5A]">
-                  <p className="mb-4 text-xs font-semibold uppercase tracking-widest text-[#8585A3]">Ervoor</p>
-                  <p className="text-[#EDEDF4] leading-relaxed">{c.ervoor}</p>
+                <div className="h-full rounded-xl border border-[#DCE6F5] bg-white shadow-[0_1px_2px_rgba(16,24,43,0.04),0_16px_40px_-20px_rgba(79,142,247,0.25)] p-8 transition-all duration-300 hover:border-[#B7CBEE]">
+                  <p className="mb-4 text-xs font-semibold uppercase tracking-widest text-[#5F6B85]">Ervoor</p>
+                  <p className="text-[#2B3446] leading-relaxed">{c.ervoor}</p>
                 </div>
               </StaggerItem>
 
               <StaggerItem>
-                <div className="h-full rounded-xl border border-[#4F8EF7]/20 bg-[#1E1E30] p-8 transition-all duration-300 hover:border-[#4F8EF7]/40">
+                <div className="h-full rounded-xl border border-[#4F8EF7]/20 bg-white shadow-[0_1px_2px_rgba(16,24,43,0.04),0_16px_40px_-20px_rgba(79,142,247,0.25)] p-8 transition-all duration-300 hover:border-[#4F8EF7]/40">
                   <p className="mb-4 text-xs font-semibold uppercase tracking-widest text-[#4F8EF7]">Erna</p>
-                  <p className="text-[#EDEDF4] leading-relaxed">{c.erna}</p>
+                  <p className="text-[#2B3446] leading-relaxed">{c.erna}</p>
                 </div>
               </StaggerItem>
             </StaggerContainer>
@@ -130,7 +130,7 @@ export default function CasesPage() {
             <AnimateIn delay={0.1}>
               <div className="mt-8 flex flex-wrap gap-8">
                 {c.punten.map((punt) => (
-                  <div key={punt} className="flex items-center gap-2 text-[#EDEDF4]">
+                  <div key={punt} className="flex items-center gap-2 text-[#2B3446]">
                     <span className="font-bold text-[#4F8EF7]">✓</span> {punt}
                   </div>
                 ))}
@@ -146,10 +146,10 @@ export default function CasesPage() {
       <section className="py-24 md:py-32">
         <div className="mx-auto max-w-[700px] px-6">
           <AnimateIn>
-            <h2 className="mb-4 font-[family-name:var(--font-heading)] text-3xl font-bold text-white">
+            <h2 className="mb-4 font-[family-name:var(--font-heading)] text-3xl font-bold text-[#10182B]">
               Welk uitzoekwerk zit er bij jou?
             </h2>
-            <p className="mb-8 text-lg text-[#8585A3]">
+            <p className="mb-8 text-lg text-[#5F6B85]">
               Weet je al waar het bij jou blijft hangen, plan dan een gesprek.
               Weet je het nog niet precies, kijk dan eerst wat er bij jou kan.
             </p>
@@ -162,7 +162,7 @@ export default function CasesPage() {
               </Link>
               <Link
                 href="/configurator"
-                className="inline-block rounded-full border border-[#2E2E4A] px-8 py-4 font-semibold text-[#EDEDF4] transition-all duration-300 hover:border-[#4F8EF7]/40 hover:text-white"
+                className="inline-block rounded-full border border-[#C9D8F0] px-8 py-4 font-semibold text-[#2B3446] transition-all duration-300 hover:border-[#4F8EF7]/40 hover:text-[#10182B]"
               >
                 Kijk wat er bij jou kan
               </Link>

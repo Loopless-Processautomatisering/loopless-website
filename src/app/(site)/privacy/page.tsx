@@ -15,14 +15,14 @@ export const metadata: Metadata = {
 
 function H2({ children }: { children: React.ReactNode }) {
   return (
-    <h2 className="mb-3 mt-12 font-[family-name:var(--font-heading)] text-2xl font-bold text-white">
+    <h2 className="mb-3 mt-12 font-[family-name:var(--font-heading)] text-2xl font-bold text-[#10182B]">
       {children}
     </h2>
   );
 }
 
 function P({ children }: { children: React.ReactNode }) {
-  return <p className="mb-4 leading-relaxed text-[#8585A3]">{children}</p>;
+  return <p className="mb-4 leading-relaxed text-[#5F6B85]">{children}</p>;
 }
 
 export default function PrivacyPage() {
@@ -31,10 +31,10 @@ export default function PrivacyPage() {
       <PageGlow />
       <section className="relative pb-24 pt-40">
         <div className="mx-auto max-w-[720px] px-6">
-          <h1 className="mb-4 font-[family-name:var(--font-heading)] text-4xl font-bold text-white md:text-5xl">
+          <h1 className="mb-4 font-[family-name:var(--font-heading)] text-4xl font-bold text-[#10182B] md:text-5xl">
             Privacyverklaring
           </h1>
-          <p className="mb-2 text-sm text-[#8585A3]">Laatst bijgewerkt: 1 oktober 2026</p>
+          <p className="mb-2 text-sm text-[#5F6B85]">Laatst bijgewerkt: 1 oktober 2026</p>
           <P>
             Loopless is een handelsnaam van Broeders Digital (eenmanszaak, KVK 42004729). Deze
             pagina legt uit welke gegevens we verwerken als je iets achterlaat op loopless.nl, en

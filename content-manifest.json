@@ -44,6 +44,13 @@
       "sortOrder": 5
     },
     {
+      "key": "home/loop",
+      "label": "De loop verbreken",
+      "pagePath": "/",
+      "pageLabel": "Homepagina",
+      "sortOrder": 6
+    },
+    {
       "key": "over/intro",
       "label": "Intro",
       "pagePath": "/over",
@@ -247,6 +254,34 @@
       "value": "Vaste prijs, duidelijke acceptatiecriteria vooraf. Werkt het niet zoals afgesproken, dan betaal je de laatste termijn niet.",
       "sortOrder": 24,
       "section": "home/belofte"
+    },
+    {
+      "key": "home/home_loop_kicker",
+      "label": "De loop verbreken — label",
+      "value": "Over Loopless",
+      "sortOrder": 25,
+      "section": "home/loop"
+    },
+    {
+      "key": "home/home_loop_heading",
+      "label": "De loop verbreken — kop",
+      "value": "Wij doorbreken de loop.",
+      "sortOrder": 26,
+      "section": "home/loop"
+    },
+    {
+      "key": "home/home_loop_text",
+      "label": "De loop verbreken — tekst",
+      "value": "Elke week hetzelfde uitzoekwerk. Mail doorspitten, lijsten bijwerken, gegevens overtypen. Het houdt je mensen bezig, maar het brengt je bedrijf niet verder. Dat is de loop.\n\nLoopless bouwt systemen die dat werk overnemen. Het systeem zet klaar, jouw mensen controleren en beslissen. Zo gaat hun tijd weer naar het werk waarvoor je ze hebt aangenomen.",
+      "sortOrder": 27,
+      "section": "home/loop"
+    },
+    {
+      "key": "home/home_loop_cta",
+      "label": "De loop verbreken — knop",
+      "value": "Lees het verhaal van Wessel",
+      "sortOrder": 28,
+      "section": "home/loop"
     },
     {
       "key": "over/over_intro_kicker",

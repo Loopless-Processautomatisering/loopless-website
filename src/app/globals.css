@@ -47,37 +47,39 @@
   --radius-3xl: calc(var(--radius) + 12px);
   --radius-4xl: calc(var(--radius) + 16px);
 
-  /* Loopless custom colors */
-  --color-loopless-bg: #161625;
-  --color-loopless-surface: #1E1E30;
-  --color-loopless-border: #2E2E4A;
+  /* Loopless custom colors — licht palet (sinds september 2026).
+     Wit als basis, lichtblauw voor vlakken, het merkblauw #4F8EF7 als accent. */
+  --color-loopless-bg: #FFFFFF;
+  --color-loopless-surface: #F3F7FD;
+  --color-loopless-border: #DCE6F5;
   --color-loopless-accent: #4F8EF7;
   --color-loopless-accent-hover: #3A75D8;
   --color-loopless-accent-glow: #4F8EF740;
-  --color-loopless-text: #EDEDF4;
-  --color-loopless-muted: #8585A3;
+  --color-loopless-text: #10182B;
+  --color-loopless-muted: #5F6B85;
 }
 
-/* Loopless dark theme as default */
+/* Loopless licht thema als standaard.
+   Koppen #10182B, lopende tekst #2B3446, gedempt #5F6B85, randen #DCE6F5, vlakken #F3F7FD. */
 :root {
   --radius: 0.75rem;
-  --background: #161625;
-  --foreground: #EDEDF4;
-  --card: #1E1E30;
-  --card-foreground: #EDEDF4;
-  --popover: #1E1E30;
-  --popover-foreground: #EDEDF4;
+  --background: #FFFFFF;
+  --foreground: #10182B;
+  --card: #FFFFFF;
+  --card-foreground: #10182B;
+  --popover: #FFFFFF;
+  --popover-foreground: #10182B;
   --primary: #4F8EF7;
   --primary-foreground: #FFFFFF;
-  --secondary: #2E2E4A;
-  --secondary-foreground: #EDEDF4;
-  --muted: #1E1E30;
-  --muted-foreground: #8585A3;
-  --accent: #2E2E4A;
-  --accent-foreground: #EDEDF4;
-  --destructive: oklch(0.704 0.191 22.216);
-  --border: #2E2E4A;
-  --input: #2E2E4A;
+  --secondary: #EAF1FC;
+  --secondary-foreground: #10182B;
+  --muted: #F3F7FD;
+  --muted-foreground: #5F6B85;
+  --accent: #EAF1FC;
+  --accent-foreground: #10182B;
+  --destructive: #D93636;
+  --border: #DCE6F5;
+  --input: #DCE6F5;
   --ring: #4F8EF7;
   --chart-1: #4F8EF7;
   --chart-2: #5a922c;
@@ -90,9 +92,16 @@
   * {
     @apply border-border outline-ring/50;
   }
+  html {
+    color-scheme: light;
+  }
   body {
     @apply bg-background text-foreground antialiased;
     font-family: var(--font-sans);
+  }
+  ::selection {
+    background: #4F8EF7;
+    color: #FFFFFF;
   }
 }
 
@@ -119,4 +128,58 @@ html {
 
 .animate-spin-slow-hover:hover {
   animation: spin-slow 1s ease-in-out;
+}
+
+/* Kop als gepolijst blauw metaal met een trage glans (chroom lint, oktober 2026) */
+.chrome-ink {
+  background: linear-gradient(105deg, #10182B 0%, #10182B 30%, #3A6FD0 42%, #10182B 54%, #10182B 100%);
+  background-size: 260% 100%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  animation: chromeSweep 9s ease-in-out infinite;
+}
+@keyframes chromeSweep {
+  0%, 100% { background-position: 100% 50%; }
+  50% { background-position: 0% 50%; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .chrome-ink { animation: none; }
+}
+
+/* Glazen pil (oktober 2026), naar de liquid-glass-knoppen van de chromeribbon-opzet, voor
+   een lichte achtergrond: bijna doorzichtig glas, blur, een binnenglans en een dunne
+   lichtrand die boven en onder het helderst is. */
+.liquid-glass {
+  position: relative;
+  overflow: hidden;
+  background: rgba(255, 255, 255, 0.28);
+  background-blend-mode: luminosity;
+  -webkit-backdrop-filter: blur(10px) saturate(1.4);
+  backdrop-filter: blur(10px) saturate(1.4);
+  border: none;
+  box-shadow:
+    inset 0 1px 1px rgba(255, 255, 255, 0.9),
+    inset 0 -1px 1px rgba(79, 142, 247, 0.12),
+    0 8px 28px -12px rgba(31, 45, 82, 0.28);
+}
+.liquid-glass::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  padding: 1.2px;
+  background: linear-gradient(
+    180deg,
+    rgba(255, 255, 255, 0.95) 0%,
+    rgba(127, 178, 240, 0.45) 22%,
+    rgba(127, 178, 240, 0.12) 45%,
+    rgba(127, 178, 240, 0.12) 55%,
+    rgba(127, 178, 240, 0.45) 78%,
+    rgba(255, 255, 255, 0.95) 100%
+  );
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  pointer-events: none;
 }
