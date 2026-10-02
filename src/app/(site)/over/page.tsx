@@ -50,7 +50,7 @@ export default async function OverPage() {
         <div className="mx-auto max-w-[1000px] px-6">
           <div className="flex flex-col gap-12 md:flex-row md:items-start">
             <AnimateIn className="flex-shrink-0 self-center md:self-start">
-              <div className="relative h-[280px] w-[280px] overflow-hidden rounded-2xl border border-[#2E2E4A] transition-all duration-500 hover:border-[#4F8EF7]/30 hover:shadow-[0_8px_30px_-12px_rgba(79,142,247,0.2)]">
+              <div className="relative h-[280px] w-[280px] overflow-hidden rounded-2xl border border-[#DCE6F5] transition-all duration-500 hover:border-[#4F8EF7]/30 hover:shadow-[0_8px_30px_-12px_rgba(79,142,247,0.2)]">
                 <Image
                   src={photoUrl}
                   alt="Wessel Broeders"
@@ -64,11 +64,11 @@ export default async function OverPage() {
             <AnimateIn delay={0.15}>
               <div>
                 <p className="mb-3 text-sm font-medium uppercase tracking-wider text-[#4F8EF7]">{kicker}</p>
-                <h1 className="mb-6 font-[family-name:var(--font-heading)] text-4xl font-bold text-white md:text-5xl">
+                <h1 className="mb-6 font-[family-name:var(--font-heading)] text-4xl font-bold text-[#10182B] md:text-5xl">
                   Wessel Broeders
                 </h1>
-                <p className="mb-4 text-lg leading-relaxed text-[#EDEDF4]">{introP1}</p>
-                <p className="text-[#8585A3] leading-relaxed">{introP2}</p>
+                <p className="mb-4 text-lg leading-relaxed text-[#2B3446]">{introP1}</p>
+                <p className="text-[#5F6B85] leading-relaxed">{introP2}</p>
               </div>
             </AnimateIn>
           </div>
@@ -76,13 +76,13 @@ export default async function OverPage() {
       </section>
 
       {/* Waarom dat werkt */}
-      <section className="bg-[#1A1A2E] py-24 md:py-32">
+      <section className="bg-[#F3F7FD] py-24 md:py-32">
         <div className="mx-auto max-w-[700px] px-6">
           <AnimateIn>
-            <h2 className="mb-8 font-[family-name:var(--font-heading)] text-3xl font-bold text-white">{waaromHeading}</h2>
-            <div className="space-y-4 text-[#EDEDF4] leading-relaxed">
+            <h2 className="mb-8 font-[family-name:var(--font-heading)] text-3xl font-bold text-[#10182B]">{waaromHeading}</h2>
+            <div className="space-y-4 text-[#2B3446] leading-relaxed">
               <p>{waaromP1}</p>
-              <p className="text-[#8585A3]">{waaromP2}</p>
+              <p className="text-[#5F6B85]">{waaromP2}</p>
             </div>
           </AnimateIn>
         </div>
@@ -92,21 +92,21 @@ export default async function OverPage() {
       <section className="py-24 md:py-32">
         <div className="mx-auto max-w-[700px] px-6">
           <AnimateIn>
-            <h2 className="mb-8 font-[family-name:var(--font-heading)] text-3xl font-bold text-white">Hoe dat er in de praktijk uitziet</h2>
-            <div className="space-y-4 text-[#EDEDF4] leading-relaxed">
+            <h2 className="mb-8 font-[family-name:var(--font-heading)] text-3xl font-bold text-[#10182B]">Hoe dat er in de praktijk uitziet</h2>
+            <div className="space-y-4 text-[#2B3446] leading-relaxed">
               <p>{praktijkP1}</p>
-              <p className="text-[#8585A3]">{praktijkP2}</p>
+              <p className="text-[#5F6B85]">{praktijkP2}</p>
             </div>
           </AnimateIn>
         </div>
       </section>
 
       {/* Bewezen resultaat */}
-      <section className="bg-[#1A1A2E] py-24 md:py-32">
+      <section className="bg-[#F3F7FD] py-24 md:py-32">
         <div className="mx-auto max-w-[700px] px-6">
           <AnimateIn>
-            <h2 className="mb-8 font-[family-name:var(--font-heading)] text-3xl font-bold text-white">{resultaatHeading}</h2>
-            <div className="rounded-xl border border-[#2E2E4A] bg-[#161625] p-8">
+            <h2 className="mb-8 font-[family-name:var(--font-heading)] text-3xl font-bold text-[#10182B]">{resultaatHeading}</h2>
+            <div className="rounded-xl border border-[#DCE6F5] bg-[#FFFFFF] p-8">
               <div className="mb-4 flex items-center gap-4">
                 <a href="https://vuljevacature.nl" target="_blank" rel="noopener noreferrer" className="opacity-70 transition-opacity hover:opacity-100">
                   <Image
@@ -119,9 +119,9 @@ export default async function OverPage() {
                 </a>
                 <span className="rounded-full border border-[#4F8EF7]/20 bg-[#4F8EF7]/10 px-3 py-0.5 text-xs font-medium text-[#4F8EF7]">Recruitment</span>
               </div>
-              <p className="text-[#EDEDF4] leading-relaxed">{resultaatText}</p>
+              <p className="text-[#2B3446] leading-relaxed">{resultaatText}</p>
             </div>
-            <div className="mt-6 rounded-xl border border-[#2E2E4A] bg-[#161625] p-8">
+            <div className="mt-6 rounded-xl border border-[#DCE6F5] bg-[#FFFFFF] p-8">
               <div className="mb-4 flex items-center gap-4">
                 {/* Donkerblauw woordmerk op transparant — licht vlak eronder, anders onzichtbaar */}
                 <a
@@ -134,7 +134,7 @@ export default async function OverPage() {
                 </a>
                 <span className="rounded-full border border-[#4F8EF7]/20 bg-[#4F8EF7]/10 px-3 py-0.5 text-xs font-medium text-[#4F8EF7]">Groothandel</span>
               </div>
-              <p className="text-[#EDEDF4] leading-relaxed">{resultaatDraborText}</p>
+              <p className="text-[#2B3446] leading-relaxed">{resultaatDraborText}</p>
             </div>
           </AnimateIn>
         </div>
@@ -146,8 +146,8 @@ export default async function OverPage() {
       <section className="py-24 md:py-32">
         <div className="mx-auto max-w-[700px] px-6">
           <AnimateIn>
-            <h2 className="mb-4 font-[family-name:var(--font-heading)] text-3xl font-bold text-white">{ctaHeading}</h2>
-            <p className="mb-8 text-lg text-[#8585A3]">{ctaText}</p>
+            <h2 className="mb-4 font-[family-name:var(--font-heading)] text-3xl font-bold text-[#10182B]">{ctaHeading}</h2>
+            <p className="mb-8 text-lg text-[#5F6B85]">{ctaText}</p>
             <div className="flex flex-wrap items-center gap-4">
               <Link
                 href="/contact"
@@ -157,7 +157,7 @@ export default async function OverPage() {
               </Link>
               <Link
                 href="/configurator"
-                className="inline-block rounded-full border border-[#2E2E4A] px-8 py-4 font-semibold text-[#EDEDF4] transition-all duration-300 hover:border-[#4F8EF7]/40 hover:text-white"
+                className="inline-block rounded-full border border-[#C9D8F0] px-8 py-4 font-semibold text-[#2B3446] transition-all duration-300 hover:border-[#4F8EF7]/40 hover:text-[#10182B]"
               >
                 Kijk wat er bij jou kan
               </Link>

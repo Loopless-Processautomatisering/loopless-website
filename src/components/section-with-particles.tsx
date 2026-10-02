@@ -23,9 +23,9 @@ export function SectionWithParticles({
   overlay = "full",
 }: SectionWithParticlesProps) {
   const overlayClass = {
-    left: "bg-gradient-to-r from-[#161625]/90 via-[#161625]/70 to-[#161625]/40",
-    center: "bg-[#161625]/60",
-    full: "bg-[#161625]/70",
+    left: "bg-gradient-to-r from-[#FFFFFF]/90 via-[#FFFFFF]/70 to-[#FFFFFF]/40",
+    center: "bg-[#FFFFFF]/60",
+    full: "bg-[#FFFFFF]/70",
   };
 
   return (
@@ -36,7 +36,8 @@ export function SectionWithParticles({
           trailOpacity={trailOpacity}
           particleCount={particleCount}
           speed={speed}
-          className="bg-[#161625]"
+          trailColor="255, 255, 255"
+          className="bg-white"
         />
         <div className={cn("absolute inset-0", overlayClass[overlay])} />
       </div>

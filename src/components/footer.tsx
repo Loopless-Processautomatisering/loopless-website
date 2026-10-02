@@ -4,7 +4,7 @@ import { CurrentYear } from "@/components/current-year";
 
 export function Footer() {
   return (
-    <footer className="border-t border-[#2E2E4A] px-6 pb-8 pt-16">
+    <footer className="border-t border-[#DCE6F5] px-6 pb-8 pt-16">
       <div className="mx-auto max-w-[1200px]">
         <div className="mb-10 flex flex-col justify-between gap-10 md:flex-row">
           {/* Brand */}
@@ -12,7 +12,7 @@ export function Footer() {
             <Link href="/" className="mb-4 inline-block">
               <LogoWithText iconSize={26} />
             </Link>
-            <p className="text-sm leading-relaxed text-[#8585A3]">
+            <p className="text-sm leading-relaxed text-[#5F6B85]">
               Geen overbodige stappen. Alleen processen die werken.
             </p>
           </div>
@@ -20,7 +20,7 @@ export function Footer() {
           {/* Links */}
           <div className="flex gap-16">
             <div>
-              <h4 className="mb-4 font-[family-name:var(--font-heading)] text-sm font-semibold uppercase tracking-wider text-white">
+              <h4 className="mb-4 font-[family-name:var(--font-heading)] text-sm font-semibold uppercase tracking-wider text-[#10182B]">
                 Pagina&apos;s
               </h4>
               <ul className="flex flex-col gap-2">
@@ -37,7 +37,7 @@ export function Footer() {
                   <li key={item.href}>
                     <Link
                       href={item.href}
-                      className="text-sm text-[#8585A3] transition-colors hover:text-[#4F8EF7]"
+                      className="text-sm text-[#5F6B85] transition-colors hover:text-[#4F8EF7]"
                     >
                       {item.label}
                     </Link>
@@ -46,14 +46,14 @@ export function Footer() {
               </ul>
             </div>
             <div>
-              <h4 className="mb-4 font-[family-name:var(--font-heading)] text-sm font-semibold uppercase tracking-wider text-white">
+              <h4 className="mb-4 font-[family-name:var(--font-heading)] text-sm font-semibold uppercase tracking-wider text-[#10182B]">
                 Contact
               </h4>
               <ul className="flex flex-col gap-2">
                 <li>
                   <a
                     href="mailto:wessel@loopless.nl"
-                    className="text-sm text-[#8585A3] transition-colors hover:text-[#4F8EF7]"
+                    className="text-sm text-[#5F6B85] transition-colors hover:text-[#4F8EF7]"
                   >
                     wessel@loopless.nl
                   </a>
@@ -63,7 +63,7 @@ export function Footer() {
                     href="https://www.linkedin.com/in/wessel-broeders-250767221/"
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="text-sm text-[#8585A3] transition-colors hover:text-[#4F8EF7]"
+                    className="text-sm text-[#5F6B85] transition-colors hover:text-[#4F8EF7]"
                   >
                     LinkedIn
                   </a>
@@ -74,8 +74,8 @@ export function Footer() {
         </div>
 
         {/* Bottom */}
-        <div className="border-t border-[#2E2E4A] pt-6">
-          <p className="text-center text-xs text-[#8585A3]">
+        <div className="border-t border-[#DCE6F5] pt-6">
+          <p className="text-center text-xs text-[#5F6B85]">
             &copy; <CurrentYear /> Loopless — Broeders Digital | KVK: 42004729 |{" "}
             <Link href="/privacy" className="transition-colors hover:text-[#4F8EF7]">
               Privacy

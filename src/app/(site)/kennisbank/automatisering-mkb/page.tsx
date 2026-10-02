@@ -94,7 +94,7 @@ export default function AutomatiseringMkbPage() {
           <AnimateIn>
             <nav
               aria-label="Kruimelpad"
-              className="mb-6 flex items-center gap-2 text-sm text-[#8585A3]"
+              className="mb-6 flex items-center gap-2 text-sm text-[#5F6B85]"
             >
               <Link href="/kennisbank" className="transition-colors hover:text-[#4F8EF7]">
                 Kennisbank
@@ -102,16 +102,16 @@ export default function AutomatiseringMkbPage() {
             </nav>
           </AnimateIn>
           <AnimateIn delay={0.05}>
-            <h1 className="font-[family-name:var(--font-heading)] text-4xl font-bold leading-[1.1] text-white md:text-5xl">
+            <h1 className="font-[family-name:var(--font-heading)] text-4xl font-bold leading-[1.1] text-[#10182B] md:text-5xl">
               {artikel.titel}
             </h1>
           </AnimateIn>
           <AnimateIn delay={0.1}>
-            <p className="mt-6 text-xl leading-relaxed text-[#B4B4C8]">{artikel.lead}</p>
+            <p className="mt-6 text-xl leading-relaxed text-[#3D4759]">{artikel.lead}</p>
           </AnimateIn>
           <AnimateIn delay={0.15}>
-            <div className="mt-8 flex flex-wrap items-center gap-3 border-b border-[#2E2E4A] pb-8 text-sm text-[#8585A3]">
-              <span className="rounded-full border border-[#2E2E4A] bg-[#1E1E30] px-3 py-1">
+            <div className="mt-8 flex flex-wrap items-center gap-3 border-b border-[#DCE6F5] pb-8 text-sm text-[#5F6B85]">
+              <span className="rounded-full border border-[#C9D8F0] bg-[#F3F7FD] px-3 py-1">
                 Kennisbank
               </span>
               <span>Leestijd ongeveer {artikel.leestijd}</span>
@@ -122,9 +122,9 @@ export default function AutomatiseringMkbPage() {
           <AnimateIn delay={0.2}>
             <nav
               aria-label="In dit artikel"
-              className="mt-10 rounded-xl border border-[#2E2E4A] bg-[#1E1E30] p-6"
+              className="mt-10 rounded-xl border border-[#DCE6F5] bg-white shadow-[0_1px_2px_rgba(16,24,43,0.04),0_16px_40px_-20px_rgba(79,142,247,0.25)] p-6"
             >
-              <h2 className="mb-4 text-xs font-medium uppercase tracking-[0.09em] text-[#8585A3]">
+              <h2 className="mb-4 text-xs font-medium uppercase tracking-[0.09em] text-[#5F6B85]">
                 In dit artikel
               </h2>
               <ol className="flex flex-col gap-2">
@@ -132,9 +132,9 @@ export default function AutomatiseringMkbPage() {
                   <li key={s.id}>
                     <a
                       href={`#${s.id}`}
-                      className="flex gap-3 text-[15px] text-[#EDEDF4] transition-colors hover:text-[#4F8EF7]"
+                      className="flex gap-3 text-[15px] text-[#2B3446] transition-colors hover:text-[#4F8EF7]"
                     >
-                      <span className="tabular-nums text-[#8585A3]">
+                      <span className="tabular-nums text-[#5F6B85]">
                         {String(i + 1).padStart(2, "0")}
                       </span>
                       {s.kop}
@@ -144,9 +144,9 @@ export default function AutomatiseringMkbPage() {
                 <li>
                   <a
                     href="#vragen"
-                    className="flex gap-3 text-[15px] text-[#EDEDF4] transition-colors hover:text-[#4F8EF7]"
+                    className="flex gap-3 text-[15px] text-[#2B3446] transition-colors hover:text-[#4F8EF7]"
                   >
-                    <span className="tabular-nums text-[#8585A3]">
+                    <span className="tabular-nums text-[#5F6B85]">
                       {String(secties.length + 1).padStart(2, "0")}
                     </span>
                     Veelgestelde vragen
@@ -166,15 +166,15 @@ export default function AutomatiseringMkbPage() {
               <div key={sectie.id}>
                 <h2
                   id={sectie.id}
-                  className="mt-14 scroll-mt-28 font-[family-name:var(--font-heading)] text-2xl font-bold leading-snug text-white md:text-[1.75rem]"
+                  className="mt-14 scroll-mt-28 font-[family-name:var(--font-heading)] text-2xl font-bold leading-snug text-[#10182B] md:text-[1.75rem]"
                 >
                   {sectie.kop}
                 </h2>
 
                 {sectie.alineas.map((alinea, i) => (
-                  <p key={i} className="mt-5 text-[17px] leading-[1.75] text-[#B4B4C8]">
+                  <p key={i} className="mt-5 text-[17px] leading-[1.75] text-[#3D4759]">
                     {alinea.vet && (
-                      <strong className="font-semibold text-white">{alinea.vet} </strong>
+                      <strong className="font-semibold text-[#10182B]">{alinea.vet} </strong>
                     )}
                     {alinea.tekst}
                   </p>
@@ -186,20 +186,20 @@ export default function AutomatiseringMkbPage() {
                       {cases.map((c) => (
                         <div
                           key={c.naam}
-                          className="rounded-xl border border-[#2E2E4A] bg-[#1E1E30] p-6"
+                          className="rounded-xl border border-[#DCE6F5] bg-white shadow-[0_1px_2px_rgba(16,24,43,0.04),0_16px_40px_-20px_rgba(79,142,247,0.25)] p-6"
                           style={{ borderLeft: `2px solid ${c.accent}` }}
                         >
-                          <h3 className="font-[family-name:var(--font-heading)] text-[15px] font-bold text-white">
+                          <h3 className="font-[family-name:var(--font-heading)] text-[15px] font-bold text-[#10182B]">
                             {c.naam}
                           </h3>
-                          <p className="mt-4 text-[15px] leading-relaxed text-[#B4B4C8]">
-                            <span className="mb-1 block text-[11px] uppercase tracking-[0.09em] text-[#8585A3]">
+                          <p className="mt-4 text-[15px] leading-relaxed text-[#3D4759]">
+                            <span className="mb-1 block text-[11px] uppercase tracking-[0.09em] text-[#5F6B85]">
                               Ervoor
                             </span>
                             {c.ervoor}
                           </p>
-                          <p className="mt-4 text-[15px] leading-relaxed text-[#B4B4C8]">
-                            <span className="mb-1 block text-[11px] uppercase tracking-[0.09em] text-[#8585A3]">
+                          <p className="mt-4 text-[15px] leading-relaxed text-[#3D4759]">
+                            <span className="mb-1 block text-[11px] uppercase tracking-[0.09em] text-[#5F6B85]">
                               Erna
                             </span>
                             {c.erna}
@@ -208,13 +208,13 @@ export default function AutomatiseringMkbPage() {
                       ))}
                     </div>
                     {naCases.map((tekst, i) => (
-                      <p key={i} className="mt-5 text-[17px] leading-[1.75] text-[#B4B4C8]">
+                      <p key={i} className="mt-5 text-[17px] leading-[1.75] text-[#3D4759]">
                         {tekst}
                       </p>
                     ))}
                     <Link
                       href="/cases"
-                      className="group mt-5 inline-flex items-center gap-2 text-sm font-semibold text-[#4F8EF7] transition-colors hover:text-[#7EAEFA]"
+                      className="group mt-5 inline-flex items-center gap-2 text-sm font-semibold text-[#4F8EF7] transition-colors hover:text-[#3A75D8]"
                     >
                       Bekijk beide cases uitgebreider
                       <ArrowRight className="h-3.5 w-3.5 transition-transform group-hover:translate-x-1" />
@@ -227,17 +227,17 @@ export default function AutomatiseringMkbPage() {
             {/* Veelgestelde vragen */}
             <h2
               id="vragen"
-              className="mt-14 scroll-mt-28 font-[family-name:var(--font-heading)] text-2xl font-bold leading-snug text-white md:text-[1.75rem]"
+              className="mt-14 scroll-mt-28 font-[family-name:var(--font-heading)] text-2xl font-bold leading-snug text-[#10182B] md:text-[1.75rem]"
             >
               Veelgestelde vragen
             </h2>
             <div className="mt-2">
               {vragen.map((v) => (
-                <div key={v.vraag} className="mt-7 border-t border-[#2E2E4A] pt-7">
-                  <h3 className="font-[family-name:var(--font-heading)] text-[17px] font-bold text-white">
+                <div key={v.vraag} className="mt-7 border-t border-[#DCE6F5] pt-7">
+                  <h3 className="font-[family-name:var(--font-heading)] text-[17px] font-bold text-[#10182B]">
                     {v.vraag}
                   </h3>
-                  <p className="mt-3 text-[17px] leading-[1.75] text-[#B4B4C8]">{v.antwoord}</p>
+                  <p className="mt-3 text-[17px] leading-[1.75] text-[#3D4759]">{v.antwoord}</p>
                 </div>
               ))}
             </div>
@@ -251,11 +251,11 @@ export default function AutomatiseringMkbPage() {
       <section className="relative py-20">
         <div className="mx-auto max-w-[760px] px-6">
           <AnimateIn>
-            <div className="rounded-xl border border-[#2E2E4A] bg-[#1E1E30] p-8">
-              <h2 className="font-[family-name:var(--font-heading)] text-2xl font-bold text-white">
+            <div className="rounded-xl border border-[#DCE6F5] bg-white shadow-[0_1px_2px_rgba(16,24,43,0.04),0_16px_40px_-20px_rgba(79,142,247,0.25)] p-8">
+              <h2 className="font-[family-name:var(--font-heading)] text-2xl font-bold text-[#10182B]">
                 Welk uitzoekwerk zit er bij jou?
               </h2>
-              <p className="mt-4 text-[17px] leading-relaxed text-[#B4B4C8]">
+              <p className="mt-4 text-[17px] leading-relaxed text-[#3D4759]">
                 Weet je al waar het bij jou blijft hangen, plan dan een gesprek. Weet je het nog
                 niet precies, doe dan eerst de zelfscan. Die loopt langs de plekken waar dit werk
                 zich meestal ophoopt en geeft aan waar bij jou de meeste tijd in gaat zitten.
@@ -263,14 +263,14 @@ export default function AutomatiseringMkbPage() {
               <div className="mt-8 flex flex-wrap gap-3">
                 <Link
                   href="/contact"
-                  className="group inline-flex items-center gap-2 rounded-full bg-[#4F8EF7] px-6 py-3 text-sm font-semibold text-[#0d0d18] transition-all duration-300 hover:bg-[#3A75D8]"
+                  className="group inline-flex items-center gap-2 rounded-full bg-[#4F8EF7] px-6 py-3 text-sm font-semibold text-[#FFFFFF] transition-all duration-300 hover:bg-[#3A75D8]"
                 >
                   Plan een gesprek
                   <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
                 </Link>
                 <Link
                   href="/configurator"
-                  className="inline-flex items-center gap-2 rounded-full border border-[#2E2E4A] px-6 py-3 text-sm font-semibold text-[#EDEDF4] transition-all duration-300 hover:border-[#4F8EF7]/40 hover:text-[#4F8EF7]"
+                  className="inline-flex items-center gap-2 rounded-full border border-[#C9D8F0] px-6 py-3 text-sm font-semibold text-[#2B3446] transition-all duration-300 hover:border-[#4F8EF7]/40 hover:text-[#4F8EF7]"
                 >
                   Doe de zelfscan
                 </Link>
@@ -280,7 +280,7 @@ export default function AutomatiseringMkbPage() {
 
           <Link
             href="/kennisbank"
-            className="group mt-10 inline-flex items-center gap-2 text-sm font-semibold text-[#8585A3] transition-colors hover:text-[#4F8EF7]"
+            className="group mt-10 inline-flex items-center gap-2 text-sm font-semibold text-[#5F6B85] transition-colors hover:text-[#4F8EF7]"
           >
             <ArrowLeft className="h-3.5 w-3.5 transition-transform group-hover:-translate-x-1" />
             Terug naar de kennisbank

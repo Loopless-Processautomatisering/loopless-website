@@ -207,7 +207,7 @@ export const secties: Sectie[] = [
 export const cases = [
   {
     naam: "Een recruitmentbedrijf",
-    accent: "#4CC5E8",
+    accent: "#22B8CF",
     ervoor:
       "Het team deed het voorwerk zelf: bedrijven opzoeken, beoordelen of er iets te halen viel, gegevens overtypen. Werk dat af moest zijn voordat er überhaupt iemand gebeld kon worden. Het gevolg was dat de ochtend opging aan voorbereiding en het bellen, waar ze goed in zijn, pas daarna begon.",
     erna:
@@ -215,7 +215,7 @@ export const cases = [
   },
   {
     naam: "Een groothandel",
-    accent: "#A78BFA",
+    accent: "#7C5CE6",
     ervoor:
       "De inkopers liepen hun lijst artikel voor artikel na: voorraad checken, verbruik van eerdere periodes erbij pakken, inschatten wat er besteld moest worden. Uitzoekwerk dat elke keer terugkwam en dat elke keer hetzelfde was.",
     erna:

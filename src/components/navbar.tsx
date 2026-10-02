@@ -44,7 +44,7 @@ export function Navbar() {
         className={cn(
           "fixed top-0 left-0 right-0 z-50 transition-all duration-300",
           scrolled
-            ? "bg-[#161625]/92 backdrop-blur-xl shadow-[0_1px_0_#2E2E4A]"
+            ? "bg-white/85 backdrop-blur-xl shadow-[0_1px_0_#DCE6F5]"
             : "bg-transparent"
         )}
       >
@@ -63,8 +63,8 @@ export function Navbar() {
                 className={cn(
                   "relative text-sm font-medium transition-colors",
                   pathname === item.href
-                    ? "text-white after:absolute after:-bottom-1.5 after:left-0 after:right-0 after:h-0.5 after:rounded-full after:bg-[#4F8EF7]"
-                    : "text-[#8585A3] hover:text-white"
+                    ? "text-[#10182B] after:absolute after:-bottom-1.5 after:left-0 after:right-0 after:h-0.5 after:rounded-full after:bg-[#4F8EF7]"
+                    : "text-[#5F6B85] hover:text-[#10182B]"
                 )}
               >
                 {item.label}
@@ -85,9 +85,9 @@ export function Navbar() {
             aria-label="Menu"
           >
             {mobileOpen ? (
-              <X className="h-6 w-6 text-white" />
+              <X className="h-6 w-6 text-[#10182B]" />
             ) : (
-              <Menu className="h-6 w-6 text-white" />
+              <Menu className="h-6 w-6 text-[#10182B]" />
             )}
           </button>
         </div>
@@ -96,7 +96,7 @@ export function Navbar() {
       {/* Mobile fullscreen nav — outside header to avoid backdrop-blur containing block */}
       <nav
         className={cn(
-          "fixed inset-0 z-[45] flex flex-col items-center justify-center gap-6 bg-[#161625] transition-all duration-300 md:hidden",
+          "fixed inset-0 z-[45] flex flex-col items-center justify-center gap-6 bg-[#FFFFFF] transition-all duration-300 md:hidden",
           mobileOpen
             ? "opacity-100 pointer-events-auto"
             : "opacity-0 pointer-events-none"
@@ -110,8 +110,8 @@ export function Navbar() {
             className={cn(
               "text-lg font-medium transition-colors",
               pathname === item.href
-                ? "text-white"
-                : "text-[#8585A3] hover:text-white"
+                ? "text-[#10182B]"
+                : "text-[#5F6B85] hover:text-[#10182B]"
             )}
           >
             {item.label}

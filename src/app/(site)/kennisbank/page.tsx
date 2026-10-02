@@ -34,12 +34,12 @@ export default function KennisbankPage() {
       <section className="relative pb-16 pt-40">
         <div className="mx-auto max-w-[900px] px-6">
           <AnimateIn>
-            <h1 className="font-[family-name:var(--font-heading)] text-5xl font-bold text-white md:text-6xl">
+            <h1 className="font-[family-name:var(--font-heading)] text-5xl font-bold text-[#10182B] md:text-6xl">
               Kennisbank
             </h1>
           </AnimateIn>
           <AnimateIn delay={0.1}>
-            <p className="mt-4 max-w-[600px] text-xl text-[#8585A3]">
+            <p className="mt-4 max-w-[600px] text-xl text-[#5F6B85]">
               Uitleg zonder verkooppraat, voor wie zelf wil bepalen of automatiseren bij hem past.
             </p>
           </AnimateIn>
@@ -53,12 +53,12 @@ export default function KennisbankPage() {
               <AnimateIn key={a.href} delay={0.1 + i * 0.05}>
                 <Link
                   href={a.href}
-                  className="group block rounded-xl border border-[#2E2E4A] bg-[#1E1E30] p-8 transition-all duration-300 hover:-translate-y-0.5 hover:border-[#4F8EF7]/40 hover:shadow-[0_8px_24px_-12px_rgba(79,142,247,0.3)]"
+                  className="group block rounded-xl border border-[#DCE6F5] bg-white shadow-[0_1px_2px_rgba(16,24,43,0.04),0_16px_40px_-20px_rgba(79,142,247,0.25)] p-8 transition-all duration-300 hover:-translate-y-0.5 hover:border-[#4F8EF7]/40 hover:shadow-[0_8px_24px_-12px_rgba(79,142,247,0.3)]"
                 >
-                  <h2 className="font-[family-name:var(--font-heading)] text-2xl font-bold leading-snug text-white">
+                  <h2 className="font-[family-name:var(--font-heading)] text-2xl font-bold leading-snug text-[#10182B]">
                     {a.titel}
                   </h2>
-                  <p className="mt-4 max-w-[640px] leading-relaxed text-[#8585A3]">
+                  <p className="mt-4 max-w-[640px] leading-relaxed text-[#5F6B85]">
                     {a.omschrijving}
                   </p>
                   <div className="mt-6 flex items-center gap-2 text-sm font-semibold text-[#4F8EF7]">

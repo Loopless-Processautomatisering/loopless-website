@@ -3,6 +3,23 @@ import Link from "next/link";
 import { AnimateIn } from "@/components/ui/animate-in";
 import { PageGlow, SectionDivider } from "@/components/page-glow";
 import { Target, FileText, BarChart3, PackageSearch } from "lucide-react";
+import { DustField } from "@/components/home-visuals/dust-field";
+import { ServiceArt } from "@/components/home-visuals/service-art";
+import {
+  AnswerSnippet,
+  LeadListSnippet,
+  OrderAdviceSnippet,
+  QuoteSnippet,
+} from "@/components/home-visuals/case-snippets";
+
+// Per dienst een bewegend schermpje dat laat zien wat het systeem klaarzet (oktober 2026,
+// dezelfde beeldtaal als de home). Voorbeelddata.
+const visuals: Record<string, React.ReactNode> = {
+  "inkoop-besteladvies": <OrderAdviceSnippet />,
+  "lead-qualification": <LeadListSnippet />,
+  "offerte-automatisering": <QuoteSnippet />,
+  kennisbank: <AnswerSnippet />,
+};
 
 export const metadata: Metadata = {
   title: "Diensten: AI-automatisering op maat voor het MKB",
@@ -72,7 +89,7 @@ const diensten = [
     ],
     highlight: "Zo werkt het bij vuljevacature.nl: de leadkwalificatie draait elke ochtend vanzelf, het team benadert de kandidaten.",
     voorWie: "Recruitmentbureaus en salesteams die dagelijks tijd kwijt zijn aan het zoeken en kwalificeren van leads",
-    accentColor: "#22D3EE",
+    accentColor: "#0EA5C6",
   },
   {
     id: "offerte-automatisering",
@@ -86,7 +103,7 @@ const diensten = [
       "Wie de offerte maakt, begint niet meer bij nul maar bij een concept dat al klopt.",
     ],
     voorWie: "Bedrijven die projectoffertes opstellen met vaste tarieven, zoals aannemers, groenvoorzieningsbedrijven en consultants",
-    accentColor: "#A78BFA",
+    accentColor: "#7C5CE6",
   },
   {
     id: "kennisbank",
@@ -100,7 +117,7 @@ const diensten = [
       "Geen zoeken meer, geen collega storen. De expert doet weer zijn eigen werk, en iedereen krijgt toch antwoord.",
     ],
     voorWie: "Bedrijven met veel interne documenten, handleidingen of procedures waar medewerkers dagelijks in moeten zoeken",
-    accentColor: "#E8A04E",
+    accentColor: "#C77B16",
   },
 ];
 
@@ -113,15 +130,17 @@ export default function DienstenPage() {
       />
       <PageGlow />
       {/* Hero + anchor nav */}
-      <section className="relative pb-12 pt-40">
-        <div className="mx-auto max-w-[1200px] px-6">
+      <section className="relative overflow-hidden pb-12 pt-40">
+        {/* drijvend stof achter de kop, zoals op de home */}
+        <DustField className="pointer-events-none absolute inset-0 h-full w-full [mask-image:linear-gradient(to_bottom,black_60%,transparent)]" />
+        <div className="relative mx-auto max-w-[1200px] px-6">
           <AnimateIn>
-            <h1 className="mb-4 font-[family-name:var(--font-heading)] text-5xl font-bold text-white md:text-6xl">
+            <h1 className="mb-4 font-[family-name:var(--font-heading)] text-5xl font-bold text-[#10182B] md:text-6xl">
               Het werk waarvoor je niemand hebt aangenomen
             </h1>
           </AnimateIn>
           <AnimateIn delay={0.1}>
-            <p className="max-w-[600px] text-xl text-[#8585A3]">
+            <p className="max-w-[600px] text-xl text-[#5F6B85]">
               Uitzoeken, overtypen, mail doorspitten, gegevens bij elkaar rapen. Wij bouwen systemen die dat werk op de achtergrond doen. Jouw mensen controleren en beslissen.
             </p>
           </AnimateIn>
@@ -133,14 +152,14 @@ export default function DienstenPage() {
                 <a
                   key={d.id}
                   href={`#${d.id}`}
-                  className="rounded-full border border-[#2E2E4A] px-4 py-2 text-sm font-medium text-[#8585A3] transition-all duration-300 hover:-translate-y-0.5 hover:border-[#4F8EF7]/40 hover:text-white hover:shadow-[0_4px_12px_-4px_rgba(79,142,247,0.2)]"
+                  className="rounded-full border border-[#C9D8F0] px-4 py-2 text-sm font-medium text-[#5F6B85] transition-all duration-300 hover:-translate-y-0.5 hover:border-[#4F8EF7]/40 hover:text-[#10182B] hover:shadow-[0_4px_12px_-4px_rgba(79,142,247,0.2)]"
                 >
                   {d.navLabel}
                 </a>
               ))}
               <a
                 href="#maatwerk"
-                className="rounded-full border border-[#2E2E4A] px-4 py-2 text-sm font-medium text-[#8585A3] transition-all duration-300 hover:-translate-y-0.5 hover:border-[#4F8EF7]/40 hover:text-white hover:shadow-[0_4px_12px_-4px_rgba(79,142,247,0.2)]"
+                className="rounded-full border border-[#C9D8F0] px-4 py-2 text-sm font-medium text-[#5F6B85] transition-all duration-300 hover:-translate-y-0.5 hover:border-[#4F8EF7]/40 hover:text-[#10182B] hover:shadow-[0_4px_12px_-4px_rgba(79,142,247,0.2)]"
               >
                 Maatwerk
               </a>
@@ -155,31 +174,35 @@ export default function DienstenPage() {
           key={dienst.id}
           id={dienst.id}
           className={`relative overflow-hidden py-24 md:py-32 ${
-            i % 2 === 1 ? "bg-[#1A1A2E]" : ""
+            i % 2 === 1 ? "bg-[#F3F7FD]" : ""
           }`}
         >
-          <div className="mx-auto max-w-[900px] px-6">
+          <div
+            className={`mx-auto grid max-w-[1150px] items-center gap-12 px-6 md:grid-cols-[1.1fr_0.9fr] md:gap-16 ${
+              i % 2 === 1 ? "md:[&>*:first-child]:order-2" : ""
+            }`}
+          >
             <AnimateIn>
               <article>
                 <div className="mb-8 flex items-start gap-5">
                   <div
-                    className="flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-lg bg-[#2E2E4A] transition-colors duration-300 hover:bg-[#3E3E5A]"
+                    className="flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-lg bg-[#EAF1FC] transition-colors duration-300 hover:bg-[#B7CBEE]"
                     style={{ color: dienst.accentColor }}
                   >
                     {dienst.icon}
                   </div>
-                  <h2 className="font-[family-name:var(--font-heading)] text-2xl font-bold text-white md:text-3xl">
+                  <h2 className="font-[family-name:var(--font-heading)] text-2xl font-bold text-[#10182B] md:text-3xl">
                     {dienst.title}
                   </h2>
                 </div>
 
-                <p className="mb-6 text-lg font-medium text-[#EDEDF4]">
+                <p className="mb-6 text-lg font-medium text-[#2B3446]">
                   {dienst.subtitle}
                 </p>
 
                 <div className="mb-8 flex flex-col gap-4">
                   {dienst.paragraphs.map((p) => (
-                    <p key={p} className="text-[#8585A3] leading-relaxed">{p}</p>
+                    <p key={p} className="text-[#5F6B85] leading-relaxed">{p}</p>
                   ))}
                 </div>
 
@@ -188,16 +211,24 @@ export default function DienstenPage() {
                     className="mb-8 border-l-2 py-1 pl-6"
                     style={{ borderColor: dienst.accentColor }}
                   >
-                    <p className="text-[#EDEDF4]">{dienst.highlight}</p>
+                    <p className="text-[#2B3446]">{dienst.highlight}</p>
                   </div>
                 )}
 
-                <p className="text-sm text-[#8585A3]">
+                <p className="text-sm text-[#5F6B85]">
                   <span className="font-semibold uppercase tracking-wider" style={{ color: dienst.accentColor }}>Voor wie</span>
-                  <span className="mx-3 text-[#2E2E4A]">|</span>
+                  <span className="mx-3 text-[#DCE6F5]">|</span>
                   {dienst.voorWie}
                 </p>
               </article>
+            </AnimateIn>
+            <AnimateIn delay={0.15} className="relative">
+              <div
+                aria-hidden
+                className="absolute -inset-8 rounded-full blur-3xl"
+                style={{ background: `radial-gradient(circle, ${dienst.accentColor}22, transparent 70%)` }}
+              />
+              <div className="relative">{visuals[dienst.id]}</div>
             </AnimateIn>
           </div>
         </section>
@@ -209,13 +240,16 @@ export default function DienstenPage() {
       <section id="maatwerk" className="py-24 md:py-32">
         <div className="mx-auto max-w-[700px] px-6 text-center">
           <AnimateIn>
-            <h2 className="mb-6 font-[family-name:var(--font-heading)] text-3xl font-bold text-white md:text-4xl">
+            <div className="mx-auto mb-10 h-[130px] max-w-[320px] overflow-hidden rounded-xl border border-[#EEF3FB] bg-[radial-gradient(120%_90%_at_50%_0%,#12A36F14,#F8FBFF_70%)]">
+              <ServiceArt variant="maatwerk" color="#12A36F" />
+            </div>
+            <h2 className="mb-6 font-[family-name:var(--font-heading)] text-3xl font-bold text-[#10182B] md:text-4xl">
               Staat jouw proces er niet tussen?
             </h2>
-            <p className="mb-4 text-lg text-[#EDEDF4]">
+            <p className="mb-4 text-lg text-[#2B3446]">
               Wij beginnen altijd bij het probleem, nooit bij de technologie. Of preciezer: bij de persoon die verzuipt, niet bij de tool.
             </p>
-            <p className="mb-10 text-[#8585A3]">
+            <p className="mb-10 text-[#5F6B85]">
               Eerst brengen we in kaart waar tijd verloren gaat. Dan pas bouwen we een oplossing die past bij hoe jij werkt. Elk MKB-bedrijf met taken die te veel tijd kosten is welkom.
             </p>
             <Link
@@ -224,11 +258,11 @@ export default function DienstenPage() {
             >
               Vertel over je proces
             </Link>
-            <p className="mt-8 text-sm text-[#8585A3]">
+            <p className="mt-8 text-sm text-[#5F6B85]">
               Weet je nog niet waar je moet beginnen?{" "}
               <Link
                 href="/kennisbank/automatisering-mkb"
-                className="font-semibold text-[#4F8EF7] transition-colors hover:text-[#7EAEFA]"
+                className="font-semibold text-[#4F8EF7] transition-colors hover:text-[#3A75D8]"
               >
                 Lees eerst hoe je dat bepaalt
               </Link>

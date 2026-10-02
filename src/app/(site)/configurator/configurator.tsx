@@ -250,17 +250,17 @@ export function Configurator() {
       {step === "grootte" && (
         <>
           <div className="mb-8">
-            <h1 className="mb-4 font-[family-name:var(--font-heading)] text-3xl font-bold text-white md:text-4xl">
+            <h1 className="mb-4 font-[family-name:var(--font-heading)] text-3xl font-bold text-[#10182B] md:text-4xl">
               Welk werk zou een systeem bij jou kunnen overnemen?
             </h1>
-            <p className="text-lg leading-relaxed text-[#8585A3]">
+            <p className="text-lg leading-relaxed text-[#5F6B85]">
               Drie vragen, ongeveer 2 minuten. Je krijgt een concreet overzicht, geen
               verkooppraatje. Niemand wordt vervangen: jouw mensen controleren en beslissen.
             </p>
           </div>
           <Panel>
             <StepLabel n={1} />
-            <h2 className="mb-6 font-[family-name:var(--font-heading)] text-2xl font-bold text-white">
+            <h2 className="mb-6 font-[family-name:var(--font-heading)] text-2xl font-bold text-[#10182B]">
               Hoeveel mensen werken er bij jullie?
             </h2>
             <div className="grid gap-3 sm:grid-cols-2">
@@ -278,11 +278,11 @@ export function Configurator() {
       {step === "kaarten" && (
         <Panel>
           <StepLabel n={2} />
-          <h2 className="mb-2 font-[family-name:var(--font-heading)] text-2xl font-bold text-white">
+          <h2 className="mb-2 font-[family-name:var(--font-heading)] text-2xl font-bold text-[#10182B]">
             Je mensen zijn meer tijd kwijt aan uitzoeken dan aan hun eigenlijke werk. Waar zit dat
             bij jou?
           </h2>
-          <p className="mb-6 text-[#8585A3]">
+          <p className="mb-6 text-[#5F6B85]">
             Wij bouwen systemen die het werk afleveren, niet nog een chatbox. Kies wat herkenbaar
             is, meerdere mag.
           </p>
@@ -296,7 +296,7 @@ export function Configurator() {
               </ChoiceButton>
             ))}
           </div>
-          <div className="mt-6 border-t border-[#2E2E4A] pt-6">
+          <div className="mt-6 border-t border-[#DCE6F5] pt-6">
             <div className="grid gap-3 sm:grid-cols-2">
               <ChoiceButton active={gekozen.includes(MODIFIER_ID)} onClick={() => toggle(MODIFIER_ID)}>
                 <span className="block font-semibold">Kennis zit in één hoofd</span>
@@ -327,8 +327,8 @@ export function Configurator() {
             const s = SHARPEN[c.id]!;
             return (
               <div key={c.id} className="mb-8">
-                <p className="mb-1 text-sm text-[#8585A3]">Over &ldquo;{c.pijn}&rdquo;:</p>
-                <h3 className="mb-4 font-[family-name:var(--font-heading)] text-xl font-bold text-white">
+                <p className="mb-1 text-sm text-[#5F6B85]">Over &ldquo;{c.pijn}&rdquo;:</p>
+                <h3 className="mb-4 font-[family-name:var(--font-heading)] text-xl font-bold text-[#10182B]">
                   {s.vraag}
                 </h3>
                 <div className="flex flex-col gap-3">
@@ -356,10 +356,10 @@ export function Configurator() {
       {step === "gegevens" && (
         <Panel>
           <StepLabel n={3} />
-          <h2 className="mb-2 font-[family-name:var(--font-heading)] text-2xl font-bold text-white">
+          <h2 className="mb-2 font-[family-name:var(--font-heading)] text-2xl font-bold text-[#10182B]">
             Bijna klaar. Waar mag het overzicht heen?
           </h2>
-          <p className="mb-6 text-[#8585A3]">
+          <p className="mb-6 text-[#5F6B85]">
             Je ziet het overzicht direct op je scherm en krijgt het ook per mail. Je praat straks
             direct met degene die het bouwt, geen verkoper.
           </p>
@@ -380,7 +380,7 @@ export function Configurator() {
             aria-hidden="true"
             className="hidden"
           />
-          <p className="mb-2 text-xs text-[#8585A3]">
+          <p className="mb-2 text-xs text-[#5F6B85]">
             We gebruiken je gegevens alleen om je het overzicht te mailen en er één keer contact
             over op te nemen. Zie de{" "}
             <Link href="/privacy" className="text-[#4F8EF7] hover:underline">
@@ -388,7 +388,7 @@ export function Configurator() {
             </Link>
             .
           </p>
-          {formError && <p className="mb-2 text-sm text-[#E8A04E]">{formError}</p>}
+          {formError && <p className="mb-2 text-sm text-[#C77B16]">{formError}</p>}
           <NavRow
             terug={() => setStep(sharpenTargets.length > 0 ? "aanscherping" : "kaarten")}
             verder={submit}
@@ -401,16 +401,16 @@ export function Configurator() {
       {step === "uitslag" && (
         <div className="flex flex-col gap-6">
           <Panel>
-            <h2 className="mb-2 font-[family-name:var(--font-heading)] text-3xl font-bold text-white">
+            <h2 className="mb-2 font-[family-name:var(--font-heading)] text-3xl font-bold text-[#10182B]">
               {isEscapeOnly ? "Dan is een gesprek eerlijker dan een uitslag." : `Dit staat er voor jou klaar, ${naam.split(" ")[0]}.`}
             </h2>
-            <p className="text-[#8585A3]">
+            <p className="text-[#5F6B85]">
               {isEscapeOnly
                 ? "Jouw situatie past niet in een standaardhokje, en dat gaan we ook niet forceren. In een kort gesprek komen we er samen achter waar de tijd bij jullie echt blijft hangen, en of een systeem daar iets kan betekenen."
                 : "Geen offerte, geen verplichting: dit is wat een systeem bij jullie zou kunnen overnemen, op basis van wat je aangaf."}
             </p>
             {sendFailed && (
-              <p className="mt-4 text-sm text-[#E8A04E]">
+              <p className="mt-4 text-sm text-[#C77B16]">
                 Door een technisch probleem zijn je gegevens niet verstuurd. Het overzicht hieronder
                 klopt gewoon, maar mail even naar{" "}
                 <a href="mailto:wessel@loopless.nl" className="font-semibold underline">
@@ -429,21 +429,21 @@ export function Configurator() {
 
           {vacatureNaarVakwerk && (
             <Panel>
-              <h3 className="mb-3 font-[family-name:var(--font-heading)] text-xl font-bold text-white">
+              <h3 className="mb-3 font-[family-name:var(--font-heading)] text-xl font-bold text-[#10182B]">
                 {VAKWERK_PANEL.kop}
               </h3>
-              <p className="leading-relaxed text-[#8585A3]">{VAKWERK_PANEL.tekst}</p>
+              <p className="leading-relaxed text-[#5F6B85]">{VAKWERK_PANEL.tekst}</p>
             </Panel>
           )}
 
           {nuances.length > 0 && (
             <Panel>
-              <h3 className="mb-3 font-[family-name:var(--font-heading)] text-lg font-bold text-white">
+              <h3 className="mb-3 font-[family-name:var(--font-heading)] text-lg font-bold text-[#10182B]">
                 Eerlijk erbij
               </h3>
               <ul className="flex flex-col gap-2">
                 {nuances.map((n) => (
-                  <li key={n} className="leading-relaxed text-[#8585A3]">
+                  <li key={n} className="leading-relaxed text-[#5F6B85]">
                     {n}
                   </li>
                 ))}
@@ -452,13 +452,13 @@ export function Configurator() {
           )}
 
           <Panel>
-            <h3 className="mb-3 font-[family-name:var(--font-heading)] text-lg font-bold text-white">
+            <h3 className="mb-3 font-[family-name:var(--font-heading)] text-lg font-bold text-[#10182B]">
               Wat je krijgt als je doorgaat
             </h3>
-            <p className="mb-6 text-[#EDEDF4]">{BELOFTE}</p>
+            <p className="mb-6 text-[#2B3446]">{BELOFTE}</p>
 
             {gesprek === "done" ? (
-              <p className="text-[#EDEDF4]">
+              <p className="text-[#2B3446]">
                 <span className="font-semibold">Genoteerd, {naam.split(" ")[0]}.</span> Wessel mailt
                 je binnen 24 uur om een moment te prikken. Liever meteen zelf?{" "}
                 <a href="mailto:wessel@loopless.nl" className="font-semibold underline">
@@ -471,7 +471,7 @@ export function Configurator() {
                   {gesprek === "sending" ? "Momentje..." : "Ja, ik wil hier een gesprek over"}
                 </PrimaryButton>
                 {gesprek === "error" && (
-                  <p className="mt-4 text-sm text-[#E8A04E]">
+                  <p className="mt-4 text-sm text-[#C77B16]">
                     Dat lukte niet door een technisch probleem. Mail even naar{" "}
                     <a href="mailto:wessel@loopless.nl" className="font-semibold underline">
                       wessel@loopless.nl
@@ -482,7 +482,7 @@ export function Configurator() {
               </>
             )}
 
-            <p className="mt-6 text-sm text-[#8585A3]">
+            <p className="mt-6 text-sm text-[#5F6B85]">
               Eerst zien wat we bouwen?{" "}
               <Link href="/diensten" className="font-medium text-[#4F8EF7] hover:underline">
                 Bekijk de diensten
@@ -504,7 +504,7 @@ function UitslagKaart({ kaart, standaardOpen }: { kaart: Card; standaardOpen: bo
         aria-expanded={open}
         className="flex w-full items-start justify-between gap-4 text-left"
       >
-        <h3 className="font-[family-name:var(--font-heading)] text-xl font-bold text-white">
+        <h3 className="font-[family-name:var(--font-heading)] text-xl font-bold text-[#10182B]">
           {kaart.kop}
         </h3>
         <span
@@ -516,10 +516,10 @@ function UitslagKaart({ kaart, standaardOpen }: { kaart: Card; standaardOpen: bo
       </button>
       {open && (
         <div className="mt-3">
-          <p className="mb-3 leading-relaxed text-[#8585A3]">{kaart.body}</p>
-          <p className="mb-3 font-medium text-[#EDEDF4]">{kaart.controle}</p>
+          <p className="mb-3 leading-relaxed text-[#5F6B85]">{kaart.body}</p>
+          <p className="mb-3 font-medium text-[#2B3446]">{kaart.controle}</p>
           {kaart.bewijs && (
-            <p className="border-l-2 border-[#4F8EF7] pl-4 text-sm italic text-[#8585A3]">
+            <p className="border-l-2 border-[#4F8EF7] pl-4 text-sm italic text-[#5F6B85]">
               {kaart.bewijs}
             </p>
           )}
@@ -531,7 +531,7 @@ function UitslagKaart({ kaart, standaardOpen }: { kaart: Card; standaardOpen: bo
 
 function Panel({ children }: { children: React.ReactNode }) {
   return (
-    <div className="rounded-xl border border-[#2E2E4A] bg-[#1E1E30] p-8 md:p-10">{children}</div>
+    <div className="rounded-xl border border-[#DCE6F5] bg-white shadow-[0_1px_2px_rgba(16,24,43,0.04),0_16px_40px_-20px_rgba(79,142,247,0.25)] p-8 md:p-10">{children}</div>
   );
 }
 
@@ -543,7 +543,7 @@ function StepLabel({ n }: { n: number }) {
       <span className="mb-2 block text-xs font-medium uppercase tracking-[0.2em] text-[#4F8EF7]">
         Vraag {n} van {TOTAAL_VRAGEN}
       </span>
-      <div className="h-1 w-full overflow-hidden rounded-full bg-[#2E2E4A]">
+      <div className="h-1 w-full overflow-hidden rounded-full bg-[#EAF1FC]">
         <div
           className="h-full rounded-full bg-[#4F8EF7] transition-all"
           style={{ width: `${(n / TOTAAL_VRAGEN) * 100}%` }}
@@ -571,8 +571,8 @@ function ChoiceButton({ children, active, onClick }: { children: React.ReactNode
       onClick={onClick}
       className={`rounded-xl border px-5 py-4 text-left transition-all ${
         active
-          ? "border-[#4F8EF7] bg-[#4F8EF7]/10 text-white"
-          : "border-[#2E2E4A] bg-[#161625] text-[#8585A3] hover:border-[#3E3E5A] hover:text-white"
+          ? "border-[#4F8EF7] bg-[#4F8EF7]/10 text-[#10182B]"
+          : "border-[#DCE6F5] bg-[#F7FAFF] text-[#5F6B85] hover:border-[#B7CBEE] hover:text-[#10182B]"
       }`}
     >
       {children}
@@ -584,7 +584,7 @@ function NavRow({ terug, verder, verderDisabled, verderLabel }: { terug?: () => 
   return (
     <div className="mt-8 flex items-center justify-between">
       {terug ? (
-        <button onClick={terug} className="text-sm font-medium text-[#8585A3] transition-colors hover:text-white">
+        <button onClick={terug} className="text-sm font-medium text-[#5F6B85] transition-colors hover:text-[#10182B]">
           Terug
         </button>
       ) : (
@@ -600,13 +600,13 @@ function NavRow({ terug, verder, verderDisabled, verderLabel }: { terug?: () => 
 function Input({ label, placeholder, value, onChange, type = "text" }: { label: string; placeholder: string; value: string; onChange: (v: string) => void; type?: string }) {
   return (
     <label className="block">
-      <span className="mb-1.5 block text-sm font-medium text-[#EDEDF4]">{label}</span>
+      <span className="mb-1.5 block text-sm font-medium text-[#2B3446]">{label}</span>
       <input
         type={type}
         placeholder={placeholder}
         value={value}
         onChange={(e) => onChange(e.target.value)}
-        className="w-full rounded-xl border border-[#2E2E4A] bg-[#161625] px-5 py-4 text-white placeholder-[#8585A3] outline-none transition-colors focus:border-[#4F8EF7]"
+        className="w-full rounded-xl border border-[#DCE6F5] bg-[#F7FAFF] px-5 py-4 text-[#10182B] placeholder-[#5F6B85] outline-none transition-colors focus:border-[#4F8EF7]"
       />
     </label>
   );
