@@ -264,11 +264,11 @@ export default async function Home() {
             <h2 className="mb-4 font-[family-name:var(--font-heading)] text-4xl font-bold text-[#10182B]">Hoe dat uitpakt</h2>
             <p className="text-[#5F6B85]">{caseIntro}</p>
           </AnimateIn>
-          <StaggerContainer className="grid gap-6 md:grid-cols-2" staggerDelay={0.15}>
+          <StaggerContainer className="grid grid-cols-1 gap-6 md:grid-cols-2" staggerDelay={0.15}>
             <StaggerItem>
               <div className="flex h-full flex-col gap-6 rounded-xl border border-[#DCE6F5] bg-white shadow-[0_1px_2px_rgba(16,24,43,0.04),0_16px_40px_-20px_rgba(79,142,247,0.25)] p-8 transition-colors duration-300 hover:border-[#B7CBEE] md:p-10">
                 <LeadListSnippet />
-                <div className="flex items-center gap-4">
+                <div className="flex flex-wrap items-center gap-x-4 gap-y-2">
                   <a href="https://vuljevacature.nl" target="_blank" rel="noopener noreferrer" className="opacity-90 drop-shadow-[0_4px_14px_rgba(79,142,247,0.35)] transition-opacity hover:opacity-100">
                     <Image
                       src="/clients/vuljevacature.png"
@@ -294,7 +294,7 @@ export default async function Home() {
             <StaggerItem>
               <div className="flex h-full flex-col gap-6 rounded-xl border border-[#DCE6F5] bg-white shadow-[0_1px_2px_rgba(16,24,43,0.04),0_16px_40px_-20px_rgba(79,142,247,0.25)] p-8 transition-colors duration-300 hover:border-[#B7CBEE] md:p-10">
                 <OrderAdviceSnippet />
-                <div className="flex items-center gap-4">
+                <div className="flex flex-wrap items-center gap-x-4 gap-y-2">
                   {/* Donkerblauw woordmerk op transparant — licht vlak eronder, anders onzichtbaar op de donkere kaart */}
                   <a
                     href="https://www.drabor.nl"
