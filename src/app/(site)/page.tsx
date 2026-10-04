@@ -5,7 +5,7 @@ import { LoopCircle } from "@/components/loop-circle";
 import { DustField } from "@/components/home-visuals/dust-field";
 import { MiniLoop } from "@/components/home-visuals/mini-loop";
 import { ServiceArt } from "@/components/home-visuals/service-art";
-import { LeadListSnippet, OrderAdviceSnippet } from "@/components/home-visuals/case-snippets";
+import { LeadListSnippet, OrderAdviceSnippet, SupportAnswerSnippet } from "@/components/home-visuals/case-snippets";
 import { PromiseTimeline } from "@/components/home-visuals/promise-timeline";
 import { SectionWithParticles } from "@/components/section-with-particles";
 import { AnimateIn, StaggerContainer, StaggerItem } from "@/components/ui/animate-in";
@@ -28,6 +28,13 @@ const caseDraborResults = [
   "Besteladvies staat klaar met één knop",
   "Het systeem stelt voor, de inkopers beslissen",
   "De cijfers komen uit hun eigen systeem, niet uit een schatting",
+];
+
+// CMYK Consultancy: pas publiceren na go-live en akkoord van de klant op naamsvermelding.
+const caseCmykResults = [
+  "Antwoord uit de eigen handleidingen, met de bron erbij",
+  "Het systeem zoekt op, de specialist controleert",
+  "Staat het er niet in, dan zegt het systeem dat",
 ];
 
 export default async function Home() {
@@ -53,6 +60,8 @@ export default async function Home() {
   const caseDesc = blockText(blocks, "home_case_desc", "Elke ochtend staat de lijst klaar met wie de moeite waard is. Het team begint de dag met bellen in plaats van met zoeken, en bepaalt zelf wie er benaderd wordt.");
   const caseDraborTitle = blockText(blocks, "home_case_drabor_title", "Van lijsten nalopen naar een besteladvies met één knop");
   const caseDraborDesc = blockText(blocks, "home_case_drabor_desc", "De inkopers liepen hun voorraadlijst artikel voor artikel na. Nu vragen ze met één knop het inkooprapport op: wat urgent is, wat er ligt, wat eruit gaat. Ze kijken het na, passen aan waar ze het beter weten, en bestellen.");
+  const caseCmykTitle = blockText(blocks, "home_case_cmyk_title", "Van zelf opzoeken naar een antwoord dat klaarstaat");
+  const caseCmykDesc = blockText(blocks, "home_case_cmyk_desc", "Storingsvragen van klanten kwamen bij twee mensen terecht, die het antwoord zelf opzochten in handleidingen, schema's en onderdelenlijsten. Nu zoekt het systeem het op en zet het antwoord klaar, met erbij waar het staat. Zij lezen het na en sturen het door.");
   const ctaHeading = blockText(blocks, "home_cta_heading", "Benieuwd welk werk bij jou eraf kan?");
   const ctaText = blockText(blocks, "home_cta_text", "Weet je waar het blijft hangen, plan dan een gesprek. Weet je het nog niet precies, kijk dan eerst wat er bij jou kan.");
   const replaceHeading = blockText(blocks, "home_replace_heading", "Vervangt dit mijn mensen? Nee. Bewust niet.");
@@ -256,7 +265,7 @@ export default async function Home() {
         <div className="h-px bg-gradient-to-r from-transparent via-[#DCE6F5] to-transparent" />
       </div>
 
-      {/* Resultaat — twee cases uit verschillende hoeken (positionering: nooit één niche-voorbeeld alleen) */}
+      {/* Resultaat — drie cases uit verschillende hoeken (positionering: nooit één niche-voorbeeld alleen) */}
       <section className="overflow-hidden py-24 md:py-32">
         <div className="mx-auto max-w-[1200px] px-6">
           <AnimateIn className="mb-14 max-w-[560px]">
@@ -320,6 +329,36 @@ export default async function Home() {
                       <span className="font-bold text-[#C77B16]">✓</span> {s}
                     </div>
                   ))}
+                </div>
+              </div>
+            </StaggerItem>
+            {/* Derde case over de volle breedte: schermpje links, verhaal rechts */}
+            <StaggerItem className="md:col-span-2">
+              <div className="grid h-full grid-cols-1 gap-6 rounded-xl border border-[#DCE6F5] bg-white shadow-[0_1px_2px_rgba(16,24,43,0.04),0_16px_40px_-20px_rgba(79,142,247,0.25)] p-8 transition-colors duration-300 hover:border-[#B7CBEE] md:grid-cols-2 md:items-center md:gap-10 md:p-10">
+                <div className="min-w-0">
+                  <SupportAnswerSnippet />
+                </div>
+                <div className="flex min-w-0 flex-col gap-6">
+                  <div className="flex flex-wrap items-center gap-x-4 gap-y-2">
+                    <a
+                      href="https://cmyk-consultancy.com"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="font-[family-name:var(--font-heading)] text-lg font-bold text-[#10182B] transition-colors hover:text-[#4F8EF7]"
+                    >
+                      CMYK Consultancy
+                    </a>
+                    <span className="rounded-full border border-[#4F8EF7]/20 bg-[#4F8EF7]/10 px-3 py-0.5 text-xs font-medium text-[#4F8EF7]">Signbranche</span>
+                  </div>
+                  <h3 className="font-[family-name:var(--font-heading)] text-2xl font-bold text-[#10182B]">{caseCmykTitle}</h3>
+                  <p className="text-[#5F6B85]">{caseCmykDesc}</p>
+                  <div className="flex flex-col gap-2">
+                    {caseCmykResults.map((s) => (
+                      <div key={s} className="flex items-center gap-2 text-[#2B3446]">
+                        <span className="font-bold text-[#C77B16]">✓</span> {s}
+                      </div>
+                    ))}
+                  </div>
                 </div>
               </div>
             </StaggerItem>

@@ -7,18 +7,18 @@ import { PageGlow, SectionDivider } from "@/components/page-glow";
 export const metadata: Metadata = {
   title: "Cases — het uitzoekwerk ging eraf",
   description:
-    "Twee bedrijven waar het uitzoekwerk eraf ging: leads die 's ochtends klaarstaan, en een besteladvies dat met één knop klaarstaat. De mensen beslissen nog steeds zelf.",
+    "Drie bedrijven waar het uitzoekwerk eraf ging: leads die 's ochtends klaarstaan, een besteladvies met één knop, en storingsvragen waar het antwoord al bij ligt. De mensen beslissen nog steeds zelf.",
   alternates: { canonical: "/cases" },
   openGraph: {
     title: "Cases — het uitzoekwerk ging eraf",
     description:
-      "Twee bedrijven waar het uitzoekwerk eraf ging: leads die 's ochtends klaarstaan, en een besteladvies dat met één knop klaarstaat.",
+      "Drie bedrijven waar het uitzoekwerk eraf ging: leads die 's ochtends klaarstaan, een besteladvies met één knop, en storingsvragen waar het antwoord al bij ligt.",
   },
   twitter: {
     card: "summary_large_image",
     title: "Cases — het uitzoekwerk ging eraf",
     description:
-      "Twee bedrijven waar het uitzoekwerk eraf ging: leads die 's ochtends klaarstaan, en een besteladvies dat met één knop klaarstaat.",
+      "Drie bedrijven waar het uitzoekwerk eraf ging: leads die 's ochtends klaarstaan, een besteladvies met één knop, en storingsvragen waar het antwoord al bij ligt.",
   },
 };
 
@@ -55,6 +55,23 @@ const cases = [
       "De cijfers komen uit hun eigen systeem, niet uit een schatting",
     ],
   },
+  // Pas publiceren na go-live en akkoord van de klant op naamsvermelding. Nog geen logo.
+  {
+    naam: "CMYK Consultancy",
+    logo: null,
+    site: "https://cmyk-consultancy.com",
+    lichtVlak: false,
+    chip: "Signbranche",
+    ervoor:
+      "Klanten met een storing aan hun machine kwamen met hun vraag bij twee mensen terecht. Die zochten het antwoord zelf op in handleidingen, schema's en onderdelenlijsten, en schreven het terug. Opzoekwerk dat alleen zij konden doen.",
+    erna:
+      "De vraag gaat het systeem in. Dat zoekt het antwoord op in de eigen documentatie en zet erbij waar het staat. Zij lezen het na, passen aan waar nodig, en sturen het door. Het opzoeken is eraf, het oordeel blijft bij hen.",
+    punten: [
+      "Antwoord uit de eigen handleidingen, met de bron erbij",
+      "Het systeem zoekt op, de specialist controleert",
+      "Staat het er niet in, dan zegt het systeem dat",
+    ],
+  },
 ];
 
 export default function CasesPage() {
@@ -71,7 +88,7 @@ export default function CasesPage() {
           </AnimateIn>
           <AnimateIn delay={0.1}>
             <p className="max-w-[560px] text-lg text-[#5F6B85]">
-              Twee bedrijven, twee soorten uitzoekwerk. In beide gevallen
+              Drie bedrijven, drie soorten uitzoekwerk. In alle drie
               beslist er nog steeds een mens.
             </p>
           </AnimateIn>
