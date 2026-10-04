@@ -28,6 +28,7 @@ const cases = [
     logo: "/clients/vuljevacature.png",
     site: "https://vuljevacature.nl",
     lichtVlak: false,
+    logoKlasse: "",
     chip: "Recruitment",
     ervoor:
       "Het team deed het voorwerk zelf: bedrijven opzoeken, beoordelen of er iets te halen viel, gegevens overtypen. Werk dat af moest zijn voordat er überhaupt iemand gebeld kon worden.",
@@ -44,6 +45,7 @@ const cases = [
     logo: "/clients/drabor.png",
     site: "https://www.drabor.nl",
     lichtVlak: true,
+    logoKlasse: "",
     chip: "Groothandel",
     ervoor:
       "De inkopers liepen hun lijst artikel voor artikel na: voorraad checken, verbruik van eerdere periodes erbij pakken, inschatten wat er besteld moest worden. Uitzoekwerk dat elke keer terugkwam.",
@@ -55,12 +57,14 @@ const cases = [
       "De cijfers komen uit hun eigen systeem, niet uit een schatting",
     ],
   },
-  // Pas publiceren na go-live en akkoord van de klant op naamsvermelding. Nog geen logo.
+  // Pas publiceren na go-live en akkoord van de klant op naamsvermelding en logo.
   {
     naam: "CMYK Consultancy",
-    logo: null,
+    logo: "/clients/cmyk-consultancy.png",
     site: "https://cmyk-consultancy.com",
     lichtVlak: false,
+    // Logo met twee regels: hoger zetten, anders is "consultancy" niet te lezen
+    logoKlasse: "h-12 w-auto",
     chip: "Signbranche",
     ervoor:
       "Klanten met een storing aan hun machine kwamen met hun vraag bij twee mensen terecht. Die zochten het antwoord zelf op in handleidingen, schema's en onderdelenlijsten, en schreven het terug. Opzoekwerk dat alleen zij konden doen.",
@@ -113,7 +117,7 @@ export default function CasesPage() {
                         : "opacity-70 transition-opacity hover:opacity-100"
                     }
                   >
-                    <Image src={c.logo} alt={c.naam} width={120} height={30} className={c.lichtVlak ? "h-6 w-auto" : "h-7 w-auto"} />
+                    <Image src={c.logo} alt={c.naam} width={120} height={30} className={c.logoKlasse || (c.lichtVlak ? "h-6 w-auto" : "h-7 w-auto")} />
                   </a>
                 ) : (
                   <strong className="text-2xl text-[#10182B] font-[family-name:var(--font-heading)]">

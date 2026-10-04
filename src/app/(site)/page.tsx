@@ -344,9 +344,15 @@ export default async function Home() {
                       href="https://cmyk-consultancy.com"
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="font-[family-name:var(--font-heading)] text-lg font-bold text-[#10182B] transition-colors hover:text-[#4F8EF7]"
+                      className="opacity-90 transition-opacity hover:opacity-100"
                     >
-                      CMYK Consultancy
+                      <Image
+                        src="/clients/cmyk-consultancy.png"
+                        alt="CMYK Consultancy"
+                        width={152}
+                        height={56}
+                        className="h-14 w-auto"
+                      />
                     </a>
                     <span className="rounded-full border border-[#4F8EF7]/20 bg-[#4F8EF7]/10 px-3 py-0.5 text-xs font-medium text-[#4F8EF7]">Signbranche</span>
                   </div>
