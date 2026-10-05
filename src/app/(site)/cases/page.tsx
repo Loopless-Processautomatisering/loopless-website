@@ -7,18 +7,18 @@ import { PageGlow, SectionDivider } from "@/components/page-glow";
 export const metadata: Metadata = {
   title: "Cases — het uitzoekwerk ging eraf",
   description:
-    "Twee bedrijven waar het uitzoekwerk eraf ging: leads die 's ochtends klaarstaan, en een besteladvies dat met één knop klaarstaat. De mensen beslissen nog steeds zelf.",
+    "Drie bedrijven waar het uitzoekwerk eraf ging: leads die 's ochtends klaarstaan, een besteladvies met één knop, en storingsvragen waar het antwoord al bij ligt. De mensen beslissen nog steeds zelf.",
   alternates: { canonical: "/cases" },
   openGraph: {
     title: "Cases — het uitzoekwerk ging eraf",
     description:
-      "Twee bedrijven waar het uitzoekwerk eraf ging: leads die 's ochtends klaarstaan, en een besteladvies dat met één knop klaarstaat.",
+      "Drie bedrijven waar het uitzoekwerk eraf ging: leads die 's ochtends klaarstaan, een besteladvies met één knop, en storingsvragen waar het antwoord al bij ligt.",
   },
   twitter: {
     card: "summary_large_image",
     title: "Cases — het uitzoekwerk ging eraf",
     description:
-      "Twee bedrijven waar het uitzoekwerk eraf ging: leads die 's ochtends klaarstaan, en een besteladvies dat met één knop klaarstaat.",
+      "Drie bedrijven waar het uitzoekwerk eraf ging: leads die 's ochtends klaarstaan, een besteladvies met één knop, en storingsvragen waar het antwoord al bij ligt.",
   },
 };
 
@@ -28,6 +28,7 @@ const cases = [
     logo: "/clients/vuljevacature.png",
     site: "https://vuljevacature.nl",
     lichtVlak: false,
+    logoKlasse: "",
     chip: "Recruitment",
     ervoor:
       "Het team deed het voorwerk zelf: bedrijven opzoeken, beoordelen of er iets te halen viel, gegevens overtypen. Werk dat af moest zijn voordat er überhaupt iemand gebeld kon worden.",
@@ -44,6 +45,7 @@ const cases = [
     logo: "/clients/drabor.png",
     site: "https://www.drabor.nl",
     lichtVlak: true,
+    logoKlasse: "",
     chip: "Groothandel",
     ervoor:
       "De inkopers liepen hun lijst artikel voor artikel na: voorraad checken, verbruik van eerdere periodes erbij pakken, inschatten wat er besteld moest worden. Uitzoekwerk dat elke keer terugkwam.",
@@ -53,6 +55,25 @@ const cases = [
       "Besteladvies staat klaar met één knop",
       "Het systeem stelt voor, de inkopers beslissen",
       "De cijfers komen uit hun eigen systeem, niet uit een schatting",
+    ],
+  },
+  // Pas publiceren na go-live en akkoord van de klant op naamsvermelding en logo.
+  {
+    naam: "CMYK Consultancy",
+    logo: "/clients/cmyk-consultancy.png",
+    site: "https://cmyk-consultancy.com",
+    lichtVlak: false,
+    // Logo met twee regels: hoger zetten, anders is "consultancy" niet te lezen
+    logoKlasse: "h-12 w-auto",
+    chip: "Signbranche",
+    ervoor:
+      "Klanten met een storing aan hun machine kwamen met hun vraag bij twee mensen terecht. Die zochten het antwoord zelf op in handleidingen, schema's en onderdelenlijsten, en schreven het terug. Opzoekwerk dat alleen zij konden doen.",
+    erna:
+      "De vraag gaat het systeem in. Dat zoekt het antwoord op in de eigen documentatie en zet erbij waar het staat. Zij lezen het na, passen aan waar nodig, en sturen het door. Het opzoeken is eraf, het oordeel blijft bij hen.",
+    punten: [
+      "Antwoord uit de eigen handleidingen, met de bron erbij",
+      "Het systeem zoekt op, de specialist controleert",
+      "Staat het er niet in, dan zegt het systeem dat",
     ],
   },
 ];
@@ -71,7 +92,7 @@ export default function CasesPage() {
           </AnimateIn>
           <AnimateIn delay={0.1}>
             <p className="max-w-[560px] text-lg text-[#5F6B85]">
-              Twee bedrijven, twee soorten uitzoekwerk. In beide gevallen
+              Drie bedrijven, drie soorten uitzoekwerk. In alle drie
               beslist er nog steeds een mens.
             </p>
           </AnimateIn>
@@ -96,7 +117,7 @@ export default function CasesPage() {
                         : "opacity-70 transition-opacity hover:opacity-100"
                     }
                   >
-                    <Image src={c.logo} alt={c.naam} width={120} height={30} className={c.lichtVlak ? "h-6 w-auto" : "h-7 w-auto"} />
+                    <Image src={c.logo} alt={c.naam} width={120} height={30} className={c.logoKlasse || (c.lichtVlak ? "h-6 w-auto" : "h-7 w-auto")} />
                   </a>
                 ) : (
                   <strong className="text-2xl text-[#10182B] font-[family-name:var(--font-heading)]">

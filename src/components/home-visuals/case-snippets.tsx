@@ -232,3 +232,72 @@ export function AnswerSnippet() {
     </div>
   );
 }
+
+// CMYK Consultancy: een storingsvraag van een klant komt binnen, het antwoord staat klaar
+// met de bron erbij, de specialist kijkt het na. Zelfde amber als de kennisbankdienst.
+// Verzonnen voorbeeld: geen echte machines, codes of leveranciers (geheimhouding).
+export function SupportAnswerSnippet() {
+  const { ref, step } = useCycle(6, 1000);
+  const antwoord =
+    "De melding wijst op de inkttoevoer. Loop de drie controles uit de servicehandleiding na en reset daarna via het servicemenu.";
+  return (
+    <div ref={ref} className={frame}>
+      <div className="flex items-center justify-between border-b border-[#EEF3FB] px-4 py-2.5 text-[11px]">
+        <span className="flex items-center gap-1.5 font-semibold text-[#1F2D52]">
+          <span className="h-1.5 w-1.5 rounded-full bg-[#C77B16] shadow-[0_0_8px_rgba(199,123,22,0.7)]" />
+          Binnengekomen: storing bij klant
+        </span>
+        <span className="text-[#9AA6BE]">10:42</span>
+      </div>
+      <div className="flex min-h-[188px] flex-col gap-2 p-3 text-xs">
+        <div className="max-w-[92%] rounded-xl rounded-bl-sm bg-[#EEF3FB] px-3 py-2 text-[#2B3446]">
+          De printer stopt halverwege en geeft een foutmelding op het scherm. Wat moeten we doen?
+        </div>
+        {step >= 1 && (
+          <motion.div
+            initial={{ opacity: 0, y: 6 }}
+            animate={{ opacity: 1, y: 0 }}
+            className="max-w-[92%] self-end rounded-xl rounded-br-sm border border-[#C77B16]/25 bg-[#C77B16]/[0.06] px-3 py-2 text-[#2B3446]"
+          >
+            {step === 1 ? (
+              <span className="inline-flex gap-1">
+                {[0, 1, 2].map((i) => (
+                  <motion.span
+                    key={i}
+                    className="h-1.5 w-1.5 rounded-full bg-[#C77B16]/60"
+                    animate={{ opacity: [0.3, 1, 0.3] }}
+                    transition={{ duration: 0.9, repeat: Infinity, delay: i * 0.15 }}
+                  />
+                ))}
+              </span>
+            ) : (
+              antwoord
+            )}
+          </motion.div>
+        )}
+        {step >= 3 && (
+          <motion.span
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            className="inline-flex w-fit items-center gap-1 self-end rounded-full border border-[#DCE6F5] bg-white px-2.5 py-0.5 text-[10px] text-[#5F6B85]"
+          >
+            Bron: Servicehandleiding, hoofdstuk 6
+          </motion.span>
+        )}
+        {step >= 4 && (
+          <motion.div
+            initial={{ opacity: 0, y: 6 }}
+            animate={{ opacity: 1, y: 0 }}
+            className="mt-auto flex items-center justify-between gap-3 px-1"
+          >
+            <span className="text-[11px] text-[#9AA6BE]">De specialist kijkt het na.</span>
+            <span className="inline-flex items-center gap-1 rounded-full bg-[#C77B16] px-3 py-1 text-[11px] font-semibold text-white">
+              <Check className="h-3 w-3" />
+              Doorsturen
+            </span>
+          </motion.div>
+        )}
+      </div>
+    </div>
+  );
+}
