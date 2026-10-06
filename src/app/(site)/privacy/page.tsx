@@ -49,6 +49,11 @@ export default function PrivacyPage() {
             situatie. Verder houdt de hosting standaard technische serverlogs bij, zoals elk
             website-platform.
           </P>
+          <P>
+            Via het gespreksformulier uit onze mail: de onderwerpen die je aanvinkt, hoe je
+            bereikt wilt worden, je telefoonnummer (als je dat invult) en het dagdeel dat je
+            uitkomt.
+          </P>
 
           <H2>Waarvoor we ze gebruiken</H2>
           <P>
@@ -111,6 +116,11 @@ export default function PrivacyPage() {
             bedrijf past. De grondslag is ons gerechtvaardigd belang bij het vinden van
             opdrachtgevers. De gegevens staan in een database in de EU en worden niet verkocht of
             gedeeld.
+          </P>
+          <P>
+            De knop in onze mail bevat een code die bij jouw bedrijf hoort, zodat het formulier je
+            naam en bedrijf al kent. We leggen niet vast of je op de link klikt, alleen wat je zelf
+            verstuurt.
           </P>
           <P>
             Wil je geen mail meer ontvangen, antwoord dan met &quot;stop&quot; of mail naar{" "}
