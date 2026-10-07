@@ -393,6 +393,26 @@ async function main() {
       `foutregel=${foutZichtbaar} waarden=${staatNog} verzoeken=${stub.verzoeken.length}`,
     );
     await foto(page, "formulier-fout-1280.png");
+
+    // 7b. Na de fout een ander nummer: dat is een andere inzending en krijgt een
+    // nieuw id (Codex 2026-10-07: anders bevestigt de ontvanger de oude rij).
+    const tel = page.getByLabel("Telefoonnummer");
+    await tel.fill("06 98 76 54 32");
+    const v2 = page.waitForRequest((r) => r.url().endsWith("/api/gesprek"));
+    await page.getByRole("button", { name: "Verstuur" }).click();
+    const idGewijzigd = (await v2).postDataJSON()?.inzending_id;
+    await page.getByText(FOUTREGEL).waitFor({ timeout: 10_000 }).catch(() => {});
+    await tel.fill("06 12 34 56 78");
+    const v3 = page.waitForRequest((r) => r.url().endsWith("/api/gesprek"));
+    await page.getByRole("button", { name: "Verstuur" }).click();
+    const idTerug = (await v3).postDataJSON()?.inzending_id;
+    await page.getByText(FOUTREGEL).waitFor({ timeout: 10_000 }).catch(() => {});
+    meld(
+      "na een fout: gewijzigde inhoud krijgt een nieuw inzendings-id, en terug naar de oude inhoud weer een nieuw",
+      /^[0-9a-f-]{36}$/.test(idGewijzigd ?? "") && idGewijzigd !== idBijFout && idTerug !== idGewijzigd,
+      `idBijFout=${idBijFout} idGewijzigd=${idGewijzigd} idTerug=${idTerug}`,
+    );
+    idBijFout = idTerug;
     stub.faal = false;
   }
 

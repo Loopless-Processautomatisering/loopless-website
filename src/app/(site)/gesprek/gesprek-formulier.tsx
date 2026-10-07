@@ -69,9 +69,14 @@ export function GesprekFormulier({
   const [verstuurd, setVerstuurd] = useState<Inzending | null>(null);
   const [error, setError] = useState(false);
   const { meldVerstuurd } = useGesprekStaat();
-  // Eén id per geopend formulier: een nieuwe poging na een fout is dezelfde
-  // inzending en geeft geen tweede rij. Herladen geeft een nieuw id.
+  // Een nieuwe poging na een fout met dezelfde inhoud is dezelfde inzending en
+  // geeft geen tweede rij. Herladen geeft een nieuw id.
   const inzendingId = useRef("");
+  // De inhoud waarvoor het huidige inzendingId is gemaakt. Een herhaalde poging
+  // met dezelfde inhoud houdt het id (de ontvanger herkent dan het duplicaat);
+  // een gewijzigde inhoud krijgt een nieuw id, anders bevestigt de ontvanger de
+  // oude rij terwijl dit scherm de nieuwe waarden toont (Codex 2026-10-07).
+  const inzendingInhoud = useRef("");
 
   const wisselInteresse = (waarde: string) => {
     setInteresse((nu) => (nu.includes(waarde) ? nu.filter((w) => w !== waarde) : [...nu, waarde]));
@@ -121,7 +126,11 @@ export function GesprekFormulier({
       voorkeur: schoon(voorkeur, 200),
     };
 
-    if (!inzendingId.current) inzendingId.current = crypto.randomUUID();
+    const inhoud = JSON.stringify(inzending);
+    if (!inzendingId.current || inzendingInhoud.current !== inhoud) {
+      inzendingId.current = crypto.randomUUID();
+      inzendingInhoud.current = inhoud;
+    }
 
     setSubmitting(true);
     try {
