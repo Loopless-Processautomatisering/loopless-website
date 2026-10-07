@@ -1,30 +1,34 @@
 import { type NextRequest } from "next/server";
 import { verifieer } from "@/lib/gesprek/code";
 
-// Gespreksformulier (/gesprek): valideert de inzending en zet één rij in
-// gesprek_aanvragen (server-to-server via PostgREST, zodat de sleutel niet in de
-// browser ligt). lead_id en versie komen alleen uit de geverifieerde code uit de
-// link, nooit uit een los veld in de body.
-// Let op: dit is het outreach-project (LOOPLESS_SUPABASE_*), niet het portaal
-// waar NEXT_PUBLIC_SUPABASE_* naar wijst.
+// Gespreksformulier (/gesprek): valideert de inzending en stuurt hem door naar de
+// loopless-outreach-app (api/gesprek.js daar), die er één rij voor in
+// gesprek_aanvragen zet. lead_id en versie komen alleen uit de geverifieerde code
+// uit de link, nooit uit een los veld in de body.
+// Bewust geen databasesleutel hier: deze site draait in het Vercel-team Site UP
+// en de outreach-database hoort daar niet bereikbaar te zijn (besluit Wessel
+// 2026-10-07). Op de site staan alleen het adres en een gedeeld geheim.
 
 const MAX_BODY_BYTES = 20_000;
 
 const INTERESSES = ["inkoop", "vragen", "offertes", "anders"];
 const DAGDELEN = ["ochtend", "middag", "geen_voorkeur"];
 
+const UUID = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/;
+const EMAIL = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
 const str = (v: unknown, max: number) =>
   typeof v === "string" ? v.trim().slice(0, max) : "";
 
 export async function POST(request: NextRequest) {
   const secret = process.env.GESPREK_SECRET;
-  const supabaseUrl = process.env.LOOPLESS_SUPABASE_URL;
-  const supabaseKey = process.env.LOOPLESS_SUPABASE_KEY;
-  if (!secret || !supabaseUrl || !supabaseKey) {
+  const doorstuurUrl = process.env.GESPREK_DOORSTUUR_URL;
+  const doorstuurSecret = process.env.GESPREK_DOORSTUUR_SECRET;
+  if (!secret || !doorstuurUrl || !doorstuurSecret) {
     const ontbreekt = [
       !secret && "GESPREK_SECRET",
-      !supabaseUrl && "LOOPLESS_SUPABASE_URL",
-      !supabaseKey && "LOOPLESS_SUPABASE_KEY",
+      !doorstuurUrl && "GESPREK_DOORSTUUR_URL",
+      !doorstuurSecret && "GESPREK_DOORSTUUR_SECRET",
     ].filter(Boolean);
     console.error("[gesprek] ontbreekt:", ontbreekt.join(", "));
     return Response.json({ ok: false }, { status: 500 });
@@ -81,39 +85,52 @@ export async function POST(request: NextRequest) {
   if (bereiken === "bellen" && !telefoon) {
     return Response.json({ ok: false }, { status: 400 });
   }
+  const anderEmail = bereiken === "mailen" ? str(payload.ander_email, 200) : "";
+  if (anderEmail && !EMAIL.test(anderEmail)) {
+    return Response.json({ ok: false }, { status: 400 });
+  }
+  // Het formulier geeft elke inzending een eigen id mee. Probeert de bezoeker
+  // het na een fout opnieuw, dan is het hetzelfde id en komt er geen tweede rij.
+  const inzendingId = str(payload.inzending_id, 36).toLowerCase();
+  if (!UUID.test(inzendingId)) {
+    return Response.json({ ok: false }, { status: 400 });
+  }
 
   // Alleen bewaren wat bij de gemaakte keuze hoort: een nummer bij bellen, een
   // ander adres bij mailen, de toelichting bij "anders".
   const rij = {
+    inzending_id: inzendingId,
     lead_id: code.leadId,
     versie: code.versie,
     interesse,
     anders_tekst: (interesse.includes("anders") && str(payload.anders_tekst, 1000)) || null,
     bereiken,
     telefoon: bereiken === "bellen" ? telefoon : null,
-    ander_email: (bereiken === "mailen" && str(payload.ander_email, 200)) || null,
+    ander_email: anderEmail || null,
     dagdeel,
     voorkeur: str(payload.voorkeur, 200) || null,
   };
 
+  // voornaam en bedrijf gaan mee voor de melding aan Wessel; ze worden niet
+  // opgeslagen (ze staan al bij de lead).
   try {
-    const res = await fetch(`${supabaseUrl.replace(/\/+$/, "")}/rest/v1/gesprek_aanvragen`, {
+    const res = await fetch(doorstuurUrl, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
-        apikey: supabaseKey,
-        Authorization: `Bearer ${supabaseKey}`,
-        Prefer: "return=minimal",
+        Authorization: `Bearer ${doorstuurSecret}`,
       },
-      body: JSON.stringify(rij),
-      signal: AbortSignal.timeout(10_000),
+      body: JSON.stringify({ ...rij, voornaam: code.voornaam, bedrijf: code.bedrijf }),
+      signal: AbortSignal.timeout(15_000),
     });
-    if (!res.ok) {
+    // Alleen "gelukt" melden als de ontvanger bevestigt dat de rij staat.
+    const antwoord: unknown = res.ok ? await res.json().catch(() => null) : null;
+    if (!antwoord || typeof antwoord !== "object" || (antwoord as { ok?: unknown }).ok !== true) {
       console.error("[gesprek] opslaan mislukt, status", res.status);
       return Response.json({ ok: false }, { status: 502 });
     }
   } catch (e) {
-    console.error("[gesprek] database onbereikbaar:", e instanceof Error ? e.name : "fout");
+    console.error("[gesprek] ontvanger onbereikbaar:", e instanceof Error ? e.name : "fout");
     return Response.json({ ok: false }, { status: 502 });
   }
 

@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useRef, useState } from "react";
 import Link from "next/link";
 import { AnimateIn } from "@/components/ui/animate-in";
 import { GesprekBevestiging } from "./gesprek-bevestiging";
@@ -15,7 +15,15 @@ import { BEREIKEN, DAGDELEN, INTERESSES, type Inzending } from "./keuzes";
 // Zelfde opschoning als str() in /api/gesprek.
 const schoon = (v: string, max: number) => v.trim().slice(0, max);
 
-type Fouten = { interesse?: string; bereiken?: string; telefoon?: string; dagdeel?: string };
+type Fouten = {
+  interesse?: string;
+  bereiken?: string;
+  telefoon?: string;
+  anderEmail?: string;
+  dagdeel?: string;
+};
+
+const EMAIL = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
 const kaart =
   "relative overflow-hidden rounded-2xl border border-[#DCE6F5] bg-white shadow-[0_1px_2px_rgba(16,24,43,0.04),0_16px_40px_-20px_rgba(79,142,247,0.25)] p-6 sm:p-8";
@@ -61,6 +69,9 @@ export function GesprekFormulier({
   const [verstuurd, setVerstuurd] = useState<Inzending | null>(null);
   const [error, setError] = useState(false);
   const { meldVerstuurd } = useGesprekStaat();
+  // Eén id per geopend formulier: een nieuwe poging na een fout is dezelfde
+  // inzending en geeft geen tweede rij. Herladen geeft een nieuw id.
+  const inzendingId = useRef("");
 
   const wisselInteresse = (waarde: string) => {
     setInteresse((nu) => (nu.includes(waarde) ? nu.filter((w) => w !== waarde) : [...nu, waarde]));
@@ -76,15 +87,21 @@ export function GesprekFormulier({
     if (!bereiken) gevonden.bereiken = "Kies of ik je mag bellen of mailen.";
     if (bereiken === "bellen" && !telefoon.trim())
       gevonden.telefoon = "Vul het nummer in waarop ik je kan bellen.";
+    if (bereiken === "mailen" && anderEmail.trim() && !EMAIL.test(anderEmail.trim()))
+      gevonden.anderEmail = "Dit lijkt geen e-mailadres. Laat het leeg of vul het aan.";
     if (!dagdeel) gevonden.dagdeel = "Kies een dagdeel.";
     setFouten(gevonden);
 
-    const eerste = (["interesse", "bereiken", "telefoon", "dagdeel"] as const).find(
+    const eerste = (["interesse", "bereiken", "telefoon", "anderEmail", "dagdeel"] as const).find(
       (k) => gevonden[k],
     );
     if (eerste) {
       const doel = e.currentTarget.querySelector<HTMLElement>(
-        eerste === "telefoon" ? "#gesprek-telefoon" : `[name="${eerste}"]`,
+        eerste === "telefoon"
+          ? "#gesprek-telefoon"
+          : eerste === "anderEmail"
+            ? "#gesprek-ander-email"
+            : `[name="${eerste}"]`,
       );
       doel?.focus();
       return;
@@ -104,6 +121,8 @@ export function GesprekFormulier({
       voorkeur: schoon(voorkeur, 200),
     };
 
+    if (!inzendingId.current) inzendingId.current = crypto.randomUUID();
+
     setSubmitting(true);
     try {
       const res = await fetch("/api/gesprek", {
@@ -111,6 +130,7 @@ export function GesprekFormulier({
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           c: code,
+          inzending_id: inzendingId.current,
           interesse: inzending.interesse,
           anders_tekst: inzending.andersTekst,
           bereiken: inzending.bereiken,
@@ -263,9 +283,15 @@ export function GesprekFormulier({
                 autoComplete="email"
                 maxLength={200}
                 value={anderEmail}
-                onChange={(e) => setAnderEmail(e.target.value)}
+                onChange={(e) => {
+                  setAnderEmail(e.target.value);
+                  setFouten((f) => ({ ...f, anderEmail: undefined }));
+                }}
+                aria-invalid={fouten.anderEmail ? true : undefined}
+                aria-describedby={fouten.anderEmail ? "fout-ander-email" : undefined}
                 className={invoer}
               />
+              <Melding id="fout-ander-email" tekst={fouten.anderEmail} />
             </div>
           )}
         </fieldset>
@@ -317,7 +343,7 @@ export function GesprekFormulier({
         {/* Honeypot: onzichtbaar voor mensen, bots vullen het wel in. */}
         <input
           type="text"
-          name="website"
+          name="gesprek_extra"
           value={hp}
           onChange={(e) => setHp(e.target.value)}
           tabIndex={-1}

@@ -98,6 +98,11 @@ const professionalServiceJsonLd = {
   priceRange: "€€",
 };
 
+// Zet de wachtrij van Vercel Web Analytics klaar en hangt er een filter in.
+// Het script roept dit filter aan voor elke paginaweergave en gebeurtenis; null
+// teruggeven laat hem vervallen.
+const analyticsFilter = `window.va=window.va||function(){(window.vaq=window.vaq||[]).push(arguments)};window.va("beforeSend",function(e){try{if(new URL(e.url,location.origin).pathname.indexOf("/gesprek")===0)return null}catch(_){}return e});`;
+
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -120,6 +125,11 @@ export default function RootLayout({
             maar injecteerde script.js nooit, waardoor elke pageview in de wachtrij
             bleef staan (geverifieerd in de browser, 2026-08-09). Dit script handelt
             pageviews en route-wissels zelf af. */}
+        {/* Bezoeken aan /gesprek tellen niet mee: de link daarheen is persoonlijk
+            en de privacytekst zegt dat een klik niet wordt vastgelegd. Het filter
+            moet in de wachtrij staan vóór de loader hieronder draait, en geldt
+            per gebeurtenis, dus ook na navigeren binnen de site. */}
+        <script dangerouslySetInnerHTML={{ __html: analyticsFilter }} />
         <Script src="/_vercel/insights/script.js" strategy="afterInteractive" />
       </body>
     </html>

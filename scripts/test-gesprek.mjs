@@ -1,12 +1,14 @@
 // Herhaalbare controle van het gespreksformulier (/gesprek en POST /api/gesprek).
 //
-// Draait volledig lokaal: een stub-server speelt de database (PostgREST), de site
-// draait als `next start` op een eigen poort, en Playwright bedient de pagina.
-// Er gaat niets naar de echte Supabase.
+// Draait volledig lokaal: een stub-server speelt de ontvanger in de
+// loopless-outreach-app (api/gesprek.js daar), de site draait als `next start` op
+// een eigen poort, en Playwright bedient de pagina. Er gaat niets naar de echte
+// outreach-app of database. De ontvanger zelf heeft zijn eigen test:
+// loopless-outreach/scripts/gesprek_test.mjs.
 //
 // Vooraf:
-//   1. .env.local met wegwerpwaarden voor GESPREK_SECRET, LOOPLESS_SUPABASE_KEY en
-//      LOOPLESS_SUPABASE_URL=http://127.0.0.1:<vrije poort>  (de stub luistert daar)
+//   1. .env.local met wegwerpwaarden voor GESPREK_SECRET, GESPREK_DOORSTUUR_SECRET en
+//      GESPREK_DOORSTUUR_URL=http://127.0.0.1:<vrije poort>/api/gesprek  (de stub luistert daar)
 //   2. npm run build
 //
 // Draaien:
@@ -40,12 +42,12 @@ for (const regel of readFileSync(envPad, "utf8").split("\n")) {
   const m = regel.match(/^([A-Z_]+)=(.*)$/);
   if (m) env[m[1]] = m[2].trim();
 }
-for (const naam of ["GESPREK_SECRET", "LOOPLESS_SUPABASE_URL", "LOOPLESS_SUPABASE_KEY"]) {
+for (const naam of ["GESPREK_SECRET", "GESPREK_DOORSTUUR_URL", "GESPREK_DOORSTUUR_SECRET"]) {
   if (!env[naam]) stop(`${naam} ontbreekt in .env.local.`);
 }
-const stubUrl = new URL(env.LOOPLESS_SUPABASE_URL);
+const stubUrl = new URL(env.GESPREK_DOORSTUUR_URL);
 if (!["127.0.0.1", "localhost"].includes(stubUrl.hostname)) {
-  stop("LOOPLESS_SUPABASE_URL wijst niet naar deze machine. Dit script schrijft alleen naar een lokale stub.");
+  stop("GESPREK_DOORSTUUR_URL wijst niet naar deze machine. Dit script schrijft alleen naar een lokale stub.");
 }
 if (!existsSync(path.join(root, ".next", "BUILD_ID"))) stop("Geen build gevonden. Draai eerst: npm run build");
 
@@ -74,8 +76,10 @@ function meld(naam, ok, detail = "") {
 }
 const gelijk = (a, b) => JSON.stringify(a) === JSON.stringify(b);
 
-// --- de stub: neemt de insert aan, bewaart het JSON, geeft 201 (of 500) ---
-const stub = { rijen: [], verzoeken: [], faal: false };
+// --- de stub: neemt de doorgestuurde inzending aan, bewaart het JSON, geeft 201
+// met {"ok":true} (of 500). Wat niet in de tabel komt (het inzendings-id voor de
+// vergelijking, en voornaam en bedrijf voor de melding) staat apart in `extra`.
+const stub = { rijen: [], extra: [], verzoeken: [], faal: false, zonderOk: false };
 const stubServer = http.createServer((req, res) => {
   let body = "";
   req.on("data", (d) => (body += d));
@@ -87,16 +91,19 @@ const stubServer = http.createServer((req, res) => {
       return;
     }
     try {
-      stub.rijen.push(JSON.parse(body));
+      const { inzending_id, voornaam, bedrijf, ...rij } = JSON.parse(body);
+      stub.rijen.push(rij);
+      stub.extra.push({ inzending_id, voornaam, bedrijf });
     } catch {
       stub.rijen.push({ ongeldig: body });
     }
-    res.writeHead(201);
-    res.end();
+    res.writeHead(201, { "Content-Type": "application/json" });
+    res.end(stub.zonderOk ? '{"ok":false}' : '{"ok":true,"stond_al":false}');
   });
 });
 const leegStub = () => {
   stub.rijen = [];
+  stub.extra = [];
   stub.verzoeken = [];
 };
 
@@ -360,12 +367,15 @@ async function main() {
   }
 
   // ---------- 7. de stub geeft 500 ----------
+  let idBijFout;
   leegStub();
   {
     await open(page, link);
     await vulAlles(page);
     stub.faal = true;
+    const verzoek = page.waitForRequest((r) => r.url().endsWith("/api/gesprek"));
     await page.getByRole("button", { name: "Verstuur" }).click();
+    idBijFout = (await verzoek).postDataJSON()?.inzending_id;
     await page.getByText(FOUTREGEL).waitFor({ timeout: 10_000 }).catch(() => {});
     const foutZichtbaar = await page.getByText(FOUTREGEL).isVisible();
     const staatNog =
@@ -413,12 +423,18 @@ async function main() {
     );
     const v = stub.verzoeken[0] ?? { headers: {} };
     meld(
-      "het verzoek aan de stub: POST /rest/v1/gesprek_aanvragen met apikey, Bearer en Prefer: return=minimal",
-      v.methode === "POST" && v.pad === "/rest/v1/gesprek_aanvragen" &&
-        v.headers.apikey === env.LOOPLESS_SUPABASE_KEY &&
-        v.headers.authorization === `Bearer ${env.LOOPLESS_SUPABASE_KEY}` &&
-        v.headers.prefer === "return=minimal",
-      `methode=${v.methode} pad=${v.pad} prefer=${v.headers.prefer}`,
+      "het verzoek aan de ontvanger: POST naar het doorstuuradres met het gedeelde geheim als Bearer, zonder apikey",
+      v.methode === "POST" && v.pad === stubUrl.pathname &&
+        v.headers.authorization === `Bearer ${env.GESPREK_DOORSTUUR_SECRET}` &&
+        !("apikey" in v.headers),
+      `methode=${v.methode} pad=${v.pad}`,
+    );
+    const x = stub.extra[0] ?? {};
+    meld(
+      "meegestuurd voor de melding: voornaam en bedrijf uit de code, en een inzendings-id; na de fout van zojuist hetzelfde id",
+      x.voornaam === VOORNAAM && typeof x.bedrijf === "string" && x.bedrijf.length > 0 &&
+        /^[0-9a-f-]{36}$/.test(x.inzending_id ?? "") && x.inzending_id === idBijFout,
+      `extra=${JSON.stringify(x)} idBijFout=${idBijFout}`,
     );
     meld("antwoord van de route is precies {\"ok\":true}", res.status() === 200 && body === '{"ok":true}', `status=${res.status()} body=${body}`);
     const dank = (await page.locator('[role="status"]').innerText().catch(() => "")).replace(/\s+/g, " ").trim();
@@ -560,8 +576,8 @@ async function main() {
         stub.rijen[0]?.anders_tekst === null,
       `echo=${JSON.stringify(echo)}`,
     );
-    await p4.reload();
-    await p4.waitForLoadState("networkidle");
+    await p4.reload({ waitUntil: "load" });
+    await p4.locator("form").waitFor({ timeout: 10_000 }).catch(() => {});
     meld(
       "herladen na versturen: het lege formulier staat er weer, met de intro",
       (await p4.locator("form").count()) === 1 &&
@@ -573,6 +589,7 @@ async function main() {
   // ---------- 4. een ander lead_id in de body ----------
   const geldig = {
     c: code,
+    inzending_id: "aaaaaaaa-bbbb-4ccc-8ddd-eeeeeeeeeeee",
     interesse: ["inkoop"],
     bereiken: "mailen",
     dagdeel: "middag",
@@ -610,6 +627,9 @@ async function main() {
       "onbekend dagdeel": { ...geldig, dagdeel: "avond" },
       "onbekend bereiken": { ...geldig, bereiken: "sms" },
       "bellen zonder nummer": { ...geldig, bereiken: "bellen", telefoon: "  " },
+      "geen inzendings-id": { ...geldig, inzending_id: undefined },
+      "inzendings-id geen uuid": { ...geldig, inzending_id: "1234" },
+      "onzinnig ander adres": { ...geldig, ander_email: "geen adres" },
     };
     const statussen = {};
     for (const [naam, body] of Object.entries(fout)) statussen[naam] = (await stuur(body)).status;
@@ -641,6 +661,69 @@ async function main() {
         gelijk(r.interesse, ["inkoop", "anders"]),
       `status=${lang.status} lengtes=${r.anders_tekst?.length}/${r.telefoon?.length}/${r.voorkeur?.length} interesse=${JSON.stringify(r.interesse)}`,
     );
+  }
+
+  // de ontvanger antwoordt 2xx maar bevestigt niet: de bezoeker ziet geen "gelukt"
+  leegStub();
+  {
+    stub.zonderOk = true;
+    const res = await stuur(geldig);
+    stub.zonderOk = false;
+    meld(
+      "ontvanger bevestigt niet met ok:true: de route geeft 502",
+      res.status === 502 && (await res.text()) === '{"ok":false}',
+      `status=${res.status}`,
+    );
+  }
+
+  // een onzinnig ander adres wordt in het formulier al tegengehouden
+  leegStub();
+  {
+    const p5 = await ctx.newPage();
+    await open(p5, link);
+    await p5.getByLabel("Offertes klaarzetten").check();
+    await p5.getByLabel("Mail me").check();
+    await p5.getByLabel("Liever een ander e-mailadres?").fill("geen adres");
+    await p5.getByLabel("'s Middags").check();
+    await p5.getByRole("button", { name: "Verstuur" }).click();
+    const zichtbaar = await p5.locator("#fout-ander-email").isVisible();
+    meld(
+      "onzinnig ander adres: melding bij het veld, focus erop, niets verstuurd",
+      zichtbaar && stub.verzoeken.length === 0 &&
+        (await p5.evaluate(() => document.activeElement?.id)) === "gesprek-ander-email",
+    );
+    await p5.close();
+  }
+
+  // analytics: het filter staat klaar vóór de loader en laat /gesprek vervallen
+  {
+    const p6 = await ctx.newPage();
+    await open(p6, link);
+    const uit = await p6.evaluate(() => {
+      const regel = [...(window.vaq ?? [])].map((a) => [...a]).find((a) => a[0] === "beforeSend");
+      if (!regel) return null;
+      const f = regel[1];
+      const o = location.origin;
+      return {
+        gesprek: f({ type: "pageview", url: `${o}/gesprek?c=abc` }),
+        home: f({ type: "pageview", url: `${o}/` })?.url,
+        diensten: f({ type: "pageview", url: `${o}/diensten` })?.url,
+        eerste: [...window.vaq[0]][0],
+      };
+    });
+    meld(
+      "analytics-filter: staat als eerste in de wachtrij, laat /gesprek vervallen en andere pagina's door",
+      uit && uit.gesprek === null && uit.home?.endsWith("/") && uit.diensten?.endsWith("/diensten") && uit.eerste === "beforeSend",
+      `uit=${JSON.stringify(uit)}`,
+    );
+    const kop = (await fetch(link)).headers.get("referrer-policy");
+    const kopElders = (await fetch(`${site}/diensten`)).headers.get("referrer-policy");
+    meld(
+      "/gesprek stuurt geen verwijzer mee (no-referrer); de rest van de site houdt zijn eigen beleid",
+      kop === "no-referrer" && kopElders === "strict-origin-when-cross-origin",
+      `gesprek=${kop} diensten=${kopElders}`,
+    );
+    await p6.close();
   }
 
   // ---------- 8. breedtes en schermafbeeldingen ----------
@@ -690,10 +773,10 @@ async function main() {
       adressen.every((a) => a === "wessel@loopless.nl"),
       `gevonden=${JSON.stringify(adressen)}`,
     );
-    const lekHtml = [env.GESPREK_SECRET, env.LOOPLESS_SUPABASE_KEY, env.LOOPLESS_SUPABASE_URL].some((w) => html.includes(w));
+    const lekHtml = [env.GESPREK_SECRET, env.GESPREK_DOORSTUUR_SECRET, env.GESPREK_DOORSTUUR_URL].some((w) => html.includes(w));
     meld("geheim, sleutel en database-adres staan niet in de HTML van de pagina", !lekHtml);
 
-    const zoek = [env.GESPREK_SECRET, env.LOOPLESS_SUPABASE_KEY, "GESPREK_SECRET", "LOOPLESS_SUPABASE"];
+    const zoek = [env.GESPREK_SECRET, env.GESPREK_DOORSTUUR_SECRET, "GESPREK_SECRET", "GESPREK_DOORSTUUR", "LOOPLESS_SUPABASE"];
     const lijst = bestanden(path.join(root, ".next", "static"));
     const treffers = lijst.filter((f) => {
       const inhoud = readFileSync(f, "latin1");
