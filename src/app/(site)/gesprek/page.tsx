@@ -6,6 +6,7 @@ import { AnimateIn } from "@/components/ui/animate-in";
 import { PageGlow } from "@/components/page-glow";
 import { verifieer } from "@/lib/gesprek/code";
 import { GesprekFormulier } from "./gesprek-formulier";
+import { GesprekStaat, VoorVersturen } from "./gesprek-staat";
 
 // Landingspagina voor de knop in de koude mail: /gesprek?c=<code>. De code is
 // ondertekend (src/lib/gesprek/code.ts) en draagt voornaam en bedrijf, zodat het
@@ -42,8 +43,10 @@ async function Inhoud({ searchParams }: Props) {
   const code = typeof c === "string" ? c : null;
   const lead = verifieer(code);
 
+  // De intro in de hero verdwijnt na versturen; GesprekStaat deelt dat met het
+  // formulier. De controle van de code hierboven blijft op de server.
   return (
-    <>
+    <GesprekStaat>
       {/* Hero, links uitgelijnd */}
       <section className={`relative pt-40 ${lead ? "pb-12" : "pb-24 md:pb-32"}`}>
         <div className="mx-auto max-w-[1200px] px-6">
@@ -54,13 +57,15 @@ async function Inhoud({ searchParams }: Props) {
           </AnimateIn>
           {lead ? (
             <>
-              <AnimateIn delay={0.1}>
-                <p className="max-w-[600px] text-lg text-[#5F6B85]">
-                  {lead.voornaam && `Hoi ${lead.voornaam}. `}Vink aan waar je nieuwsgierig naar
-                  bent, waar ik je kan bereiken en wanneer het je uitkomt. Ik neem daarna contact
-                  op om een tijdstip af te spreken.
-                </p>
-              </AnimateIn>
+              <VoorVersturen>
+                <AnimateIn delay={0.1}>
+                  <p className="max-w-[600px] text-lg text-[#5F6B85]">
+                    {lead.voornaam && `Hoi ${lead.voornaam}. `}Vink aan waar je nieuwsgierig naar
+                    bent, waar ik je kan bereiken en wanneer het je uitkomt. Ik neem daarna
+                    contact op om een tijdstip af te spreken.
+                  </p>
+                </AnimateIn>
+              </VoorVersturen>
               <AnimateIn delay={0.2}>
                 <div className="mt-6 flex flex-wrap items-center gap-x-6 gap-y-3 text-sm text-[#5F6B85]">
                   {feiten.map(({ icon: Icon, tekst }) => (
@@ -97,6 +102,6 @@ async function Inhoud({ searchParams }: Props) {
           </div>
         </section>
       )}
-    </>
+    </GesprekStaat>
   );
 }

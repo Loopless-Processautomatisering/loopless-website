@@ -1,32 +1,19 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useState } from "react";
 import Link from "next/link";
-import { ShieldCheck } from "lucide-react";
 import { AnimateIn } from "@/components/ui/animate-in";
+import { GesprekBevestiging } from "./gesprek-bevestiging";
+import { useGesprekStaat } from "./gesprek-staat";
+import { BEREIKEN, DAGDELEN, INTERESSES, type Inzending } from "./keuzes";
 
 // Het formulier achter de knop in de koude mail. Naam en bedrijf komen uit de
 // ondertekende code en zijn hier vaste tekst; het e-mailadres van de lead staat
 // nergens op de pagina. De code gaat ongewijzigd mee terug naar /api/gesprek,
 // die hem opnieuw verifieert.
 
-const INTERESSES = [
-  { waarde: "inkoop", label: "Besteladvies en inkoop-uitzoekwerk" },
-  { waarde: "vragen", label: "Vragen beantwoorden uit eigen documentatie" },
-  { waarde: "offertes", label: "Offertes klaarzetten" },
-  { waarde: "anders", label: "Maatwerk: iets anders bij ons" },
-];
-
-const BEREIKEN = [
-  { waarde: "bellen", label: "Bel me" },
-  { waarde: "mailen", label: "Mail me" },
-];
-
-const DAGDELEN = [
-  { waarde: "ochtend", label: "'s Ochtends" },
-  { waarde: "middag", label: "'s Middags" },
-  { waarde: "geen_voorkeur", label: "Maakt me niet uit" },
-];
+// Zelfde opschoning als str() in /api/gesprek.
+const schoon = (v: string, max: number) => v.trim().slice(0, max);
 
 type Fouten = { interesse?: string; bereiken?: string; telefoon?: string; dagdeel?: string };
 
@@ -71,15 +58,9 @@ export function GesprekFormulier({
   const [hp, setHp] = useState("");
   const [fouten, setFouten] = useState<Fouten>({});
   const [submitting, setSubmitting] = useState(false);
-  const [submitted, setSubmitted] = useState(false);
+  const [verstuurd, setVerstuurd] = useState<Inzending | null>(null);
   const [error, setError] = useState(false);
-  const dankRef = useRef<HTMLDivElement>(null);
-
-  // Na versturen verdwijnt het formulier; zet de focus op de dankregel zodat
-  // die in beeld staat en door een schermlezer wordt voorgelezen.
-  useEffect(() => {
-    if (submitted) dankRef.current?.focus();
-  }, [submitted]);
+  const { meldVerstuurd } = useGesprekStaat();
 
   const wisselInteresse = (waarde: string) => {
     setInteresse((nu) => (nu.includes(waarde) ? nu.filter((w) => w !== waarde) : [...nu, waarde]));
@@ -109,6 +90,20 @@ export function GesprekFormulier({
       return;
     }
 
+    // Momentopname van wat er nu de deur uit gaat. De velden blijven tijdens het
+    // versturen bewerkbaar, dus het scherm erna leest hieruit en niet uit de
+    // velden, en toont dezelfde waarden als de server opslaat.
+    const anders = interesse.includes("anders");
+    const inzending: Inzending = {
+      interesse: INTERESSES.map((i) => i.waarde).filter((w) => interesse.includes(w)),
+      andersTekst: anders ? schoon(andersTekst, 1000) : "",
+      bereiken,
+      telefoon: bereiken === "bellen" ? schoon(telefoon, 40) : "",
+      anderEmail: bereiken === "mailen" ? schoon(anderEmail, 200) : "",
+      dagdeel,
+      voorkeur: schoon(voorkeur, 200),
+    };
+
     setSubmitting(true);
     try {
       const res = await fetch("/api/gesprek", {
@@ -116,19 +111,20 @@ export function GesprekFormulier({
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           c: code,
-          interesse,
-          anders_tekst: andersTekst,
-          bereiken,
-          telefoon,
-          ander_email: anderEmail,
-          dagdeel,
-          voorkeur,
+          interesse: inzending.interesse,
+          anders_tekst: inzending.andersTekst,
+          bereiken: inzending.bereiken,
+          telefoon: inzending.telefoon,
+          ander_email: inzending.anderEmail,
+          dagdeel: inzending.dagdeel,
+          voorkeur: inzending.voorkeur,
           _hp: hp,
         }),
       });
       const antwoord: unknown = res.ok ? await res.json() : null;
       if (antwoord && typeof antwoord === "object" && (antwoord as { ok?: unknown }).ok === true) {
-        setSubmitted(true);
+        setVerstuurd(inzending);
+        meldVerstuurd();
       } else {
         setError(true);
       }
@@ -138,25 +134,8 @@ export function GesprekFormulier({
     setSubmitting(false);
   }
 
-  if (submitted) {
-    return (
-      <div className={`${kaart} max-w-[760px]`}>
-        <div
-          ref={dankRef}
-          tabIndex={-1}
-          role="status"
-          className="flex flex-col items-center justify-center py-12 text-center focus:outline-none"
-        >
-          <div className="mb-6 flex h-16 w-16 items-center justify-center rounded-full bg-[#4F8EF7]/10">
-            <ShieldCheck className="h-8 w-8 text-[#4F8EF7]" />
-          </div>
-          <p className="max-w-md text-lg text-[#2B3446]">
-            {voornaam ? `Dank je, ${voornaam}.` : "Dank je."} Ik neem contact op om een tijdstip af
-            te spreken. Je hoeft verder niets te doen.
-          </p>
-        </div>
-      </div>
-    );
+  if (verstuurd) {
+    return <GesprekBevestiging voornaam={voornaam} inzending={verstuurd} />;
   }
 
   return (

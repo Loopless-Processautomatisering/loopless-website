@@ -423,10 +423,44 @@ async function main() {
     meld("antwoord van de route is precies {\"ok\":true}", res.status() === 200 && body === '{"ok":true}', `status=${res.status()} body=${body}`);
     const dank = (await page.locator('[role="status"]').innerText().catch(() => "")).replace(/\s+/g, " ").trim();
     meld(
-      "dankstaat: formulier weg, de dankregel met voornaam",
-      (await page.locator("form").count()) === 0 &&
-        dank === "Dank je, Annelotte. Ik neem contact op om een tijdstip af te spreken. Je hoeft verder niets te doen.",
+      "na versturen: formulier weg, de dankregel met voornaam",
+      (await page.locator("form").count()) === 0 && dank === "Dank je, Annelotte. Het staat genoteerd.",
       `dank=${JSON.stringify(dank)}`,
+    );
+    meld(
+      "na versturen: de focus staat op de dankregel en de intro in de hero is weg",
+      (await page.evaluate(() => document.activeElement?.getAttribute("role"))) === "status" &&
+        (await page.getByText("Vink aan waar je nieuwsgierig naar bent").count()) === 0 &&
+        (await page.getByRole("heading", { level: 1 }).isVisible()),
+    );
+    const echo = (await page.locator("dl").innerText()).replace(/\s+/g, " ");
+    meld(
+      "na versturen: het scherm toont wat is verstuurd (onderwerpen, toelichting, nummer, dagdeel, voorkeur)",
+      ["Besteladvies en inkoop-uitzoekwerk", "Maatwerk: iets anders bij ons", "Orderbevestigingen overtypen.",
+        "Ik bel je op 06 12 34 56 78", "'s Ochtends", "Niet op maandag."].every((t) => echo.includes(t)),
+      `echo=${JSON.stringify(echo)}`,
+    );
+    const stappen = (await page.locator("ol h3").allInnerTexts()).join(" | ");
+    const beeld = page.locator('img[src*="voorbeeldplan"]');
+    await beeld.scrollIntoViewIfNeeded();
+    const geladen = await beeld
+      .evaluate(async (el) => {
+        await el.decode().catch(() => {});
+        return el.complete && el.naturalWidth > 0;
+      })
+      .catch(() => false);
+    const planLink = page.locator('a[href="/gesprek/voorbeeldplan-inkoop.png"]');
+    meld(
+      "na versturen: drie stappen (bellen), het voorbeeldplan van inkoop geladen, link opent in een nieuw tabblad",
+      stappen === "Ik bel je | Een half uur bellen | Jij krijgt het plan" && geladen &&
+        (await planLink.getAttribute("target")) === "_blank" &&
+        (await page.getByText("Je vinkte meer dan één onderwerp aan.").count()) === 1,
+      `stappen=${stappen} geladen=${geladen}`,
+    );
+    const tekst = await page.locator("body").innerText();
+    meld(
+      "na versturen: geen termijn, geen 'gratis', geen 'voor te bereiden' op het scherm",
+      !/werkdag|binnen \d|gratis|voor te bereiden/i.test(tekst),
     );
   }
 
@@ -457,13 +491,83 @@ async function main() {
     };
     const ok =
       regel && stub.rijen.length === 1 && gelijk(stub.rijen[0], verwacht) &&
-      dank === "Dank je. Ik neem contact op om een tijdstip af te spreken. Je hoeft verder niets te doen.";
+      dank === "Dank je. Het staat genoteerd.";
     meld(
       "versturen (mailen, ander adres, zonder voornaam): één rij met de verwachte velden, dankregel zonder naam",
       ok,
       ok ? "" : `regel=${regel} rijen=${JSON.stringify(stub.rijen)} dank=${dank}`,
     );
+    const echo = (await p2.locator("dl").innerText().catch(() => "")).replace(/\s+/g, " ");
+    meld(
+      "na versturen (mailen): het andere adres en 'geen voorkeur' in de echo, stap 1 is 'Ik mail je', voorbeeld van vragen",
+      echo.includes("Ik mail je op inkoop@voorbeeld.test") && echo.includes("Geen voorkeur voor een dagdeel") &&
+        (await p2.locator("ol h3").first().innerText()) === "Ik mail je" &&
+        (await p2.locator('a[href="/gesprek/voorbeeldplan-vragen.png"]').count()) === 1,
+      `echo=${JSON.stringify(echo)}`,
+    );
     await p2.close();
+  }
+
+  // wisselen tijdens het versturen: het scherm toont wat is verstuurd, niet wat er daarna is aangeklikt
+  leegStub();
+  {
+    const p3 = await ctx.newPage();
+    await open(p3, link);
+    await p3.getByLabel("Offertes klaarzetten").check();
+    await p3.getByLabel("Bel me").check();
+    await p3.getByLabel("Telefoonnummer").fill("  06 98 76 54 32  ");
+    await p3.getByLabel("'s Middags").check();
+    await p3.route("**/api/gesprek", async (route) => {
+      await new Promise((r) => setTimeout(r, 3000));
+      await route.continue();
+    });
+    await p3.getByRole("button", { name: "Verstuur" }).click();
+    await p3.getByLabel("Mail me").check({ force: true });
+    await p3.getByLabel("'s Ochtends").check({ force: true });
+    const gewisseld = await p3.getByLabel("Mail me").isChecked().catch(() => false);
+    await p3.locator('[role="status"]').waitFor({ timeout: 10_000 }).catch(() => {});
+    const echo = (await p3.locator("dl").innerText().catch(() => "")).replace(/\s+/g, " ");
+    const r = stub.rijen[0] ?? {};
+    meld(
+      "wisselen tijdens het versturen: scherm en opgeslagen rij tonen allebei bellen, het ingekorte nummer en de middag",
+      gewisseld &&
+        echo.includes("Ik bel je op 06 98 76 54 32") && echo.includes("'s Middags") && !echo.includes("Ik mail je") &&
+        r.bereiken === "bellen" && r.telefoon === "06 98 76 54 32" && r.dagdeel === "middag" &&
+        (await p3.locator("ol h3").first().innerText().catch(() => "")) === "Ik bel je" &&
+        (await p3.locator('a[href="/gesprek/voorbeeldplan-offertes.png"]').count()) === 1 &&
+        (await p3.getByText("Je vinkte meer dan één onderwerp aan.").count()) === 0,
+      `gewisseld=${gewisseld} echo=${JSON.stringify(echo)} rij=${JSON.stringify(r)}`,
+    );
+    await p3.close();
+  }
+
+  // alleen maatwerk, zonder toelichting: het voorbeeld van inkoop met de uitleg erbij
+  leegStub();
+  {
+    const p4 = await ctx.newPage();
+    await open(p4, link);
+    await p4.getByLabel("Maatwerk: iets anders bij ons").check();
+    await p4.getByLabel("Mail me").check();
+    await p4.getByLabel("'s Middags").check();
+    await p4.getByRole("button", { name: "Verstuur" }).click();
+    await p4.locator('[role="status"]').waitFor({ timeout: 10_000 }).catch(() => {});
+    const echo = (await p4.locator("dl").innerText().catch(() => "")).replace(/\s+/g, " ");
+    meld(
+      "alleen maatwerk zonder toelichting: voorbeeld van inkoop met de uitleg, mail naar het adres van de mail",
+      (await p4.locator('a[href="/gesprek/voorbeeldplan-inkoop.png"]').count()) === 1 &&
+        (await p4.getByText("Jouw onderwerp is maatwerk.").count()) === 1 &&
+        echo.includes("Ik mail je op het adres waar mijn bericht naartoe ging") &&
+        stub.rijen[0]?.anders_tekst === null,
+      `echo=${JSON.stringify(echo)}`,
+    );
+    await p4.reload();
+    await p4.waitForLoadState("networkidle");
+    meld(
+      "herladen na versturen: het lege formulier staat er weer, met de intro",
+      (await p4.locator("form").count()) === 1 &&
+        (await p4.getByText("Vink aan waar je nieuwsgierig naar bent").count()) === 1,
+    );
+    await p4.close();
   }
 
   // ---------- 4. een ander lead_id in de body ----------
@@ -565,6 +669,7 @@ async function main() {
     leegStub();
     await p.getByRole("button", { name: "Verstuur" }).click();
     await p.locator('[role="status"]').waitFor({ timeout: 10_000 });
+    await p.locator('img[src*="voorbeeldplan"]').evaluate((el) => el.decode?.()).catch(() => {});
     scroll.dank = await geenZijscroll(p);
     await foto(p, `dank-${breedte}.png`);
 

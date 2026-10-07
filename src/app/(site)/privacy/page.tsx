@@ -50,9 +50,10 @@ export default function PrivacyPage() {
             website-platform.
           </P>
           <P>
-            Via het gespreksformulier uit onze mail: de onderwerpen die je aanvinkt, hoe je
-            bereikt wilt worden, je telefoonnummer (als je dat invult) en het dagdeel dat je
-            uitkomt.
+            Via het gespreksformulier uit onze mail: de onderwerpen die je aanvinkt en wat je
+            daarbij zelf toelicht, hoe je bereikt wilt worden, je telefoonnummer of een ander
+            e-mailadres (als je dat invult), het dagdeel dat je uitkomt en de dagen die je
+            daarbij noemt.
           </P>
 
           <H2>Waarvoor we ze gebruiken</H2>
