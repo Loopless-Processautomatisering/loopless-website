@@ -21,21 +21,23 @@ const visuals: Record<string, React.ReactNode> = {
   kennisbank: <AnswerSnippet />,
 };
 
+// Titel en omschrijving dragen sinds oktober 2026 de zoekterm "bedrijfsprocessen automatiseren"
+// (480 per maand, doelterm van /diensten in siteup-seo klanten/loopless/config.md).
 export const metadata: Metadata = {
-  title: "Diensten: AI-automatisering op maat voor het MKB",
+  title: "Bedrijfsprocessen automatiseren met AI voor het MKB",
   description:
-    "Van leads uitzoeken tot offertes klaarzetten en vragen beantwoorden uit eigen documentatie: AI-automatisering op maat die jouw MKB-team tijd teruggeeft.",
+    "Bedrijfsprocessen automatiseren zonder je team te vervangen: AI-systemen die leads uitzoeken, offertes klaarzetten en vragen beantwoorden. Jij beslist.",
   alternates: { canonical: "/diensten" },
   openGraph: {
-    title: "Diensten: AI-automatisering op maat voor het MKB",
+    title: "Bedrijfsprocessen automatiseren met AI voor het MKB",
     description:
-      "Van leads uitzoeken tot offertes klaarzetten en vragen beantwoorden uit eigen documentatie: AI-automatisering op maat die jouw MKB-team tijd teruggeeft.",
+      "Bedrijfsprocessen automatiseren zonder je team te vervangen: AI-systemen die leads uitzoeken, offertes klaarzetten en vragen beantwoorden. Jij beslist.",
   },
   twitter: {
     card: "summary_large_image",
-    title: "Diensten: AI-automatisering op maat voor het MKB",
+    title: "Bedrijfsprocessen automatiseren met AI voor het MKB",
     description:
-      "Van leads uitzoeken tot offertes klaarzetten en vragen beantwoorden uit eigen documentatie: AI-automatisering op maat die jouw MKB-team tijd teruggeeft.",
+      "Bedrijfsprocessen automatiseren zonder je team te vervangen: AI-systemen die leads uitzoeken, offertes klaarzetten en vragen beantwoorden. Jij beslist.",
   },
 };
 
