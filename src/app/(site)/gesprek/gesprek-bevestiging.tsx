@@ -3,7 +3,8 @@
 import { useEffect, useRef } from "react";
 import Image from "next/image";
 import { ShieldCheck } from "lucide-react";
-import { DAGDELEN, INTERESSES, type Inzending } from "./keuzes";
+import { momentenRegels } from "@/lib/gesprek/momenten";
+import { INTERESSES, type Inzending } from "./keuzes";
 
 // Het scherm na versturen: wat er is genoteerd, wat er nu gebeurt en een
 // fictief voorbeeld van het plan. Het leest alleen uit de momentopname van de
@@ -47,7 +48,7 @@ export function GesprekBevestiging({
     dankRef.current?.focus();
   }, []);
 
-  const { interesse, andersTekst, bereiken, telefoon, anderEmail, dagdeel, voorkeur } = inzending;
+  const { interesse, andersTekst, bereiken, telefoon, anderEmail, dagdeel, momenten, voorkeur } = inzending;
   const bellen = bereiken === "bellen";
 
   const onderwerpen = INTERESSES.filter((i) => interesse.includes(i.waarde)).map((i) => i.label);
@@ -56,10 +57,7 @@ export function GesprekBevestiging({
     : anderEmail
       ? `Ik mail je op ${anderEmail}`
       : "Ik mail je op het adres waar mijn bericht naartoe ging";
-  const dagdeelRegel =
-    dagdeel === "geen_voorkeur"
-      ? "Geen voorkeur voor een dagdeel"
-      : (DAGDELEN.find((d) => d.waarde === dagdeel)?.label ?? "");
+  const metMomenten = dagdeel === "momenten" && momenten.length > 0;
 
   // Eén voorbeeld: dat van het eerste aangevinkte onderwerp. Voor maatwerk
   // bestaat geen voorbeeld, dan tonen we dat van inkoop.
@@ -70,7 +68,9 @@ export function GesprekBevestiging({
   const stappen = [
     {
       kop: bellen ? "Ik bel je" : "Ik mail je",
-      tekst: "Om een tijdstip af te spreken. Je hoeft verder niets te doen.",
+      tekst: metMomenten
+        ? "Ik bevestig zo snel mogelijk één van deze momenten. Je hoeft verder niets te doen."
+        : "Om een tijdstip af te spreken. Je hoeft verder niets te doen.",
     },
     {
       kop: "Een half uur bellen",
@@ -120,7 +120,15 @@ export function GesprekBevestiging({
         <div>
           <dt className="text-[#5F6B85]">Wanneer</dt>
           <dd className="break-words font-semibold text-[#10182B]">
-            {dagdeelRegel}
+            {metMomenten ? (
+              <ul>
+                {momentenRegels(momenten).map((regel) => (
+                  <li key={regel}>{regel}</li>
+                ))}
+              </ul>
+            ) : (
+              "Maakt me niet uit"
+            )}
             {voorkeur && <p className="mt-1 font-normal text-[#2B3446]">{voorkeur}</p>}
           </dd>
         </div>

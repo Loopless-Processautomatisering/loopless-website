@@ -189,14 +189,26 @@ async function foto(page, naam) {
   await page.screenshot({ path: path.join(uit, naam), fullPage: true });
 }
 
+const VRIJ_VELD = "Nog iets over het moment? (optioneel)";
+
+// Het n-de vakje van het rooster: { waarde: "JJJJ-MM-DD:deel", label: "wo 14 okt ochtend" }.
+// De data hangen af van vandaag, dus de test leest ze van de pagina.
+async function moment(page, n = 0) {
+  const vak = page.locator('#gesprek-wanneer input[name="momenten"]').nth(n);
+  await vak.waitFor();
+  return { vak, waarde: await vak.getAttribute("value"), label: await vak.getAttribute("aria-label") };
+}
+
 async function vulAlles(page) {
   await page.getByLabel("Besteladvies en inkoop-uitzoekwerk").check();
   await page.getByLabel("Maatwerk: iets anders bij ons").check();
   await page.getByLabel("Waar zit bij jullie het uitzoekwerk?").fill("Orderbevestigingen overtypen.");
   await page.getByLabel("Bel me").check();
   await page.getByLabel("Telefoonnummer").fill("06 12 34 56 78");
-  await page.getByLabel("'s Ochtends").check();
-  await page.getByLabel("Dagen die niet kunnen, of een voorkeur").fill("Niet op maandag.");
+  const m = await moment(page, 0);
+  await m.vak.check();
+  await page.getByLabel(VRIJ_VELD).fill("Niet op maandag.");
+  return m;
 }
 
 let siteProces;
@@ -300,15 +312,14 @@ async function main() {
     const meldingen = await page.locator('form [role="alert"]').allInnerTexts();
     const zichtbaar = await page.locator('form [role="alert"]').first().isVisible();
     meld(
-      "leeg versturen: geen verzoek aan de stub, meldingen bij onderwerp, bereiken en dagdeel",
-      stub.verzoeken.length === 0 && meldingen.length === 3 && zichtbaar,
+      "leeg versturen: geen verzoek aan de stub, meldingen bij onderwerp en bereiken (het rooster is niet verplicht)",
+      stub.verzoeken.length === 0 && meldingen.length === 2 && zichtbaar,
       `meldingen=${JSON.stringify(meldingen)} verzoeken=${stub.verzoeken.length}`,
     );
     await foto(page, "formulier-meldingen-1280.png");
 
     // zonder vinkje
     await page.getByLabel("Mail me").check();
-    await page.getByLabel("'s Middags").check();
     await page.getByRole("button", { name: "Verstuur" }).click();
     let m = await page.locator('form [role="alert"]').allInnerTexts();
     meld(
@@ -328,17 +339,19 @@ async function main() {
       `meldingen=${JSON.stringify(m)}`,
     );
 
-    // zonder dagdeel: verse pagina, alles behalve het dagdeel
+    // zonder moment: verse pagina, niets in het rooster aangevinkt -> gaat gewoon, als geen_voorkeur
     await open(page, link);
     await page.getByLabel("Offertes klaarzetten").check();
     await page.getByLabel("Mail me").check();
     await page.getByRole("button", { name: "Verstuur" }).click();
-    m = await page.locator('form [role="alert"]').allInnerTexts();
+    await page.locator('[role="status"]').waitFor({ timeout: 10_000 }).catch(() => {});
+    const r0 = stub.rijen[0] ?? {};
     meld(
-      "zonder dagdeel: geen verzoek aan de stub en een zichtbare melding",
-      stub.verzoeken.length === 0 && m.length === 1 && (await page.locator("#fout-dagdeel").isVisible()),
-      `meldingen=${JSON.stringify(m)}`,
+      "zonder moment: wordt verstuurd als geen_voorkeur, zonder sleutel momenten",
+      stub.rijen.length === 1 && r0.dagdeel === "geen_voorkeur" && !("momenten" in r0),
+      `rijen=${JSON.stringify(stub.rijen)}`,
     );
+    leegStub();
   }
 
   // ---------- toetsenbord ----------
@@ -366,12 +379,75 @@ async function main() {
     await page.screenshot({ path: path.join(uit, "formulier-focus-1280.png") });
   }
 
+  // ---------- het rooster (01-08): klok, volgende week, maakt niet uit, moment voorbij ----------
+  {
+    // vr 23 okt 2026, 11:00 in Amsterdam: vandaag-middag staat erbij, de ochtend niet.
+    const pc = await ctx.newPage();
+    await pc.clock.install({ time: new Date("2026-10-23T09:00:00Z") });
+    await open(pc, link);
+    await pc.locator("#gesprek-wanneer table").waitFor();
+    const rijen = (await pc.locator("#gesprek-wanneer tbody th").allInnerTexts()).map((s) => s.replace(/\s+/g, " ").trim());
+    meld(
+      "rooster om 11:00 op vr 23 okt: eerst vandaag (alleen middag), dan vijf werkdagen vanaf ma 26 okt (na de zomertijd)",
+      gelijk(rijen, ["vr 23 okt (vandaag)", "ma 26 okt", "di 27 okt", "wo 28 okt", "do 29 okt", "vr 30 okt"]) &&
+        (await pc.getByLabel("vr 23 okt ochtend").count()) === 0 && (await pc.getByLabel("vr 23 okt middag").count()) === 1,
+      JSON.stringify(rijen),
+    );
+    await pc.getByRole("button", { name: "Volgende week tonen" }).click();
+    const rijen2 = await pc.locator("#gesprek-wanneer tbody th").allInnerTexts();
+    meld(
+      "'Volgende week tonen' voegt vijf werkdagen toe (t/m vr 6 nov) en verdwijnt",
+      rijen2.length === 11 && rijen2.at(-1).trim() === "vr 6 nov" &&
+        (await pc.getByRole("button", { name: "Volgende week tonen" }).count()) === 0,
+      JSON.stringify(rijen2),
+    );
+    await pc.getByLabel("ma 26 okt ochtend").check();
+    await pc.getByLabel("Maakt me niet uit").check();
+    const leeg = !(await pc.getByLabel("ma 26 okt ochtend").isChecked());
+    await pc.getByLabel("di 27 okt middag").check();
+    meld(
+      "'Maakt me niet uit' haalt de vinkjes weg, en een vinkje zet 'Maakt me niet uit' weer uit",
+      leeg && !(await pc.getByLabel("Maakt me niet uit").isChecked()),
+    );
+    await pc.close();
+
+    // Zelfde dag, 14:00: vandaag staat er niet meer bij.
+    const pd = await ctx.newPage();
+    await pd.clock.install({ time: new Date("2026-10-23T12:00:00Z") });
+    await open(pd, link);
+    await pd.locator("#gesprek-wanneer table").waitFor();
+    const eerste = (await pd.locator("#gesprek-wanneer tbody th").first().innerText()).trim();
+    meld("rooster om 14:00: vandaag staat er niet meer bij, het begint bij ma 26 okt", eerste === "ma 26 okt", eerste);
+    await pd.close();
+
+    // De route meldt "moment voorbij" (pagina lang open laten staan).
+    const pv = await ctx.newPage();
+    await open(pv, link);
+    await pv.getByLabel("Offertes klaarzetten").check();
+    await pv.getByLabel("Mail me").check();
+    const mv = await moment(pv, 0);
+    await mv.vak.check();
+    await pv.route("**/api/gesprek", (route) =>
+      route.fulfill({ status: 400, contentType: "application/json", body: '{"ok":false,"fout":"moment voorbij"}' }),
+    );
+    await pv.getByRole("button", { name: "Verstuur" }).click();
+    await pv.getByText("Een van de gekozen momenten is al voorbij.").waitFor({ timeout: 10_000 }).catch(() => {});
+    meld(
+      "moment voorbij: eigen melding bij het rooster, formulier blijft staan, geen algemene foutregel",
+      (await pv.getByText("Een van de gekozen momenten is al voorbij.").isVisible()) &&
+        (await pv.locator("form").count()) === 1 && (await pv.getByText(FOUTREGEL).count()) === 0 &&
+        (await pv.getByLabel(mv.label).isChecked()),
+    );
+    await pv.close();
+  }
+
   // ---------- 7. de stub geeft 500 ----------
   let idBijFout;
+  let eersteMoment;
   leegStub();
   {
     await open(page, link);
-    await vulAlles(page);
+    eersteMoment = await vulAlles(page);
     stub.faal = true;
     const verzoek = page.waitForRequest((r) => r.url().endsWith("/api/gesprek"));
     await page.getByRole("button", { name: "Verstuur" }).click();
@@ -385,8 +461,8 @@ async function main() {
       (await page.getByLabel("Waar zit bij jullie het uitzoekwerk?").inputValue()) === "Orderbevestigingen overtypen." &&
       (await page.getByLabel("Bel me").isChecked()) &&
       (await page.getByLabel("Telefoonnummer").inputValue()) === "06 12 34 56 78" &&
-      (await page.getByLabel("'s Ochtends").isChecked()) &&
-      (await page.getByLabel("Dagen die niet kunnen, of een voorkeur").inputValue()) === "Niet op maandag.";
+      (await page.getByLabel(eersteMoment.label).isChecked()) &&
+      (await page.getByLabel(VRIJ_VELD).inputValue()) === "Niet op maandag.";
     meld(
       "stub geeft 500: formulier blijft staan met de ingevulde waarden en de foutregel",
       foutZichtbaar && staatNog && stub.verzoeken.length === 1 && stub.rijen.length === 0,
@@ -432,8 +508,9 @@ async function main() {
       bereiken: "bellen",
       telefoon: "06 12 34 56 78",
       ander_email: null,
-      dagdeel: "ochtend",
+      dagdeel: "momenten",
       voorkeur: "Niet op maandag.",
+      momenten: [eersteMoment.waarde],
     };
     const ok = stub.rijen.length === 1 && gelijk(stub.rijen[0], verwacht);
     meld(
@@ -471,9 +548,9 @@ async function main() {
     );
     const echo = (await page.locator("dl").innerText()).replace(/\s+/g, " ");
     meld(
-      "na versturen: het scherm toont wat is verstuurd (onderwerpen, toelichting, nummer, dagdeel, voorkeur)",
+      "na versturen: het scherm toont wat is verstuurd (onderwerpen, toelichting, nummer, moment, voorkeur)",
       ["Besteladvies en inkoop-uitzoekwerk", "Maatwerk: iets anders bij ons", "Orderbevestigingen overtypen.",
-        "Ik bel je op 06 12 34 56 78", "'s Ochtends", "Niet op maandag."].every((t) => echo.includes(t)),
+        "Ik bel je op 06 12 34 56 78", eersteMoment.label.replace(/ (ochtend|middag)$/, ": $1"), "Niet op maandag."].every((t) => echo.includes(t)),
       `echo=${JSON.stringify(echo)}`,
     );
     const stappen = (await page.locator("ol h3").allInnerTexts()).join(" | ");
@@ -489,6 +566,7 @@ async function main() {
     meld(
       "na versturen: drie stappen (bellen), het voorbeeldplan van inkoop geladen, link opent in een nieuw tabblad",
       stappen === "Ik bel je | Een half uur bellen | Jij krijgt het plan" && geladen &&
+        (await page.getByText("Ik bevestig zo snel mogelijk één van deze momenten.").count()) === 1 &&
         (await planLink.getAttribute("target")) === "_blank" &&
         (await page.getByText("Je vinkte meer dan één onderwerp aan.").count()) === 1,
       `stappen=${stappen} geladen=${geladen}`,
@@ -536,7 +614,8 @@ async function main() {
     const echo = (await p2.locator("dl").innerText().catch(() => "")).replace(/\s+/g, " ");
     meld(
       "na versturen (mailen): het andere adres en 'geen voorkeur' in de echo, stap 1 is 'Ik mail je', voorbeeld van vragen",
-      echo.includes("Ik mail je op inkoop@voorbeeld.test") && echo.includes("Geen voorkeur voor een dagdeel") &&
+      echo.includes("Ik mail je op inkoop@voorbeeld.test") && echo.includes("Maakt me niet uit") &&
+        (await p2.getByText("Om een tijdstip af te spreken.").count()) === 1 &&
         (await p2.locator("ol h3").first().innerText()) === "Ik mail je" &&
         (await p2.locator('a[href="/gesprek/voorbeeldplan-vragen.png"]').count()) === 1,
       `echo=${JSON.stringify(echo)}`,
@@ -552,23 +631,26 @@ async function main() {
     await p3.getByLabel("Offertes klaarzetten").check();
     await p3.getByLabel("Bel me").check();
     await p3.getByLabel("Telefoonnummer").fill("  06 98 76 54 32  ");
-    await p3.getByLabel("'s Middags").check();
+    const m1 = await moment(p3, 1);
+    const m2 = await moment(p3, 2);
+    await m1.vak.check();
     await p3.route("**/api/gesprek", async (route) => {
       await new Promise((r) => setTimeout(r, 3000));
       await route.continue();
     });
     await p3.getByRole("button", { name: "Verstuur" }).click();
     await p3.getByLabel("Mail me").check({ force: true });
-    await p3.getByLabel("'s Ochtends").check({ force: true });
+    await m2.vak.check({ force: true });
     const gewisseld = await p3.getByLabel("Mail me").isChecked().catch(() => false);
     await p3.locator('[role="status"]').waitFor({ timeout: 10_000 }).catch(() => {});
     const echo = (await p3.locator("dl").innerText().catch(() => "")).replace(/\s+/g, " ");
     const r = stub.rijen[0] ?? {};
     meld(
-      "wisselen tijdens het versturen: scherm en opgeslagen rij tonen allebei bellen, het ingekorte nummer en de middag",
+      "wisselen tijdens het versturen: scherm en opgeslagen rij tonen allebei bellen, het ingekorte nummer en alleen het eerste moment",
       gewisseld &&
-        echo.includes("Ik bel je op 06 98 76 54 32") && echo.includes("'s Middags") && !echo.includes("Ik mail je") &&
-        r.bereiken === "bellen" && r.telefoon === "06 98 76 54 32" && r.dagdeel === "middag" &&
+        echo.includes("Ik bel je op 06 98 76 54 32") && echo.includes(m1.label.replace(/ (ochtend|middag)$/, ": $1")) &&
+        !echo.includes(m2.label.replace(/ (ochtend|middag)$/, ": $1")) && !echo.includes("Ik mail je") &&
+        r.bereiken === "bellen" && r.telefoon === "06 98 76 54 32" && r.dagdeel === "momenten" && gelijk(r.momenten, [m1.waarde]) &&
         (await p3.locator("ol h3").first().innerText().catch(() => "")) === "Ik bel je" &&
         (await p3.locator('a[href="/gesprek/voorbeeldplan-offertes.png"]').count()) === 1 &&
         (await p3.getByText("Je vinkte meer dan één onderwerp aan.").count()) === 0,
@@ -584,7 +666,6 @@ async function main() {
     await open(p4, link);
     await p4.getByLabel("Maatwerk: iets anders bij ons").check();
     await p4.getByLabel("Mail me").check();
-    await p4.getByLabel("'s Middags").check();
     await p4.getByRole("button", { name: "Verstuur" }).click();
     await p4.locator('[role="status"]').waitFor({ timeout: 10_000 }).catch(() => {});
     const echo = (await p4.locator("dl").innerText().catch(() => "")).replace(/\s+/g, " ");
@@ -612,7 +693,7 @@ async function main() {
     inzending_id: "aaaaaaaa-bbbb-4ccc-8ddd-eeeeeeeeeeee",
     interesse: ["inkoop"],
     bereiken: "mailen",
-    dagdeel: "middag",
+    dagdeel: "geen_voorkeur",
   };
   leegStub();
   {
@@ -645,6 +726,10 @@ async function main() {
       "onbekende interesse": { ...geldig, interesse: ["inkoop", "iets"] },
       "interesse geen lijst": { ...geldig, interesse: "inkoop" },
       "onbekend dagdeel": { ...geldig, dagdeel: "avond" },
+      "oud dagdeel (ochtend) van vóór het rooster": { ...geldig, dagdeel: "ochtend" },
+      "momenten zonder lijst": { ...geldig, dagdeel: "momenten" },
+      "momenten met een zaterdag": { ...geldig, dagdeel: "momenten", momenten: ["2030-01-05:ochtend"] },
+      "momenten in de verkeerde vorm": { ...geldig, dagdeel: "momenten", momenten: ["morgen:ochtend"] },
       "onbekend bereiken": { ...geldig, bereiken: "sms" },
       "bellen zonder nummer": { ...geldig, bereiken: "bellen", telefoon: "  " },
       "geen inzendings-id": { ...geldig, inzending_id: undefined },
@@ -704,7 +789,6 @@ async function main() {
     await p5.getByLabel("Offertes klaarzetten").check();
     await p5.getByLabel("Mail me").check();
     await p5.getByLabel("Liever een ander e-mailadres?").fill("geen adres");
-    await p5.getByLabel("'s Middags").check();
     await p5.getByRole("button", { name: "Verstuur" }).click();
     const zichtbaar = await p5.locator("#fout-ander-email").isVisible();
     meld(
@@ -747,12 +831,14 @@ async function main() {
   }
 
   // ---------- 8. breedtes en schermafbeeldingen ----------
-  for (const breedte of [1280, 390]) {
+  // 360 x 640: het kleinste gangbare toestel (01-08 §6.10, het rooster maakt het formulier hoger).
+  for (const breedte of [1280, 390, 360]) {
+    const mobiel = breedte < 400;
     const c2 = await browser.newContext({
-      viewport: { width: breedte, height: breedte === 390 ? 844 : 800 },
-      isMobile: breedte === 390,
-      hasTouch: breedte === 390,
-      deviceScaleFactor: breedte === 390 ? 2 : 1,
+      viewport: { width: breedte, height: breedte === 390 ? 844 : breedte === 360 ? 640 : 800 },
+      isMobile: mobiel,
+      hasTouch: mobiel,
+      deviceScaleFactor: mobiel ? 2 : 1,
     });
     const p = await c2.newPage();
     const scroll = {};

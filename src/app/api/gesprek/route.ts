@@ -1,5 +1,6 @@
 import { type NextRequest } from "next/server";
 import { verifieer } from "@/lib/gesprek/code";
+import { toetsMomenten } from "@/lib/gesprek/momenten";
 
 // Gespreksformulier (/gesprek): valideert de inzending en stuurt hem door naar de
 // loopless-outreach-app (api/gesprek.js daar), die er één rij voor in
@@ -12,7 +13,8 @@ import { verifieer } from "@/lib/gesprek/code";
 const MAX_BODY_BYTES = 20_000;
 
 const INTERESSES = ["inkoop", "vragen", "offertes", "anders"];
-const DAGDELEN = ["ochtend", "middag", "geen_voorkeur"];
+// Het formulier stuurt sinds het rooster (01-08) alleen nog deze twee.
+const DAGDELEN = ["geen_voorkeur", "momenten"];
 
 const UUID = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/;
 const EMAIL = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -79,6 +81,18 @@ export async function POST(request: NextRequest) {
   if (!DAGDELEN.includes(dagdeel)) {
     return Response.json({ ok: false }, { status: 400 });
   }
+  let momenten: string[] | null = null;
+  if (dagdeel === "momenten") {
+    const uitslag = toetsMomenten(payload.momenten);
+    if (!uitslag.ok) {
+      // "voorbij": de pagina stond lang open; het formulier laat dan opnieuw kiezen.
+      return Response.json(
+        uitslag.reden === "voorbij" ? { ok: false, fout: "moment voorbij" } : { ok: false },
+        { status: 400 },
+      );
+    }
+    momenten = uitslag.momenten;
+  }
   if (bereiken !== "bellen" && bereiken !== "mailen") {
     return Response.json({ ok: false }, { status: 400 });
   }
@@ -109,6 +123,7 @@ export async function POST(request: NextRequest) {
     ander_email: anderEmail || null,
     dagdeel,
     voorkeur: str(payload.voorkeur, 200) || null,
+    ...(momenten ? { momenten } : {}),
   };
 
   // voornaam en bedrijf gaan mee voor de melding aan Wessel; ze worden niet

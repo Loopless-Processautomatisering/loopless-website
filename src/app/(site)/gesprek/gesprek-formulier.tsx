@@ -1,11 +1,12 @@
 "use client";
 
-import { useRef, useState } from "react";
+import { useMemo, useRef, useState, useSyncExternalStore } from "react";
 import Link from "next/link";
 import { AnimateIn } from "@/components/ui/animate-in";
 import { GesprekBevestiging } from "./gesprek-bevestiging";
 import { useGesprekStaat } from "./gesprek-staat";
-import { BEREIKEN, DAGDELEN, INTERESSES, type Inzending } from "./keuzes";
+import { roosterDagen, DAGEN_PER_WEEK, type RoosterDag } from "@/lib/gesprek/momenten";
+import { BEREIKEN, INTERESSES, type Inzending } from "./keuzes";
 
 // Het formulier achter de knop in de koude mail. Naam en bedrijf komen uit de
 // ondertekende code en zijn hier vaste tekst; het e-mailadres van de lead staat
@@ -20,10 +21,13 @@ type Fouten = {
   bereiken?: string;
   telefoon?: string;
   anderEmail?: string;
-  dagdeel?: string;
 };
 
 const EMAIL = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+// Voor useSyncExternalStore: er is niets om op te abonneren, de vlag zegt alleen
+// of we in de browser draaien (op de server false, na het laden true).
+const geenAbonnement = () => () => {};
 
 const kaart =
   "relative overflow-hidden rounded-2xl border border-[#DCE6F5] bg-white shadow-[0_1px_2px_rgba(16,24,43,0.04),0_16px_40px_-20px_rgba(79,142,247,0.25)] p-6 sm:p-8";
@@ -47,6 +51,88 @@ function Melding({ id, tekst }: { id: string; tekst?: string }) {
   );
 }
 
+// De tabel met dagen en dagdelen. Eerst één werkweek (plus vandaag-middag vóór
+// 12:00), met een knop voor de week erna: op een telefoon blijft het zo kort.
+function Rooster({
+  dagen,
+  volgendeWeek,
+  gekozen,
+  gedimd,
+  onWissel,
+  onVolgendeWeek,
+}: {
+  dagen: RoosterDag[];
+  volgendeWeek: boolean;
+  gekozen: string[];
+  gedimd: boolean;
+  onWissel: (moment: string) => void;
+  onVolgendeWeek: () => void;
+}) {
+  const vandaag = dagen.filter((d) => d.vandaag);
+  const rest = dagen.filter((d) => !d.vandaag);
+  const zichtbaar = [...vandaag, ...rest.slice(0, volgendeWeek ? DAGEN_PER_WEEK * 2 : DAGEN_PER_WEEK)];
+  const cel =
+    "flex h-11 cursor-pointer items-center justify-center rounded-lg border border-[#DCE6F5] bg-[#F7FAFF] transition-colors hover:border-[#4F8EF7] has-[:checked]:border-[#4F8EF7] has-[:checked]:bg-[#EAF1FC] has-[:focus-visible]:ring-2 has-[:focus-visible]:ring-[#4F8EF7]";
+  return (
+    <div className={`mt-4 transition-opacity ${gedimd ? "opacity-50" : ""}`}>
+      <table className="w-full border-separate border-spacing-x-2 border-spacing-y-1.5 text-sm">
+        <thead>
+          <tr>
+            <th scope="col" className="w-[38%] text-left font-normal text-[#5F6B85]">
+              <span className="sr-only">Dag</span>
+            </th>
+            <th scope="col" className="font-medium text-[#5F6B85]">Ochtend</th>
+            <th scope="col" className="font-medium text-[#5F6B85]">Middag</th>
+          </tr>
+        </thead>
+        <tbody>
+          {zichtbaar.map((dag) => (
+            <tr key={dag.datum}>
+              <th scope="row" className="whitespace-nowrap text-left font-medium text-[#2B3446]">
+                {dag.label}
+                {dag.vandaag && <span className="font-normal text-[#5F6B85]"> (vandaag)</span>}
+              </th>
+              {(["ochtend", "middag"] as const).map((deel) => {
+                const moment = `${dag.datum}:${deel}`;
+                return (
+                  <td key={deel}>
+                    {dag.dagdelen.includes(deel) ? (
+                      <label className={cel}>
+                        <input
+                          type="checkbox"
+                          name="momenten"
+                          value={moment}
+                          aria-label={`${dag.label} ${deel}`}
+                          checked={gekozen.includes(moment)}
+                          onChange={() => onWissel(moment)}
+                          className={keuzeVak}
+                        />
+                      </label>
+                    ) : (
+                      <span aria-hidden="true" className="flex h-11 items-center justify-center text-[#9AA6BF]">
+                        –
+                      </span>
+                    )}
+                  </td>
+                );
+              })}
+            </tr>
+          ))}
+        </tbody>
+      </table>
+      {!volgendeWeek && rest.length > DAGEN_PER_WEEK && (
+        <button
+          type="button"
+          onClick={onVolgendeWeek}
+          className="mt-2 text-sm font-medium text-[#3A75D8] hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#4F8EF7]"
+        >
+          Volgende week tonen
+        </button>
+      )}
+    </div>
+  );
+}
+
 export function GesprekFormulier({
   code,
   voornaam,
@@ -61,7 +147,21 @@ export function GesprekFormulier({
   const [bereiken, setBereiken] = useState("");
   const [telefoon, setTelefoon] = useState("");
   const [anderEmail, setAnderEmail] = useState("");
-  const [dagdeel, setDagdeel] = useState("");
+  // Het rooster rekent met de klok van de bezoeker, dus pas na het laden: de
+  // server kent die niet, en rond 12:00 of middernacht zou de server een ander
+  // rooster renderen dan de browser.
+  const inDeBrowser = useSyncExternalStore(geenAbonnement, () => true, () => false);
+  const [roosterVersie, setRoosterVersie] = useState(0);
+  const rooster = useMemo(
+    () => (inDeBrowser ? roosterDagen() : null),
+    // roosterVersie: opnieuw opbouwen na "moment voorbij".
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [inDeBrowser, roosterVersie],
+  );
+  const [momenten, setMomenten] = useState<string[]>([]);
+  const [geenVoorkeur, setGeenVoorkeur] = useState(false);
+  const [volgendeWeek, setVolgendeWeek] = useState(false);
+  const [momentVoorbij, setMomentVoorbij] = useState(false);
   const [voorkeur, setVoorkeur] = useState("");
   const [hp, setHp] = useState("");
   const [fouten, setFouten] = useState<Fouten>({});
@@ -77,6 +177,12 @@ export function GesprekFormulier({
   // een gewijzigde inhoud krijgt een nieuw id, anders bevestigt de ontvanger de
   // oude rij terwijl dit scherm de nieuwe waarden toont (Codex 2026-10-07).
   const inzendingInhoud = useRef("");
+
+  const wisselMoment = (moment: string) => {
+    setMomenten((nu) => (nu.includes(moment) ? nu.filter((m) => m !== moment) : [...nu, moment]));
+    setGeenVoorkeur(false);
+    setMomentVoorbij(false);
+  };
 
   const wisselInteresse = (waarde: string) => {
     setInteresse((nu) => (nu.includes(waarde) ? nu.filter((w) => w !== waarde) : [...nu, waarde]));
@@ -94,10 +200,9 @@ export function GesprekFormulier({
       gevonden.telefoon = "Vul het nummer in waarop ik je kan bellen.";
     if (bereiken === "mailen" && anderEmail.trim() && !EMAIL.test(anderEmail.trim()))
       gevonden.anderEmail = "Dit lijkt geen e-mailadres. Laat het leeg of vul het aan.";
-    if (!dagdeel) gevonden.dagdeel = "Kies een dagdeel.";
     setFouten(gevonden);
 
-    const eerste = (["interesse", "bereiken", "telefoon", "anderEmail", "dagdeel"] as const).find(
+    const eerste = (["interesse", "bereiken", "telefoon", "anderEmail"] as const).find(
       (k) => gevonden[k],
     );
     if (eerste) {
@@ -116,13 +221,16 @@ export function GesprekFormulier({
     // versturen bewerkbaar, dus het scherm erna leest hieruit en niet uit de
     // velden, en toont dezelfde waarden als de server opslaat.
     const anders = interesse.includes("anders");
+    // Het rooster is niet verplicht: niets aangevinkt telt als "maakt niet uit".
+    const metMomenten = !geenVoorkeur && momenten.length > 0;
     const inzending: Inzending = {
       interesse: INTERESSES.map((i) => i.waarde).filter((w) => interesse.includes(w)),
       andersTekst: anders ? schoon(andersTekst, 1000) : "",
       bereiken,
       telefoon: bereiken === "bellen" ? schoon(telefoon, 40) : "",
       anderEmail: bereiken === "mailen" ? schoon(anderEmail, 200) : "",
-      dagdeel,
+      dagdeel: metMomenten ? "momenten" : "geen_voorkeur",
+      momenten: metMomenten ? [...momenten].sort() : [],
       voorkeur: schoon(voorkeur, 200),
     };
 
@@ -146,14 +254,26 @@ export function GesprekFormulier({
           telefoon: inzending.telefoon,
           ander_email: inzending.anderEmail,
           dagdeel: inzending.dagdeel,
+          ...(metMomenten ? { momenten: inzending.momenten } : {}),
           voorkeur: inzending.voorkeur,
           _hp: hp,
         }),
       });
-      const antwoord: unknown = res.ok ? await res.json() : null;
-      if (antwoord && typeof antwoord === "object" && (antwoord as { ok?: unknown }).ok === true) {
+      const antwoord: unknown = await res.json().catch(() => null);
+      const veld = (k: string) =>
+        antwoord && typeof antwoord === "object" ? (antwoord as Record<string, unknown>)[k] : undefined;
+      if (res.ok && veld("ok") === true) {
         setVerstuurd(inzending);
         meldVerstuurd();
+      } else if (veld("fout") === "moment voorbij") {
+        // De pagina stond lang open: rooster opnieuw opbouwen en alleen de
+        // vinkjes houden die er nog in staan.
+        const nieuw = roosterDagen();
+        const geldig = new Set(nieuw.flatMap((d) => d.dagdelen.map((dd) => `${d.datum}:${dd}`)));
+        setRoosterVersie((v) => v + 1);
+        setMomenten((nu) => nu.filter((m) => geldig.has(m)));
+        setMomentVoorbij(true);
+        document.getElementById("gesprek-wanneer")?.scrollIntoView({ block: "start" });
       } else {
         setError(true);
       }
@@ -307,34 +427,45 @@ export function GesprekFormulier({
 
         <div className="mb-8 border-t border-[#DCE6F5]" />
 
-        {/* Blok 3: dagdeel */}
-        <fieldset
-          className="min-w-0"
-          aria-describedby={fouten.dagdeel ? "fout-dagdeel" : undefined}
-        >
-          <legend className={`${groepKop} mb-5`}>Wanneer komt het je uit?</legend>
-          <div className="grid gap-3 sm:grid-cols-3">
-            {DAGDELEN.map(({ waarde, label }) => (
-              <label key={waarde} className={keuzeRij}>
-                <input
-                  type="radio"
-                  name="dagdeel"
-                  value={waarde}
-                  checked={dagdeel === waarde}
-                  onChange={() => {
-                    setDagdeel(waarde);
-                    setFouten((f) => ({ ...f, dagdeel: undefined }));
-                  }}
-                  className={keuzeVak}
-                />
-                <span>{label}</span>
-              </label>
-            ))}
-          </div>
-          <Melding id="fout-dagdeel" tekst={fouten.dagdeel} />
-          <div className="mt-4">
+        {/* Blok 3: wanneer. Niet verplicht; niets aanvinken telt als "maakt niet uit". */}
+        <fieldset id="gesprek-wanneer" className="min-w-0 scroll-mt-28">
+          <legend className={groepKop}>Wanneer komt het je uit?</legend>
+          <p className="mb-5 text-sm text-[#5F6B85]">
+            Vink aan wat kan, meer dan één mag. Ik bevestig één moment, per mail of telefoon.
+          </p>
+          <label className={keuzeRij}>
+            <input
+              type="checkbox"
+              name="geen_voorkeur"
+              checked={geenVoorkeur}
+              onChange={(e) => {
+                setGeenVoorkeur(e.target.checked);
+                if (e.target.checked) setMomenten([]);
+                setMomentVoorbij(false);
+              }}
+              className={keuzeVak}
+            />
+            <span>Maakt me niet uit</span>
+          </label>
+          {momentVoorbij && (
+            <p role="alert" className="mt-3 text-sm font-medium text-[#B42323]">
+              Een van de gekozen momenten is al voorbij. Kijk nog even of het klopt en verstuur
+              opnieuw.
+            </p>
+          )}
+          {rooster && (
+            <Rooster
+              dagen={rooster}
+              volgendeWeek={volgendeWeek}
+              gekozen={momenten}
+              gedimd={geenVoorkeur}
+              onWissel={wisselMoment}
+              onVolgendeWeek={() => setVolgendeWeek(true)}
+            />
+          )}
+          <div className="mt-5">
             <label htmlFor="gesprek-voorkeur" className={veldLabel}>
-              Dagen die niet kunnen, of een voorkeur
+              Nog iets over het moment? (optioneel)
             </label>
             <input
               id="gesprek-voorkeur"
@@ -343,7 +474,7 @@ export function GesprekFormulier({
               maxLength={200}
               value={voorkeur}
               onChange={(e) => setVoorkeur(e.target.value)}
-              placeholder="Bijvoorbeeld: niet op maandag."
+              placeholder="Bijvoorbeeld: liefst na 10 uur."
               className={invoer}
             />
           </div>

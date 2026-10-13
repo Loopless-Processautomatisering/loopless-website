@@ -13,11 +13,9 @@ export const BEREIKEN = [
   { waarde: "mailen", label: "Mail me" },
 ];
 
-export const DAGDELEN = [
-  { waarde: "ochtend", label: "'s Ochtends" },
-  { waarde: "middag", label: "'s Middags" },
-  { waarde: "geen_voorkeur", label: "Maakt me niet uit" },
-];
+// "Wanneer komt het je uit?" is sinds 01-08 een rooster (src/lib/gesprek/momenten.ts). Niets
+// aanvinken of "Maakt me niet uit" geeft dagdeel geen_voorkeur; vakjes in het
+// rooster geven dagdeel momenten met de lijst.
 
 // Wat er is verstuurd, opgeschoond zoals /api/gesprek het opslaat: ingekort, en
 // alleen de velden die bij de gemaakte keuze horen.
@@ -27,6 +25,7 @@ export type Inzending = {
   bereiken: string;
   telefoon: string;
   anderEmail: string;
-  dagdeel: string;
+  dagdeel: "momenten" | "geen_voorkeur";
+  momenten: string[];
   voorkeur: string;
 };
