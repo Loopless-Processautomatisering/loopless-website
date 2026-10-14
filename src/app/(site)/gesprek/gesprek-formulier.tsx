@@ -1,6 +1,7 @@
 "use client";
 
 import { useMemo, useRef, useState, useSyncExternalStore } from "react";
+import { flushSync } from "react-dom";
 import Link from "next/link";
 import { AnimateIn } from "@/components/ui/animate-in";
 import { GesprekBevestiging } from "./gesprek-bevestiging";
@@ -71,6 +72,12 @@ function Rooster({
   const vandaag = dagen.filter((d) => d.vandaag);
   const rest = dagen.filter((d) => !d.vandaag);
   const zichtbaar = [...vandaag, ...rest.slice(0, volgendeWeek ? DAGEN_PER_WEEK * 2 : DAGEN_PER_WEEK)];
+  // De knop verdwijnt na de klik; de focus gaat naar het eerste vakje van de nieuwe week.
+  const eersteNieuw = useRef<HTMLInputElement>(null);
+  const toonVolgendeWeek = () => {
+    flushSync(onVolgendeWeek);
+    eersteNieuw.current?.focus();
+  };
   const cel =
     "flex h-11 cursor-pointer items-center justify-center rounded-lg border border-[#DCE6F5] bg-[#F7FAFF] transition-colors hover:border-[#4F8EF7] has-[:checked]:border-[#4F8EF7] has-[:checked]:bg-[#EAF1FC] has-[:focus-visible]:ring-2 has-[:focus-visible]:ring-[#4F8EF7]";
   return (
@@ -105,6 +112,7 @@ function Rooster({
                           aria-label={`${dag.label} ${deel}`}
                           checked={gekozen.includes(moment)}
                           onChange={() => onWissel(moment)}
+                          ref={dag === rest[DAGEN_PER_WEEK] && deel === "ochtend" ? eersteNieuw : undefined}
                           className={keuzeVak}
                         />
                       </label>
@@ -123,7 +131,7 @@ function Rooster({
       {!volgendeWeek && rest.length > DAGEN_PER_WEEK && (
         <button
           type="button"
-          onClick={onVolgendeWeek}
+          onClick={toonVolgendeWeek}
           className="mt-2 text-sm font-medium text-[#3A75D8] hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#4F8EF7]"
         >
           Volgende week tonen

@@ -14,10 +14,12 @@ export const MAX_MOMENTEN = 20;
 export const MAX_DAGEN_VOORUIT = 28;
 export const DAGEN_PER_WEEK = 5;
 
-// Feestdagen op een werkdag, vanaf het eerste rooster tot en met 2027.
+// Feestdagen op een werkdag, vanaf het eerste rooster tot en met 2028.
 const FEESTDAGEN = new Set([
   "2026-12-25", "2027-01-01", "2027-03-26", "2027-03-29", "2027-04-27",
   "2027-05-05", "2027-05-06", "2027-05-17",
+  "2028-04-14", "2028-04-17", "2028-04-27", "2028-05-05", "2028-05-25",
+  "2028-06-05", "2028-12-25", "2028-12-26",
 ]);
 
 const VORM = /^(\d{4})-(\d{2})-(\d{2}):(ochtend|middag)$/;

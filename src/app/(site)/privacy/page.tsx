@@ -5,15 +5,13 @@ import { PageGlow } from "@/components/page-glow";
 // Claims hier zijn geverifieerd tegen de werkelijke stack, maar leveranciers
 // worden bewust niet bij naam genoemd, alleen per soort (besluit Wessel
 // 2026-10-13; de AVG vraagt ontvangers óf categorieën van ontvangers).
-// Achter de soorten: formulierdienst Formspree, configurator via eigen server
-// (n8n, EU) naar Google Workspace, hosting Vercel, koude mail via Instantly,
-// gespreksformulier via de outreach-app naar Supabase (eu-west-1, gemeten
-// 2026-10-13) met een pushmelding via ntfy (alleen naam en bedrijf).
+// Deze repo is openbaar: welke leverancier achter welke soort zit, staat in het
+// projectdossier, niet hier.
 
 export const metadata: Metadata = {
   title: "Privacyverklaring",
   description:
-    "Hoe Loopless omgaat met de gegevens die je achterlaat via het contactformulier of de configurator.",
+    "Hoe Loopless omgaat met de gegevens die je achterlaat via het contactformulier, de configurator of het gespreksformulier.",
   alternates: { canonical: "/privacy" },
 };
 

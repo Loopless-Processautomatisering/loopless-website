@@ -455,11 +455,12 @@ async function main() {
     );
     await pc.getByRole("button", { name: "Volgende week tonen" }).click();
     const rijen2 = await pc.locator("#gesprek-wanneer tbody th").allInnerTexts();
+    const focus = await pc.evaluate(() => document.activeElement?.getAttribute("aria-label"));
     meld(
-      "'Volgende week tonen' voegt vijf werkdagen toe (t/m vr 6 nov) en verdwijnt",
+      "'Volgende week tonen' voegt vijf werkdagen toe (t/m vr 6 nov), verdwijnt en zet de focus op ma 2 nov ochtend",
       rijen2.length === 11 && rijen2.at(-1).trim() === "vr 6 nov" &&
-        (await pc.getByRole("button", { name: "Volgende week tonen" }).count()) === 0,
-      JSON.stringify(rijen2),
+        (await pc.getByRole("button", { name: "Volgende week tonen" }).count()) === 0 && focus === "ma 2 nov ochtend",
+      `${JSON.stringify(rijen2)} focus=${focus}`,
     );
     await pc.getByLabel("ma 26 okt ochtend").check();
     await pc.getByLabel("Maakt me niet uit").check();
