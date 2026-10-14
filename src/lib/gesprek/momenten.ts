@@ -83,7 +83,7 @@ export function toetsMomenten(
   if (!Array.isArray(lijst) || lijst.length === 0 || lijst.length > MAX_MOMENTEN * 2) {
     return { ok: false, reden: "vorm" };
   }
-  const { datum: vandaag } = amsterdam(nu);
+  const { datum: vandaag, uur } = amsterdam(nu);
   const grens = plusDagen(vandaag, MAX_DAGEN_VOORUIT);
   const uniek = new Set<string>();
   for (const m of lijst) {
@@ -92,7 +92,8 @@ export function toetsMomenten(
     const datum = `${deel[1]}-${deel[2]}-${deel[3]}`;
     if (plusDagen(datum, 0) !== datum) return { ok: false, reden: "vorm" };
     if (datum < vandaag) return { ok: false, reden: "voorbij" };
-    if (datum === vandaag && deel[4] === "ochtend") return { ok: false, reden: "voorbij" };
+    // Vandaag kan alleen de middag, en alleen vóór 12:00 (zoals het rooster hem toont).
+    if (datum === vandaag && (deel[4] === "ochtend" || uur >= 12)) return { ok: false, reden: "voorbij" };
     if (datum > grens || !isWerkdag(datum)) return { ok: false, reden: "vorm" };
     uniek.add(m);
   }

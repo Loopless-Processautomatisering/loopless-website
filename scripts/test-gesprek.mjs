@@ -76,6 +76,12 @@ function meld(naam, ok, detail = "") {
 }
 const gelijk = (a, b) => JSON.stringify(a) === JSON.stringify(b);
 
+// De roosterregels zelf, rechtstreeks uit de bron (Node haalt de types weg). Zelfde
+// tabel als blok 11 van loopless-outreach/scripts/gesprek_test.mjs.
+const { amsterdam, toetsMomenten } = await import(path.join(root, "src", "lib", "gesprek", "momenten.ts"));
+const DAG = 86_400_000;
+const datumPlus = (datum, n) => new Date(Date.parse(`${datum}T00:00:00Z`) + n * DAG).toISOString().slice(0, 10);
+
 // --- de stub: neemt de doorgestuurde inzending aan, bewaart het JSON, geeft 201
 // met {"ok":true} (of 500). Wat niet in de tabel komt (het inzendings-id voor de
 // vergelijking, en voornaam en bedrijf voor de melding) staat apart in `extra`.
@@ -377,6 +383,60 @@ async function main() {
     );
     await page.getByLabel("Mail me").scrollIntoViewIfNeeded();
     await page.screenshot({ path: path.join(uit, "formulier-focus-1280.png") });
+  }
+
+  // ---------- het rooster (01-08): de regels in momenten.ts met een vaste klok ----------
+  {
+    // vr 23 okt 2026 10:00 in Amsterdam (zomertijd, UTC+2)
+    const vr = new Date("2026-10-23T08:00:00Z");
+    const t = (lijst, nu = vr) => toetsMomenten(lijst, nu);
+    meld(
+      "regels: vandaag-middag en maandag na de zomertijd geldig, ontdubbeld en gesorteerd",
+      gelijk(t(["2026-10-26:ochtend", "2026-10-23:middag", "2026-10-26:ochtend"]), {
+        ok: true, momenten: ["2026-10-23:middag", "2026-10-26:ochtend"],
+      }),
+    );
+    const redenen = {
+      "vandaag ochtend": t(["2026-10-23:ochtend"]).reden,
+      gisteren: t(["2026-10-22:middag"]).reden,
+      zaterdag: t(["2026-10-24:ochtend"]).reden,
+      "30 februari": t(["2027-02-30:ochtend"]).reden,
+      "31 dagen vooruit": t(["2026-11-23:ochtend"]).reden,
+      avond: t(["2026-10-26:avond"]).reden,
+      "lege lijst": t([]).reden,
+      "geen lijst": t(null).reden,
+      kerstdag: t(["2026-12-25:ochtend"], new Date("2026-12-01T09:00:00Z")).reden,
+    };
+    meld(
+      "regels: voorbij en ongeldig worden geweigerd met de juiste reden",
+      gelijk(redenen, {
+        "vandaag ochtend": "voorbij", gisteren: "voorbij", zaterdag: "vorm", "30 februari": "vorm",
+        "31 dagen vooruit": "vorm", avond: "vorm", "lege lijst": "vorm", "geen lijst": "vorm", kerstdag: "vorm",
+      }),
+      JSON.stringify(redenen),
+    );
+    meld("regels: precies 28 dagen vooruit mag", t(["2026-11-20:middag"]).ok === true);
+    const twintig = [];
+    for (const d of ["26", "27", "28", "29", "30"]) twintig.push(`2026-10-${d}:ochtend`, `2026-10-${d}:middag`);
+    for (const d of ["02", "03", "04", "05", "06"]) twintig.push(`2026-11-${d}:ochtend`, `2026-11-${d}:middag`);
+    meld("regels: 20 momenten mag, 21 niet", t(twintig).ok === true && t([...twintig, "2026-11-09:ochtend"]).ok === false);
+    // vandaag-middag staat alleen vóór 12:00 in het rooster; daarna is hij voorbij
+    const middag = (utc) => t(["2026-10-23:middag"], new Date(`2026-10-23T${utc}Z`));
+    const omMiddag = {
+      "11:59": middag("09:59:00").ok, "12:00": middag("10:00:00").reden,
+      "16:30": middag("14:30:00").reden, "21:00": middag("19:00:00").reden,
+    };
+    meld(
+      "regels: vandaag-middag geldig tot 12:00 Amsterdam, daarna voorbij",
+      gelijk(omMiddag, { "11:59": true, "12:00": "voorbij", "16:30": "voorbij", "21:00": "voorbij" }),
+      JSON.stringify(omMiddag),
+    );
+    // middernacht in Amsterdam terwijl het in UTC nog de vorige dag is (wintertijd, UTC+1)
+    meld(
+      "regels: om 00:30 Amsterdam is het al maandag (UTC nog zondag)",
+      t(["2026-10-26:ochtend"], new Date("2026-10-25T23:30:00Z")).reden === "voorbij" &&
+        t(["2026-10-26:ochtend"], new Date("2026-10-25T22:30:00Z")).ok === true,
+    );
   }
 
   // ---------- het rooster (01-08): klok, volgende week, maakt niet uit, moment voorbij ----------
@@ -719,6 +779,10 @@ async function main() {
   // ---------- validatie van de route zelf ----------
   leegStub();
   {
+    // Een zaterdag binnen 28 dagen, zodat alleen "geen werkdag" de weigering kan zijn.
+    const vandaag = amsterdam().datum;
+    let zaterdag = datumPlus(vandaag, 1);
+    while (new Date(`${zaterdag}T00:00:00Z`).getUTCDay() !== 6) zaterdag = datumPlus(zaterdag, 1);
     const fout = {
       "geen code": { ...geldig, c: undefined },
       "vervalste code": { ...geldig, c: `${vervalst}.${handtekening}` },
@@ -728,7 +792,7 @@ async function main() {
       "onbekend dagdeel": { ...geldig, dagdeel: "avond" },
       "oud dagdeel (ochtend) van vóór het rooster": { ...geldig, dagdeel: "ochtend" },
       "momenten zonder lijst": { ...geldig, dagdeel: "momenten" },
-      "momenten met een zaterdag": { ...geldig, dagdeel: "momenten", momenten: ["2030-01-05:ochtend"] },
+      "momenten met een zaterdag": { ...geldig, dagdeel: "momenten", momenten: [`${zaterdag}:ochtend`] },
       "momenten in de verkeerde vorm": { ...geldig, dagdeel: "momenten", momenten: ["morgen:ochtend"] },
       "onbekend bereiken": { ...geldig, bereiken: "sms" },
       "bellen zonder nummer": { ...geldig, bereiken: "bellen", telefoon: "  " },
@@ -747,6 +811,15 @@ async function main() {
       "de route weigert ongeldige invoer met 400 en slaat niets op",
       ok,
       `${JSON.stringify(statussen)} geenJson=${geenJson} teGroot=${teGroot} verzoeken=${stub.verzoeken.length}`,
+    );
+
+    // Echte route, geen gefingeerd antwoord: een moment van gisteren geeft "moment voorbij".
+    const gisteren = await stuur({ ...geldig, dagdeel: "momenten", momenten: [`${datumPlus(vandaag, -1)}:middag`] });
+    const gisterenBody = await gisteren.text();
+    meld(
+      "de route weigert een moment van gisteren met 400 en \"moment voorbij\", niets bij de stub",
+      gisteren.status === 400 && gisterenBody === '{"ok":false,"fout":"moment voorbij"}' && stub.verzoeken.length === 0,
+      `status=${gisteren.status} body=${gisterenBody}`,
     );
 
     const lang = await stuur({
