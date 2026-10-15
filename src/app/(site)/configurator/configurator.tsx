@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import Link from "next/link";
+import { meetAanvraag } from "@/lib/meet";
 
 // Oplossings-configurator — kaartset "alternatief 5+1" (besloten 2026-07-23).
 // Positionerings-regels (HARD): mens-eerst, geen efficiëntie/productiviteit,
@@ -224,7 +225,9 @@ export function Configurator() {
     setFormError("");
     setSending(true);
     try {
-      setSendFailed(!(await post(false)));
+      const gelukt = await post(false);
+      setSendFailed(!gelukt);
+      if (gelukt) meetAanvraag("configurator");
     } catch {
       // Inzending mag de bezoeker nooit blokkeren: uitslag tonen we sowieso,
       // maar we melden wel dat de gegevens niet zijn aangekomen.
@@ -239,7 +242,9 @@ export function Configurator() {
   const vraagGesprek = async () => {
     setGesprek("sending");
     try {
-      setGesprek((await post(true)) ? "done" : "error");
+      const gelukt = await post(true);
+      setGesprek(gelukt ? "done" : "error");
+      if (gelukt) meetAanvraag("configurator-gesprek");
     } catch {
       setGesprek("error");
     }
