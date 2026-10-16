@@ -36,6 +36,10 @@ const nextConfig: NextConfig = {
   // Cache Components: data is request-time by default; published content wordt
   // expliciet gecacht via 'use cache' in src/lib/supabase/content.ts.
   cacheComponents: true,
+  // Next 16.4 wil deze keuze expliciet. `false` houdt het prefetchgedrag van 16.1.6 (ISS-071 in
+  // het Siteup-portaal: alleen de beveiligingsupgrade, geen gedragswijziging). Aanzetten is een
+  // eigen keuze, met een meting ervoor en erna.
+  partialPrefetching: false,
   images: {
     remotePatterns: [
       {

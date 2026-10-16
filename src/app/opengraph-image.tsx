@@ -1,11 +1,16 @@
+import { readFile } from "node:fs/promises";
+import { join } from "node:path";
 import { ImageResponse } from "next/og";
 
-export const runtime = "nodejs";
 export const alt = "Loopless — AI-automatisering voor het MKB";
 export const size = { width: 1200, height: 630 };
 export const contentType = "image/png";
 
+// Het lettertype expliciet: tot Next 16.1 leverde `next/og` Noto Sans mee als standaard, vanaf 16.4
+// Geist, en daarmee veranderde dit beeld (gemeten bij de upgrade, ISS-071 in het Siteup-portaal).
+// Hetzelfde bestand als Next 16.1 meeleverde (OFL), zodat de linkvoorvertoning gelijk blijft.
 export default async function Image() {
+  const noto = await readFile(join(process.cwd(), "src/app/og/noto-sans-v27-latin-regular.ttf"));
   return new ImageResponse(
     (
       <div
@@ -121,6 +126,6 @@ export default async function Image() {
         </div>
       </div>
     ),
-    { ...size }
+    { ...size, fonts: [{ name: "Noto Sans", data: noto, style: "normal", weight: 400 }] }
   );
 }
