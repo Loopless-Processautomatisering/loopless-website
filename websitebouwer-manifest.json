@@ -1,0 +1,159 @@
+{
+  "formaat": "websitebouwer-1",
+  "sectietypes": [
+    {
+      "sleutel": "intro",
+      "label": "Intro met foto",
+      "versie": 1,
+      "velden": [
+        {
+          "sleutel": "kicker",
+          "type": "tekst",
+          "label": "Regel boven de naam"
+        },
+        {
+          "sleutel": "tekst",
+          "type": "tekst",
+          "label": "Tekst",
+          "opties": {
+            "meerregelig": true
+          }
+        },
+        {
+          "sleutel": "foto",
+          "type": "foto",
+          "label": "Foto"
+        },
+        {
+          "sleutel": "foto_alt",
+          "type": "tekst",
+          "label": "Beschrijving van de foto"
+        }
+      ]
+    },
+    {
+      "sleutel": "tekst",
+      "label": "Tekst",
+      "versie": 1,
+      "velden": [
+        {
+          "sleutel": "kop",
+          "type": "tekst",
+          "label": "Kop"
+        },
+        {
+          "sleutel": "tekst",
+          "type": "tekst",
+          "label": "Tekst",
+          "opties": {
+            "meerregelig": true
+          }
+        }
+      ]
+    },
+    {
+      "sleutel": "resultaat",
+      "label": "Resultaten",
+      "versie": 1,
+      "velden": [
+        {
+          "sleutel": "kop",
+          "type": "tekst",
+          "label": "Kop"
+        },
+        {
+          "sleutel": "tekst",
+          "type": "tekst",
+          "label": "Tekst bij vuljevacature.nl",
+          "opties": {
+            "meerregelig": true
+          }
+        },
+        {
+          "sleutel": "tekst_2",
+          "type": "tekst",
+          "label": "Tekst bij Drabor",
+          "opties": {
+            "meerregelig": true
+          }
+        }
+      ]
+    },
+    {
+      "sleutel": "oproep",
+      "label": "Oproep",
+      "versie": 1,
+      "velden": [
+        {
+          "sleutel": "kop",
+          "type": "tekst",
+          "label": "Kop"
+        },
+        {
+          "sleutel": "tekst",
+          "type": "tekst",
+          "label": "Tekst",
+          "opties": {
+            "meerregelig": true
+          }
+        }
+      ]
+    }
+  ],
+  "stijl": null,
+  "paginas": [
+    {
+      "path": "/over",
+      "secties": [
+        {
+          "type_sleutel": "intro",
+          "sort_order": 1,
+          "enabled": true,
+          "inhoud": {
+            "kicker": "Oprichter Loopless",
+            "tekst": "Je bent geen bedrijf begonnen om de hele dag uit te zoeken en mail door te spitten. En je hebt je mensen niet aangenomen om dat voor je te doen.\n\nToch gaat het zo bij veel bedrijven. De inkoper is de halve week databeheerder, de binnendienst verzuipt in mail en Excel. Ik bouw de systemen die dat werk overnemen.",
+            "foto": "",
+            "foto_alt": "Wessel Broeders"
+          }
+        },
+        {
+          "type_sleutel": "tekst",
+          "sort_order": 2,
+          "enabled": true,
+          "inhoud": {
+            "kop": "Waarom ik bij het werk begin, niet bij de techniek",
+            "tekst": "Tijdens mijn studie Bedrijfskunde aan Avans Breda leerde ik een bedrijf uit elkaar halen: waar loopt het vast, welke stap kost tijd en levert niets op. Daarnaast leerde ik bouwen. Niet als hobby, maar om die stappen er ook echt uit te kunnen halen.\n\nDaardoor begint het bij mij nooit bij een tool. Het begint bij de vraag welk werk jouw mensen doen waarvoor ze niet zijn aangenomen. Wat daaruit komt, bouw ik zelf."
+          }
+        },
+        {
+          "type_sleutel": "tekst",
+          "sort_order": 3,
+          "enabled": true,
+          "inhoud": {
+            "kop": "Hoe dat er in de praktijk uitziet",
+            "tekst": "Sommige bedrijven komen met een concreet idee: dit stuk werk moet eraf. Anderen weten alleen dat er tijd verdwijnt, maar niet precies waar. Beide zijn een goed startpunt, want je mensen weten het meestal wel.\n\nWe kijken samen waar het uitzoekwerk zit en ik bouw daar een systeem omheen. Het systeem zet klaar, jouw mensen controleren en beslissen. Niemand wordt vervangen: dat is geen geruststelling achteraf, zo bouw ik het."
+          }
+        },
+        {
+          "type_sleutel": "resultaat",
+          "sort_order": 4,
+          "enabled": true,
+          "inhoud": {
+            "kop": "Hoe dat uitpakt",
+            "tekst": "Bij vuljevacature.nl deed het team het voorwerk zelf: leads zoeken, screenen, gegevens overtypen. Nu staat die lijst er 's ochtends al. Ze beginnen de dag met bellen in plaats van met zoeken, en bepalen zelf wie ze benaderen.",
+            "tekst_2": "Bij Drabor liepen de inkopers hun voorraadlijst artikel voor artikel na. Nu vragen ze met één knop het inkooprapport op, kijken het na, passen aan waar ze het beter weten, en bestellen. Ze kopen weer in in plaats van uit te zoeken."
+          }
+        },
+        {
+          "type_sleutel": "oproep",
+          "sort_order": 5,
+          "enabled": true,
+          "inhoud": {
+            "kop": "Benieuwd welk werk bij jou eraf kan?",
+            "tekst": "Weet je waar het blijft hangen, plan dan een gesprek. Weet je het nog niet, kijk dan eerst wat er bij jou kan."
+          }
+        }
+      ]
+    }
+  ]
+}
