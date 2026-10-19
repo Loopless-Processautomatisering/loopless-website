@@ -37,7 +37,13 @@ const nextConfig: NextConfig = {
   // X-Powered-By: Next.js niet lekken (security-scan 2026-06-05, P2).
   poweredByHeader: false,
   async headers() {
-    return [{ source: "/:path*", headers: securityHeaders }];
+    return [
+      { source: "/:path*", headers: securityHeaders },
+      // De link naar /gesprek draagt een persoonlijke code. Die mag niet als
+      // verwijzer meegaan naar andere adressen. Staat na de algemene regel,
+      // zodat deze waarde wint.
+      { source: "/gesprek", headers: [{ key: "Referrer-Policy", value: "no-referrer" }] },
+    ];
   },
   // Cache Components: data is request-time by default; published content wordt
   // expliciet gecacht via 'use cache' in src/lib/supabase/content.ts.

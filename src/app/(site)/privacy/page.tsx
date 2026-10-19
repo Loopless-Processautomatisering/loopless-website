@@ -2,14 +2,16 @@ import type { Metadata } from "next";
 import { PageGlow } from "@/components/page-glow";
 
 // Privacyverklaring — toegevoegd 2026-07-24 (review-ronde configurator).
-// Claims hier zijn geverifieerd tegen de werkelijke stack: contactformulier
-// via Formspree, configurator via eigen server (n8n, EU) naar Google
-// Workspace, hosting Vercel, geen tracking-cookies of analytics.
+// Claims hier zijn geverifieerd tegen de werkelijke stack, maar leveranciers
+// worden bewust niet bij naam genoemd, alleen per soort (besluit Wessel
+// 2026-10-13; de AVG vraagt ontvangers óf categorieën van ontvangers).
+// Deze repo is openbaar: welke leverancier achter welke soort zit, staat in het
+// projectdossier, niet hier.
 
 export const metadata: Metadata = {
   title: "Privacyverklaring",
   description:
-    "Hoe Loopless omgaat met de gegevens die je achterlaat via het contactformulier of de configurator.",
+    "Hoe Loopless omgaat met de gegevens die je achterlaat via het contactformulier, de configurator of het gespreksformulier.",
   alternates: { canonical: "/privacy" },
 };
 
@@ -34,7 +36,7 @@ export default function PrivacyPage() {
           <h1 className="mb-4 font-[family-name:var(--font-heading)] text-4xl font-bold text-[#10182B] md:text-5xl">
             Privacyverklaring
           </h1>
-          <p className="mb-2 text-sm text-[#5F6B85]">Laatst bijgewerkt: 1 oktober 2026</p>
+          <p className="mb-2 text-sm text-[#5F6B85]">Laatst bijgewerkt: 13 oktober 2026</p>
           <P>
             Loopless is een handelsnaam van Broeders Digital (eenmanszaak, KVK 42004729). Deze
             pagina legt uit welke gegevens we verwerken als je iets achterlaat op loopless.nl, en
@@ -49,6 +51,12 @@ export default function PrivacyPage() {
             situatie. Verder houdt de hosting standaard technische serverlogs bij, zoals elk
             website-platform.
           </P>
+          <P>
+            Via het gespreksformulier uit onze mail: de onderwerpen die je aanvinkt en wat je
+            daarbij zelf toelicht, hoe je bereikt wilt worden, je telefoonnummer of een ander
+            e-mailadres (als je dat invult), de momenten die je aanvinkt en wat je daar zelf over
+            schrijft.
+          </P>
 
           <H2>Waarvoor we ze gebruiken</H2>
           <P>
@@ -60,11 +68,14 @@ export default function PrivacyPage() {
           <H2>Waar je gegevens staan</H2>
           <P>
             Inzendingen via de configurator lopen via onze eigen automatiseringsserver in een
-            EU-datacenter en worden bewaard in Google Workspace (mail en een spreadsheet). Het
-            contactformulier wordt verwerkt door Formspree. De website wordt gehost bij Vercel.
-            Voor zover deze partijen gegevens buiten de EU verwerken, gebeurt dat onder de
-            waarborgen die de AVG daarvoor kent, zoals het EU-VS Data Privacy Framework of
-            standaardcontractbepalingen.
+            EU-datacenter en worden bewaard in onze zakelijke mail- en kantoorsoftware. Het
+            contactformulier wordt verwerkt door een dienst voor webformulieren. Inzendingen via
+            het gespreksformulier worden bewaard in een database in de EU; Wessel krijgt daarvan
+            een melding op zijn telefoon met alleen je naam en bedrijfsnaam. Onze e-mails
+            worden verstuurd via een dienst voor het versturen van e-mail. De website wordt
+            gehost bij een hostingpartij. Voor zover deze partijen gegevens buiten de EU
+            verwerken, gebeurt dat onder de waarborgen die de AVG daarvoor kent, zoals het
+            EU-VS Data Privacy Framework of standaardcontractbepalingen.
           </P>
 
           <H2>Hoe lang we ze bewaren</H2>
@@ -75,7 +86,9 @@ export default function PrivacyPage() {
 
           <H2>Cookies</H2>
           <P>
-            Loopless.nl gebruikt geen tracking-cookies en geen analytics. Er kan alleen een
+            Loopless.nl gebruikt geen tracking-cookies. We houden wel bij hoe vaak pagina&apos;s
+            worden bezocht, met een webstatistiek die geen cookies plaatst en geen profiel van je
+            opbouwt. Op de pagina van het gespreksformulier staat ook die uit. Er kan alleen een
             functionele cookie worden gezet die nodig is om de site te laten werken.
           </P>
 
@@ -110,10 +123,17 @@ export default function PrivacyPage() {
             We gebruiken deze gegevens om één bedrijf gericht een aanbod te doen dat bij dat
             bedrijf past. De grondslag is ons gerechtvaardigd belang bij het vinden van
             opdrachtgevers. De gegevens staan in een database in de EU en worden niet verkocht of
-            gedeeld.
+            gedeeld. Voor het versturen gaan alleen het e-mailadres, de bedrijfsnaam en waar
+            bekend de naam van de contactpersoon naar de dienst die onze e-mails verstuurt.
           </P>
           <P>
-            Wil je geen mail meer ontvangen, antwoord dan met &quot;stop&quot; of mail naar{" "}
+            De knop in onze mail bevat een code die bij jouw bedrijf hoort, zodat het formulier je
+            naam en bedrijf al kent. We leggen niet vast of je op de link klikt, alleen wat je zelf
+            verstuurt.
+          </P>
+          <P>
+            Wil je geen mail meer ontvangen, klik dan op de afmeldlink onderaan de mail, antwoord
+            met &quot;stop&quot; of mail naar{" "}
             <a href="mailto:wessel@loopless.nl" className="text-[#4F8EF7] hover:underline">
               wessel@loopless.nl
             </a>
