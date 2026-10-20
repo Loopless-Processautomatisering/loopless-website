@@ -128,8 +128,9 @@ export default function PrivacyPage() {
           </P>
           <P>
             De knop in onze mail bevat een code die bij jouw bedrijf hoort, zodat het formulier je
-            naam en bedrijf al kent. We leggen niet vast of je op de link klikt, alleen wat je zelf
-            verstuurt.
+            naam en bedrijf al kent. De dienst die onze e-mails verstuurt houdt bij of er op een link
+            in de mail is geklikt; links lopen daarom eerst via die dienst. Of je een mail opent,
+            meten we niet. We gebruiken dit alleen om te zien welke mails werken.
           </P>
           <P>
             Wil je geen mail meer ontvangen, klik dan op de afmeldlink onderaan de mail, antwoord
