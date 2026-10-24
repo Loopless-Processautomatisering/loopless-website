@@ -5,6 +5,7 @@ import Link from "next/link";
 import { Mail, Linkedin, Clock, ShieldCheck, Send } from "lucide-react";
 import { AnimateIn } from "@/components/ui/animate-in";
 import { PageGlow } from "@/components/page-glow";
+import { meetAanvraag } from "@/lib/meet";
 
 const FORMSPREE_ACTION = "https://formspree.io/f/xbdeeolq";
 
@@ -45,6 +46,7 @@ export default function ContactPage() {
 
       if (res.ok) {
         setSubmitted(true);
+        meetAanvraag("contact");
       } else {
         setError(true);
       }
