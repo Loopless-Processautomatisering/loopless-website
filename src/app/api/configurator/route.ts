@@ -50,10 +50,18 @@ export async function POST(request: NextRequest) {
     return Response.json({ ok: false }, { status: 400 });
   }
 
+  // De n8n-webhook eist header-auth; zonder sleutel antwoordt hij 403 en toont
+  // de client de herstel-regel.
+  const sleutel = process.env.CONFIGURATOR_WEBHOOK_KEY;
+  if (!sleutel) console.error("[configurator] CONFIGURATOR_WEBHOOK_KEY ontbreekt");
+
   try {
     const res = await fetch(webhook, {
       method: "POST",
-      headers: { "Content-Type": "application/json" },
+      headers: {
+        "Content-Type": "application/json",
+        ...(sleutel ? { "X-Loopless-Key": sleutel } : {}),
+      },
       body: JSON.stringify(payload),
       signal: AbortSignal.timeout(10_000),
     });
