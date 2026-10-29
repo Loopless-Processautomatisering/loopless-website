@@ -1,7 +1,8 @@
 "use client";
 
-import { useState } from "react";
+import { useRef, useState } from "react";
 import Link from "next/link";
+import { leesHerkomst, nieuwInzendingId } from "@/lib/aanvraag/herkomst";
 
 // Oplossings-configurator — kaartset "alternatief 5+1" (besloten 2026-07-23).
 // Positionerings-regels (HARD): mens-eerst, geen efficiëntie/productiviteit,
@@ -133,6 +134,8 @@ export function Configurator() {
   const [email, setEmail] = useState("");
   const [telefoon, setTelefoon] = useState("");
   const [hp, setHp] = useState("");
+  // Eén id per configurator-sessie; de vraag om een gesprek krijgt server-side een eigen achtervoegsel.
+  const inzendingId = useRef<string | null>(null);
   const [formError, setFormError] = useState("");
   const [sending, setSending] = useState(false);
   const [sendFailed, setSendFailed] = useState(false);
@@ -190,6 +193,9 @@ export function Configurator() {
       // dat er is. n8n zet daar een aparte badge op in de intake-mail.
       gesprek_gevraagd: gesprekGevraagd,
       _hp: hp,
+      // Leadflow: voor de outreach-app; de route haalt deze twee weg vóór n8n.
+      inzending_id: (inzendingId.current ??= nieuwInzendingId()),
+      herkomst: leesHerkomst(),
       // Render-klare uitslag voor de mail naar de lead: n8n rendert alleen,
       // de copy heeft precies één bron (dit bestand).
       uitslag: {
