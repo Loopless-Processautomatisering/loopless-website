@@ -95,8 +95,9 @@ export default function PrivacyPage() {
           <H2>Hoe lang we ze bewaren</H2>
           <P>
             Zolang dat nodig is voor de opvolging van je aanvraag, en maximaal twaalf maanden na
-            het laatste contact. Een aanvraag in onze database wordt twaalf maanden nadat we hem
-            hebben opgepakt automatisch verwijderd; pakken we hem nooit op, dan twaalf maanden na
+            het laatste contact. Een aanvraag via het contactformulier of de configurator, of een
+            vraag die we zelf noteren, wordt twaalf maanden nadat we hem hebben opgepakt
+            automatisch uit onze database verwijderd; pakken we hem nooit op, dan twaalf maanden na
             binnenkomst. Word je klant, dan gelden de afspraken uit de overeenkomst.
           </P>
 

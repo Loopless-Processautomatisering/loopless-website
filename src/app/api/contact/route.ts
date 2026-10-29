@@ -82,7 +82,7 @@ function html(l: Lead): string {
 <p style="font-family:sans-serif;font-size:14px;white-space:pre-wrap">${esc(l.bericht || "-")}</p>`;
 }
 
-async function viaResend(l: Lead): Promise<boolean> {
+async function viaResend(l: Lead, sleutel: string): Promise<boolean> {
   const key = process.env.RESEND_API_KEY;
   const naar = process.env.CONTACT_NOTIFICATIE_EMAIL; // komma-gescheiden mag
   const van = process.env.CONTACT_AFZENDER;
@@ -93,7 +93,12 @@ async function viaResend(l: Lead): Promise<boolean> {
   try {
     const res = await fetch("https://api.resend.com/emails", {
       method: "POST",
-      headers: { Authorization: `Bearer ${key}`, "Content-Type": "application/json" },
+      // Zelfde inzending opnieuw (antwoord kwam niet aan in de browser) = geen tweede mail.
+      headers: {
+        Authorization: `Bearer ${key}`,
+        "Content-Type": "application/json",
+        "Idempotency-Key": `contact-${sleutel}`,
+      },
       body: JSON.stringify({
         from: van,
         to: naar.split(",").map((s) => s.trim()).filter(Boolean),
@@ -187,13 +192,14 @@ export async function POST(request: Request) {
     return Response.json({ ok: false }, { status: 400 });
   }
 
-  const gemaild = (await viaResend(lead)) || (await viaFormspree(lead));
+  const ruweId = str(p.inzending_id, 36).toLowerCase();
+  const inzending = UUID.test(ruweId) ? ruweId : crypto.randomUUID();
+  const gemaild = (await viaResend(lead, inzending)) || (await viaFormspree(lead));
 
   // Ook als beide mailpaden faalden: dan staat de aanvraag in elk geval in de app.
-  const inzending = str(p.inzending_id, 36).toLowerCase();
   await stuurAanvraagDoor({
     bron: "contact",
-    extern_id: UUID.test(inzending) ? inzending : crypto.randomUUID(),
+    extern_id: inzending,
     naam: lead.naam,
     bedrijf: lead.bedrijf,
     email: lead.email,
