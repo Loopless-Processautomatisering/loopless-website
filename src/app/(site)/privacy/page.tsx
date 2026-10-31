@@ -36,7 +36,7 @@ export default function PrivacyPage() {
           <h1 className="mb-4 font-[family-name:var(--font-heading)] text-4xl font-bold text-[#10182B] md:text-5xl">
             Privacyverklaring
           </h1>
-          <p className="mb-2 text-sm text-[#5F6B85]">Laatst bijgewerkt: 13 oktober 2026</p>
+          <p className="mb-2 text-sm text-[#5F6B85]">Laatst bijgewerkt: 29 oktober 2026</p>
           <P>
             Loopless is een handelsnaam van Broeders Digital (eenmanszaak, KVK 42004729). Deze
             pagina legt uit welke gegevens we verwerken als je iets achterlaat op loopless.nl, en
@@ -50,6 +50,18 @@ export default function PrivacyPage() {
             telefoonnummer (als je dat invult) en de antwoorden die je zelf geeft over jullie
             situatie. Verder houdt de hosting standaard technische serverlogs bij, zoals elk
             website-platform.
+          </P>
+          <P>
+            Tijdens je bezoek onthoudt je browser via welke link je binnenkwam (bijvoorbeeld een
+            video op Instagram of TikTok, of een pagina van deze site). Dat staat alleen in het
+            geheugen van dat tabblad, is geen cookie en verdwijnt als je het tabblad sluit. Vul je
+            een formulier in, dan gaat die herkomst mee, zodat we kunnen zien welke video of pagina
+            aanvragen oplevert.
+          </P>
+          <P>
+            Stuur je ons een bericht via sociale media, LinkedIn of mail met een vraag over onze
+            diensten, dan noteren we je naam of accountnaam, wat je vraagt en via welk kanaal het
+            binnenkwam, zodat je vraag niet blijft liggen.
           </P>
           <P>
             Via het gespreksformulier uit onze mail: de onderwerpen die je aanvinkt en wat je
@@ -69,9 +81,11 @@ export default function PrivacyPage() {
           <P>
             Inzendingen via de configurator lopen via onze eigen automatiseringsserver in een
             EU-datacenter en worden bewaard in onze zakelijke mail- en kantoorsoftware. Het
-            contactformulier wordt verwerkt door een dienst voor webformulieren. Inzendingen via
-            het gespreksformulier worden bewaard in een database in de EU; Wessel krijgt daarvan
-            een melding op zijn telefoon met alleen je naam en bedrijfsnaam. Onze e-mails
+            contactformulier wordt als e-mail bezorgd via een dienst voor webformulieren of een
+            dienst voor het versturen van e-mail. Inzendingen via het contactformulier, de
+            configurator en het gespreksformulier, en vragen die we zelf noteren, worden daarnaast
+            bewaard in een database in de EU, zodat alle aanvragen op één plek staan; Wessel
+            krijgt daarvan een melding op zijn telefoon met alleen je naam en bedrijfsnaam. Onze e-mails
             worden verstuurd via een dienst voor het versturen van e-mail. De website wordt
             gehost bij een hostingpartij. Voor zover deze partijen gegevens buiten de EU
             verwerken, gebeurt dat onder de waarborgen die de AVG daarvoor kent, zoals het
@@ -81,7 +95,10 @@ export default function PrivacyPage() {
           <H2>Hoe lang we ze bewaren</H2>
           <P>
             Zolang dat nodig is voor de opvolging van je aanvraag, en maximaal twaalf maanden na
-            het laatste contact. Word je klant, dan gelden de afspraken uit de overeenkomst.
+            het laatste contact. Een aanvraag via het contactformulier, de configurator of het
+            gespreksformulier, of een vraag die we zelf noteren, wordt twaalf maanden nadat we hem hebben opgepakt
+            automatisch uit onze database verwijderd; pakken we hem nooit op, dan twaalf maanden na
+            binnenkomst. Word je klant, dan gelden de afspraken uit de overeenkomst.
           </P>
 
           <H2>Cookies</H2>
