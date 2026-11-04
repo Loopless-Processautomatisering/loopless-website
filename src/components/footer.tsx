@@ -68,6 +68,7 @@ export function Footer() {
                     LinkedIn
                   </a>
                 </li>
+                <li className="text-sm text-[#5F6B85]">Tiel, Gelderland</li>
               </ul>
             </div>
           </div>

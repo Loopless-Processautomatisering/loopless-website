@@ -31,6 +31,7 @@ export const faqCategories: { label: string; items: FaqEntry[] }[] = [
           "Wat is het verschil tussen procesautomatisering en gewone software kopen?",
         answer:
           "Software koop je, en je bedrijf past zich eraan aan. Ik bouw op maat, op de manier waarop jullie al werken. We beginnen bij het probleem, niet bij de technologie. En niemand hoeft een nieuw systeem te leren waar hij niet om gevraagd heeft.",
+        link: { href: "/kennisbank/procesautomatisering", label: "Lees meer over procesautomatisering" },
       },
     ],
   },
