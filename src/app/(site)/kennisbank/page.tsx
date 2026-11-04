@@ -4,6 +4,7 @@ import { ArrowRight } from "lucide-react";
 import { AnimateIn } from "@/components/ui/animate-in";
 import { PageGlow } from "@/components/page-glow";
 import { artikel } from "./automatisering-mkb/artikel-data";
+import { artikel as procesArtikel } from "./procesautomatisering/artikel-data";
 
 export const metadata: Metadata = {
   title: "Kennisbank: uitleg over automatiseren in het MKB",
@@ -23,6 +24,12 @@ const artikelen = [
     titel: artikel.titel,
     omschrijving: artikel.omschrijving,
     leestijd: artikel.leestijd,
+  },
+  {
+    href: `/kennisbank/${procesArtikel.slug}`,
+    titel: procesArtikel.titel,
+    omschrijving: procesArtikel.omschrijving,
+    leestijd: procesArtikel.leestijd,
   },
 ];
 

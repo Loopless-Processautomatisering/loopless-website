@@ -2,18 +2,18 @@ import type { Metadata } from "next";
 import { faqCategories } from "./faq-data";
 
 export const metadata: Metadata = {
-  title: "Veelgestelde vragen over AI-automatisering",
+  title: "Veelgestelde vragen over werken met Loopless",
   description:
     "Welk werk een systeem kan overnemen, wat het kost, hoe lang het duurt en wat er gebeurt als het niet doet wat we hebben afgesproken.",
   alternates: { canonical: "/faq" },
   openGraph: {
-    title: "Veelgestelde vragen over AI-automatisering",
+    title: "Veelgestelde vragen over werken met Loopless",
     description:
       "Welk werk een systeem kan overnemen, wat het kost, hoe lang het duurt en wat er gebeurt als het niet doet wat we hebben afgesproken.",
   },
   twitter: {
     card: "summary_large_image",
-    title: "Veelgestelde vragen over AI-automatisering",
+    title: "Veelgestelde vragen over werken met Loopless",
     description:
       "Welk werk een systeem kan overnemen, wat het kost, hoe lang het duurt en wat er gebeurt als het niet doet wat we hebben afgesproken.",
   },

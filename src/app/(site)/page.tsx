@@ -252,7 +252,7 @@ export default async function Home() {
                 </span>
                 <span className="text-sm">
                   <span className="block font-semibold text-[#10182B] transition-colors group-hover:text-[#4F8EF7]">Wessel Broeders</span>
-                  <span className="text-[#5F6B85]">Oprichter Loopless</span>
+                  <span className="text-[#5F6B85]">Oprichter Loopless, vanuit Tiel</span>
                 </span>
               </Link>
             </AnimateIn>
